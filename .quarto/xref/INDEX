@@ -1,0 +1,20 @@
+{
+  "youtube-tutorials.qmd": {
+    "youtube-tutorials.html": "19f68a12"
+  },
+  "spatial-lag.qmd": {
+    "spatial-lag.html": "e6b447e0"
+  },
+  "hot-spot-analysis.qmd": {
+    "hot-spot-analysis.html": "b9d42d31"
+  },
+  "deleteme.qmd": {
+    "deleteme.html": "64b6bc28"
+  },
+  "hot-spot-analysis/hot-spot-analysis.qmd": {
+    "hot-spot-analysis.html": "42521072"
+  },
+  "spatial-lag/spatial-lag.qmd": {
+    "spatial-lag.html": "d14dc012"
+  }
+}

@@ -1,0 +1,323 @@
+---
+title: "spatial analysis" 
+subtitle: "weights & neighbors in `sfdep`"
+format: 
+  revealjs:
+    incremental: true
+---
+
+```{r}
+options("pillar.width" = 60)
+```
+
+
+# Objective:
+calculate the spatial lag
+
+
+## The Spatial Lag
+
+- The weighted average of a variable in a neighborhood
+
+$$Wy_i = \sum_{j = 1}^{n} W_{ij} * yj$$
+
+- it's a formula which is tough lets break it down
+
+## $ij$
+
+:::{.incremental}
+- $i$ is the observed element of a vector (black)
+- $j$ is that element's neighbors in space (white)
+- $ij$ the neighbors of element $i$
+:::
+```{r, echo = FALSE}
+library(sf)
+library(dplyr)
+library(ggplot2)
+grd <- st_make_grid(n = 3, cellsize = 1, offset = c(0, 0)) |> 
+  st_as_sf() |> 
+  mutate(id = row_number())
+```
+
+```{r}
+plt <- grd |> 
+  mutate(focal = id == 5) |> 
+  ggplot(aes(fill = focal)) +
+  geom_sf(color = "black") +
+  theme_void() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("white", "black"))
+
+plt
+```
+
+## $ij$
+
+```{r}
+nb_index <- c(paste("j", c(6, 7, 8, 4), sep = ""), 
+              "i", 
+              (paste("j", c(5, 1, 2, 3), sep = "")))
+
+grd |> 
+  mutate(focal = id == 5, nb = nb_index) |> 
+  ggplot(aes(fill = focal, label = nb)) +
+  geom_sf(color = "black") +
+  geom_sf_text(aes(color = focal), size = 8) +
+  theme_void() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("white", "black")) + 
+  scale_color_manual(values = c("black", "white")) 
+```
+
+
+## $yi$
+
+- $yi$ is the observed value at each location
+
+```{r}
+grd |> 
+  mutate(
+    value = c(8.4, 15.5, 6.9, 11.5, 3, 26.8, 5.2, 0.9, 7.9),
+    focal = id == 5,
+  ) |> 
+  ggplot(aes(fill = focal, label = value)) +
+  geom_sf() +
+  geom_sf_text(
+    aes(color = c(rep("black", 4), "white", rep("black", 4))),
+    size = 6
+    ) +
+  scale_fill_manual(values = c("white", "black")) +
+  scale_color_manual(values = c("black", "white")) +
+  theme_void() +
+  theme(legend.position = "none") 
+```
+
+## $W_{ij}$
+
+:::{.incremental}
+- The spatial weights
+- For simplicity: _row standardized_ weights
+- $1 \div card(i)$
+  - cardinality is the number of neighbors
+- 8 neighbors
+
+
+```{r}
+cardi <- 8
+wij <- rep(1, cardi) / cardi
+```
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-fold: true
+cardi <- 8
+wij <- rep(1, cardi) / cardi
+
+wij
+#> c(0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125)
+```
+:::
+
+## $\sum_{j = 1}^{n} W_{ij} * yj$ 
+
+```{r, echo = TRUE}
+values <- c(8.4, 15.5, 6.9, 11.5, 3, 26.8, 5.2, 0.9, 7.9)
+
+# neighbor index
+nbs <- c(1:4, 6:9)
+
+# create neighbor values
+yj <- values[nbs]
+
+# multiply each element
+wij * yj
+```
+
+```{r, echo = TRUE}
+# the spatial lag
+sum(wij * yj)
+```
+## Observed vs. Lagged
+
+```{r}
+library(sfdep)
+library(ggplot2)
+grd2 <- grd |> 
+  as_tibble() |> 
+  mutate(nb = st_contiguity(x), 
+         wt = st_weights(nb),
+         vals = c(8.4, 15.5, 6.9, 11.5, 3, 26.8, 5.2, 0.9, 7.9),
+         x_lag = st_lag(vals, nb, wt)) |> 
+  st_as_sf() 
+
+
+obs <- ggplot(grd2, aes(fill = vals)) + 
+  geom_sf(color = NA) +
+  scale_fill_viridis_c(option = "B", limits = range(values)) +
+  theme_void() +
+  theme(legend.position =  "none")
+
+obs_lag <- ggplot(grd2, aes(fill = x_lag)) + 
+  geom_sf(color = NA) +
+  scale_fill_viridis_c(option = "B", limits = range(values)) +
+  theme_void() +
+  labs(fill = "")
+
+patchwork::wrap_plots(obs, obs_lag)
+```
+
+## Understanding the lag
+
+- it is the average value of the neighborhood
+- "expected value" of the neighborhood
+- summarizes values of $x$ for an observation $i$'s neighborhood
+
+# using {sfdep} 
+
+a tidy interface to spdep
+
+```{r, echo = TRUE}
+library(sfdep)
+library(dplyr)
+```
+
+## Identifying Neighbors
+
+- simplest way using `st_contiguity()`
+- requires `sf` or `sfc` object
+- Queen contiguity by default
+  - shared sides and corners
+  
+. . . 
+  
+```{r, echo = TRUE}
+data(guerry, package = "sfdep")
+
+nb <- st_contiguity(guerry)
+nb
+```
+
+## `nb` class objects
+
+- `nb` class from `spdep`
+
+. . .
+
+```{r, echo = TRUE}
+attributes(nb)
+```
+
+## `nb` class objects
+
+- sparse matrix (list) of neighbors
+- each element is an integer vector
+- elements are row position of neighbor
+
+. . .
+
+```{r, echo = TRUE}
+nb[1:3]
+```
+
+
+## spatial weights 
+
+- `st_weights(nb)` 
+- row standardized by default
+- returns list 
+- each element is numeric vector with same **cardinality** as the neighbor list
+  - contains the weight for the corresponding element in the `nb` list
+  - _note: cardinality is the number of neighbors_
+
+## spatial weights
+
+```{r, echo = TRUE}
+wt <- st_weights(nb)
+
+wt[1:3]
+```
+
+## spatial lag
+
+- use `st_lag(x, nb, wt)`
+
+```{r, echo = TRUE}
+x <- guerry$crime_pers
+
+st_lag(x, nb, wt)
+```
+
+
+## spatial lag
+
+- calculate by hand using lists
+
+```{r, echo = TRUE}
+ij <- nb[[1]]
+wij <- wt[[1]]
+xij <- x[ij]
+
+xij * wij
+
+sum(xij * wij)
+```
+
+# Using dplyr
+
+
+## Guerry 
+
+```{r, echo = TRUE}
+dplyr::glimpse(guerry)
+```
+
+
+## In one fell swoop
+
+```{r, echo = TRUE}
+guerry |> 
+  transmute(
+    nb = st_contiguity(geometry),
+    wt = st_weights(nb),
+    crime_lag = st_lag(crime_pers, nb, wt)
+  )
+
+```
+
+
+## Let's make something, shall we?
+
+```{r}
+library(sfdep)
+library(tidyverse)
+
+
+crime_lag <- guerry |> 
+  mutate(
+    nb = st_contiguity(geometry),
+    wt = st_weights(nb),
+    crime_lag = st_lag(crime_pers, nb, wt)
+  )
+
+plot_lims <- c(
+  min(guerry$crime_pers),
+  max(guerry$crime_pers)
+)
+
+p1 <- crime_lag |> 
+  ggplot(aes(fill = crime_pers)) +
+  geom_sf(color = "black", lwd = 0.15) +
+  scale_fill_viridis_c(limits = plot_lims) +
+  labs(title = "Observed Crime") +
+  theme(legend.position = "none")
+
+
+p2 <- crime_lag |> 
+  ggplot(aes(fill = crime_lag)) +
+  geom_sf(color = "black", lwd = 0.15) +
+  scale_fill_viridis_c(limits = plot_lims) +
+  labs(title = "Spatial Lag of Crime")
+
+
+patchwork::wrap_plots(p1, p2)
+```
+

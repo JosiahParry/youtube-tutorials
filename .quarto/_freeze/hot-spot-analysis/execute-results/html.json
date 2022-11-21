@@ -1,0 +1,20 @@
+{
+  "hash": "a9a24cb06f7d2907739bde63d5afc7de",
+  "result": {
+    "markdown": "---\ntitle: \"Hot Spot Analysis\"\nsubtitle: \"Gi and Gi* foundations\"\nexecute: \n  eval: false\n  echo: true\nformat:\n  revealjs:\n    incremental: true   \n---\n\n\n# Objective: \n\nidentify clustes of high or low values in space\n\n## LISA is going to help us\n\n- local indicators of spatial association (LISA)\n- reduce global statistics to the local level\n- The Local Moran's I is the most famous\n\n\n## Which LISA for hot spots?\n\n- Getis-Ord Gi and Gi*\n- Local versions of the Getis-Ord Global G\n  - _note: the $i$ subscript is a good hint that a measure is local_ \n\n## blank\n\nHot spot analysis looks for clusters of high and low values in space. \n\n statistics are use to identify these hotspots\n\nGi & Gi* are considered LISAs. Local indicator of spatial analysis. LISAs are global statistics that can be broken down into local statistic. \n\nThe G and G* are the corresponding global statistics. \n \nLets take a look at the Gi and Gi*\n\n$$\nG = \\frac{\\sum_{i = 1}^{n} \\sum_{j = 1}^{n} w_{ij}x_ix_j}\n{\\sum_{i = 1}^{n}\\sum_{j = 1}^{n} x_i x_j}\n$$\n\n$$\nGi = \\frac{\\sum_j w_{ij} x_j}{\\sum_j x_j}\n$$\n\n::: {.cell}\n\n```{.r .cell-code}\nnum = sum(st_lag(x, nb, wt) * x)\n\n\nst_lag(x, nb, wt) * t(x)\ndenom = sum(st_lag(x, nb, wtb) * x)\n\nnum / denom\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ny <- as.numeric(scale(x))\n# scale(st_lag(x, nb, wt)  / sum(x))\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nxj <- find_xj(x, nb)\nlags <- st_lag(x, nb, wt)\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nfunction(x, xj, wj) {\n  # This comes from the body of spdep::localG()\n  n <- length(wj)\n  xibar <- rep(mean(x), n)\n  lx <- mapply(xj, wj, FUN = function(x, y) sum(x * y))\n  si2 <- rep(sum(scale(x, scale = FALSE)^2)/n, n)\n  Wi <- sapply(wj, sum)\n  S1i <- sapply(wj, function(x) sum(x^2))\n  EG <- Wi * xibar\n  res <- (lx - EG)\n  VG <- si2 * ((n * S1i - Wi^2)/(n - 1))\n  res <- res/sqrt(VG)\n  res\n}\n```\n:::\n",
+    "supporting": [
+      "hot-spot-analysis_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

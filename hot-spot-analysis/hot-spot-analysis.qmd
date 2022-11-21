@@ -1,0 +1,69 @@
+---
+title: "Hot Spot Analysis"
+subtitle: "Gi and Gi* foundations"
+execute: 
+  eval: false
+  echo: true
+format:
+  revealjs:
+    incremental: true   
+---
+
+# Objective: 
+
+identify clusters of high or low values in space
+
+## LISA is going to help us
+
+- local indicators of spatial association (LISA)
+- decompose global statistics to the local level
+- The Local Moran's I is the most famous
+
+
+## Which LISA for hot spots?
+
+- Getis-Ord Gi and Gi*
+- Local versions of the Getis-Ord Global G
+  - _note: the $i$ subscript is a good hint that a measure is local_ 
+
+## Getis-Ord G
+
+- G informs of the presence of high-high or low-low clustering
+- $$G = \frac{\sum_{i = 1}^{n} \sum_{j = 1}^{n} w_{ij}x_ix_j}{\sum_{i = 1}^{n}\sum_{j = 1}^{n} x_i x_j}$$
+
+## Local Getis-Ord G ($G_i$)
+
+- Most global statistics are a double sum     
+  - first over $j$ and then $i$
+- $G = \frac{\sum_{i = 1}^{n} \sum_{j = 1}^{n} w_{ij}x_ix_j}{\sum_{i = 1}^{n}\sum_{j = 1}^{n} x_i x_j}$
+- Decompose the G into a LISA 
+- $Gi = \frac{\sum_j w_{ij} x_j}{\sum_j x_j}$
+
+- "ratio of the weighted average of the values in the neighboring locations" ([GeodaCenter](https://geodacenter.github.io/workbook/6b_local_adv/lab6b.html#getis-ord-statistics))
+- $G_i$ is often returned as a standardized Z-score
+
+## $G_i$
+
+- The numerator is the spatial lag:  $\sum_j w_{ij} x_j$
+- Denominator is the sum of neighbor x values:  $\sum_j x_j$
+- Gi is the ratio of the 2  
+  - $G_i = \frac{\sum_j w_{ij} x_j}{\sum_j x_j}$
+
+
+## $G_i$ vs $G_i^*$
+
+- The only difference is in neighbor matrix
+- $G_i^*$ includes the observation $i$ in the calculation
+- $G_i$ does **not**
+- often rewritten as $G_i = \frac{\sum_{j\ne i} w_{ij} x_j}{\sum_{j \ne i} x_j}$
+- I don't like this because they're the same except the `nb` list
+
+
+## Example: 
+
+
+
+
+## resources:
+
+- https://geodacenter.github.io/workbook/6a_local_auto/lab6a.html
