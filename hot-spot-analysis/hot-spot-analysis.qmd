@@ -58,8 +58,17 @@ identify clusters of high or low values in space
 - often rewritten as $G_i = \frac{\sum_{j\ne i} w_{ij} x_j}{\sum_{j \ne i} x_j}$
 - I don't like this because they're the same except the `nb` list
 
+## $G_i$ interpretation
 
-## Example: 
+- High $G_i$: location with high value neighbors
+- Low $G_i$: location with low value neighbors
+
+## Hypothesis testing
+
+- $H_0$ - observed value is not spatially dependent
+- $H_1$ - observed value is spatially dependent
+- $H_0$ - we would expect to find this value under **complete spatial randomness** (CSR)
+- $H_1$ - we would __not__ expect to find this value under CSR
 
 
 

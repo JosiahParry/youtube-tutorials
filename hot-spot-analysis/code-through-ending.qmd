@@ -1,0 +1,25 @@
+---
+title: "Hot Spot Analysis Recap"
+execute: 
+  eval: false
+  echo: true
+format:
+  revealjs:
+    incremental: true   
+---
+
+
+## Steps: 
+
+1. Create neighbors
+2. Create weights
+3. Calculate measure 
+
+    - returns data.frame
+  
+4. unnest results
+5. visualize
+
+# Thanks! 
+
+Got an idea for the next one? Drop it down below!

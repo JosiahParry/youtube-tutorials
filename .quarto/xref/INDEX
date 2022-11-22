@@ -16,5 +16,8 @@
   },
   "spatial-lag/spatial-lag.qmd": {
     "spatial-lag.html": "d14dc012"
+  },
+  "hot-spot-analysis/code-through-ending.qmd": {
+    "code-through-ending.html": "21eb08be"
   }
 }

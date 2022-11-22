@@ -3,8 +3,6 @@ library(sfdep)
 library(tidyverse)
 
 
-
-
 # Atlanta boundaries & fishnet --------------------------------------------
 
 georgia_places <- tigris::places("georgia") 
