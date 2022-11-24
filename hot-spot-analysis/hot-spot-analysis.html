@@ -27,6 +27,70 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="hot-spot-analysis_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="hot-spot-analysis_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -330,6 +394,12 @@
 </div>
 
 </section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">78</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section>
 <section id="objective" class="title-slide slide level1 center">
 <h1>Objective:</h1>
@@ -342,48 +412,259 @@
 <li class="fragment">decompose global statistics to the local level</li>
 <li class="fragment">The Local Moran’s I is the most famous</li>
 </ul>
+</section></section>
+<section>
+<section id="local-indicators-of-spatial-associationlisa" class="title-slide slide level1 center">
+<h1>Local Indicators of Spatial Association—LISA</h1>
+<p>Luc Anselin, 1995</p>
 </section>
 <section id="which-lisa-for-hot-spots" class="slide level2">
 <h2>Which LISA for hot spots?</h2>
 <ul>
 <li class="fragment">Getis-Ord Gi and Gi*</li>
-<li class="fragment">Local versions of the Getis-Ord Global G
-<ul>
-<li class="fragment"><em>note: the <span class="math inline">\(i\)</span> subscript is a good hint that a measure is local</em></li>
-</ul></li>
+<li class="fragment">Local versions of the Getis-Ord Global G</li>
 </ul>
-</section>
+
+<aside><div>
+<p><em>note: the <span class="math inline">\(i\)</span> subscript is a good hint that a measure is local</em></p>
+</div></aside></section>
 <section id="getis-ord-g" class="slide level2">
 <h2>Getis-Ord G</h2>
 <ul>
 <li class="fragment">G informs of the presence of high-high or low-low clustering</li>
-<li class="fragment"><span class="math display">\[G = \frac{\sum_{i = 1}^{n} \sum_{j = 1}^{n} w_{ij}x_ix_j}{\sum_{i = 1}^{n}\sum_{j = 1}^{n} x_i x_j}\]</span></li>
 </ul>
+<div class="fragment">
+<p><span class="math display">\[
+G = \frac{\sum_{i = 1}^{n} \sum_{j = 1}^{n} w_{ij}x_ix_j}{\sum_{i = 1}^{n}\sum_{j = 1}^{n} x_i x_j}
+\]</span></p>
+</div>
 </section>
 <section id="local-getis-ord-g-g_i" class="slide level2">
 <h2>Local Getis-Ord G (<span class="math inline">\(G_i\)</span>)</h2>
 <ul>
-<li class="fragment"><p>Most global statistics are a double sum</p>
+<li class="fragment">Most global statistics are a double sum
 <ul>
 <li class="fragment">first over <span class="math inline">\(j\)</span> and then <span class="math inline">\(i\)</span></li>
 </ul></li>
-<li class="fragment"><p><span class="math inline">\(G = \frac{\sum_{i = 1}^{n} \sum_{j = 1}^{n} w_{ij}x_ix_j}{\sum_{i = 1}^{n}\sum_{j = 1}^{n} x_i x_j}\)</span></p></li>
-<li class="fragment"><p>Decompose the G into a LISA</p></li>
-<li class="fragment"><p><span class="math inline">\(Gi = \frac{\sum_j w_{ij} x_j}{\sum_j x_j}\)</span></p></li>
-<li class="fragment"><p>“ratio of the weighted average of the values in the neighboring locations” (<a href="https://geodacenter.github.io/workbook/6b_local_adv/lab6b.html#getis-ord-statistics">GeodaCenter</a>)</p></li>
-<li class="fragment"><p><span class="math inline">\(G_i\)</span> is often returned as a standardized Z-score</p></li>
+<li class="fragment"><span class="math inline">\(G = \frac{\sum_{i = 1}^{n} \sum_{j = 1}^{n} w_{ij}x_ix_j}{\sum_{i = 1}^{n}\sum_{j = 1}^{n} x_i x_j}\)</span></li>
+<li class="fragment">Decompose the G into a LISA</li>
+<li class="fragment"><span class="math inline">\(Gi = \frac{\sum_j w_{ij} x_j}{\sum_j x_j}\)</span></li>
 </ul>
 </section>
 <section id="g_i" class="slide level2">
 <h2><span class="math inline">\(G_i\)</span></h2>
 <ul>
 <li class="fragment">The numerator is the spatial lag: <span class="math inline">\(\sum_j w_{ij} x_j\)</span></li>
-<li class="fragment">Denominator is the sum of neighbor x values: <span class="math inline">\(\sum_j x_j\)</span></li>
-<li class="fragment">Gi is the ratio of the 2
-<ul>
+<li class="fragment">Denominator is the sum of all x values except <span class="math inline">\(x_i\)</span>: <span class="math inline">\(\sum_j x_j\)</span></li>
 <li class="fragment"><span class="math inline">\(G_i = \frac{\sum_j w_{ij} x_j}{\sum_j x_j}\)</span></li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p>“ratio of the weighted average of the values in the neighboring locations to the sum of all values, not including the value at the location” (<a href="https://geodacenter.github.io/workbook/6b_local_adv/lab6b.html#getis-ord-statistics">GeodaCenter</a>)</p>
+</blockquote>
+</div>
+<div class="fragment">
+
+</div>
+<aside><div>
+<p>note: <span class="math inline">\(G_i\)</span> is often returned as a Z-score</p>
+</div></aside></section>
+<section id="example" class="slide level2">
+<h2>Example</h2>
+
+<img data-src="hot-spot-analysis_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section id="example-1" class="slide level2">
+<h2>Example</h2>
+
+<img data-src="hot-spot-analysis_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="example-data" class="slide level2">
+<h2>Example data</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 49 features and 1 field
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 0 ymin: 0 xmax: 7 ymax: 7
+CRS:           NA
+# A tibble: 49 × 2
+       x                    geometry
+   &lt;dbl&gt;                   &lt;POLYGON&gt;
+ 1 5.70  ((0 0, 1 0, 1 1, 0 1, 0 0))
+ 2 4.71  ((1 0, 2 0, 2 1, 1 1, 1 0))
+ 3 2.94  ((2 0, 3 0, 3 1, 2 1, 2 0))
+ 4 1.87  ((3 0, 4 0, 4 1, 3 1, 3 0))
+ 5 2.46  ((4 0, 5 0, 5 1, 4 1, 4 0))
+ 6 2.00  ((5 0, 6 0, 6 1, 5 1, 5 0))
+ 7 0.408 ((6 0, 7 0, 7 1, 6 1, 6 0))
+ 8 3.96  ((0 1, 1 1, 1 2, 0 2, 0 1))
+ 9 4.00  ((1 1, 2 1, 2 2, 1 2, 1 1))
+10 1.93  ((2 1, 3 1, 3 2, 2 2, 2 1))
+# … with 39 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="the-numerator" class="slide level2">
+<h2>The numerator</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>grd_nb <span class="ot">&lt;-</span> grd <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="at">nb =</span> <span class="fu">st_contiguity</span>(geometry),</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="at">wt =</span> <span class="fu">st_weights</span>(nb),</span>
+<span id="cb3-5"><a href="#cb3-5"></a>    <span class="at">x_lag =</span> <span class="fu">st_lag</span>(x, nb, wt)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="the-numerator-1" class="slide level2">
+<h2>The numerator</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 49 features and 5 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 0 ymin: 0 xmax: 7 ymax: 7
+CRS:           NA
+# A tibble: 49 × 6
+                      geometry    id nb        wt            x x_lag
+ *                   &lt;POLYGON&gt; &lt;int&gt; &lt;nb&gt;      &lt;list&gt;    &lt;dbl&gt; &lt;dbl&gt;
+ 1 ((0 0, 1 0, 1 1, 0 1, 0 0))     1 &lt;int [3]&gt; &lt;dbl [3]&gt; 5.70  4.22 
+ 2 ((1 0, 2 0, 2 1, 1 1, 1 0))     2 &lt;int [5]&gt; &lt;dbl [5]&gt; 4.71  3.71 
+ 3 ((2 0, 3 0, 3 1, 2 1, 2 0))     3 &lt;int [5]&gt; &lt;dbl [5]&gt; 2.94  3.14 
+ 4 ((3 0, 4 0, 4 1, 3 1, 3 0))     4 &lt;int [5]&gt; &lt;dbl [5]&gt; 1.87  2.51 
+ 5 ((4 0, 5 0, 5 1, 4 1, 4 0))     5 &lt;int [5]&gt; &lt;dbl [5]&gt; 2.46  1.82 
+ 6 ((5 0, 6 0, 6 1, 5 1, 5 0))     6 &lt;int [5]&gt; &lt;dbl [5]&gt; 2.00  1.07 
+ 7 ((6 0, 7 0, 7 1, 6 1, 6 0))     7 &lt;int [3]&gt; &lt;dbl [3]&gt; 0.408 0.807
+ 8 ((0 1, 1 1, 1 2, 0 2, 0 1))     8 &lt;int [5]&gt; &lt;dbl [5]&gt; 3.96  3.74 
+ 9 ((1 1, 2 1, 2 2, 1 2, 1 1))     9 &lt;int [8]&gt; &lt;dbl [8]&gt; 4.00  3.17 
+10 ((2 1, 3 1, 3 2, 2 2, 2 1))    10 &lt;int [8]&gt; &lt;dbl [8]&gt; 1.93  2.84 
+# … with 39 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="the-numerator-2" class="slide level2">
+<h2>The numerator</h2>
+
+<img data-src="hot-spot-analysis_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<section id="the-denominator" class="slide level2">
+<h2>The denominator</h2>
+<ul>
+<li class="fragment">the of sum of all x values</li>
+<li class="fragment">OR, spatial lag of a complete graph w/ binary weights
+<ul>
+<li class="fragment"><code>st_weights(nb, style = "B")</code></li>
+</ul></li>
+<li class="fragment">Complete graph: all locations are connected
+<ul>
+<li class="fragment"><code>st_complete_nb(n, diag = FALSE)</code></li>
 </ul></li>
 </ul>
+</section>
+<section id="the-denominator-1" class="slide level2">
+<h2>The denominator</h2>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>complete_nb <span class="ot">&lt;-</span> <span class="fu">st_complete_nb</span>(<span class="at">n =</span> <span class="fu">nrow</span>(grd), <span class="at">diag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>complete_nb[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+[25] 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>denom <span class="ot">&lt;-</span> <span class="fu">st_lag</span>(</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  grd_nb<span class="sc">$</span>x, </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  complete_nb, </span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">st_weights</span>(complete_nb, <span class="at">style =</span> <span class="st">"B"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a>denom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 92.63630 93.63145 95.40112 96.47070 95.87481 96.33858 97.92817 94.37887
+ [9] 94.33532 96.40508 95.16384 96.29836 98.33663 97.91501 95.98179 96.41519
+[17] 96.48203 96.05971 96.01014 98.07216 97.06022 96.37010 96.43836 96.18403
+[25] 98.30599 98.08788 96.49048 95.93543 96.36399 95.82990 96.31504 97.17146
+[33] 96.65137 95.37411 95.97823 97.14021 97.39183 97.05320 95.40683 94.90385
+[41] 96.22288 95.82727 96.27249 96.75152 97.76805 95.96140 97.15449 96.76554
+[49] 96.84677</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="the-denominator-2" class="slide level2">
+<h2>The denominator</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>grd_nb <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-3"><a href="#cb9-3"></a>    <span class="at">complete_nb =</span> <span class="fu">st_complete_nb</span>(<span class="fu">n</span>()),</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    <span class="at">wt_b =</span> <span class="fu">st_weights</span>(complete_nb, <span class="at">style =</span> <span class="st">"B"</span>),</span>
+<span id="cb9-5"><a href="#cb9-5"></a>    <span class="at">sum_xj =</span> <span class="fu">st_lag</span>(x, complete_nb, wt_b)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb9-7"><a href="#cb9-7"></a>  <span class="fu">select</span>(x, x_lag, sum_xj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 49 features and 3 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 0 ymin: 0 xmax: 7 ymax: 7
+CRS:           NA
+# A tibble: 49 × 4
+       x x_lag sum_xj                    geometry
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;                   &lt;POLYGON&gt;
+ 1 5.70  4.22    92.6 ((0 0, 1 0, 1 1, 0 1, 0 0))
+ 2 4.71  3.71    93.6 ((1 0, 2 0, 2 1, 1 1, 1 0))
+ 3 2.94  3.14    95.4 ((2 0, 3 0, 3 1, 2 1, 2 0))
+ 4 1.87  2.51    96.5 ((3 0, 4 0, 4 1, 3 1, 3 0))
+ 5 2.46  1.82    95.9 ((4 0, 5 0, 5 1, 4 1, 4 0))
+ 6 2.00  1.07    96.3 ((5 0, 6 0, 6 1, 5 1, 5 0))
+ 7 0.408 0.807   97.9 ((6 0, 7 0, 7 1, 6 1, 6 0))
+ 8 3.96  3.74    94.4 ((0 1, 1 1, 1 2, 0 2, 0 1))
+ 9 4.00  3.17    94.3 ((1 1, 2 1, 2 2, 1 2, 1 1))
+10 1.93  2.84    96.4 ((2 1, 3 1, 3 2, 2 2, 2 1))
+# … with 39 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="g_i-1" class="slide level2">
+<h2><span class="math inline">\(G_i\)</span></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>grd_nb <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="at">complete_nb =</span> <span class="fu">st_complete_nb</span>(<span class="fu">n</span>()),</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="at">wt_b =</span> <span class="fu">st_weights</span>(complete_nb, <span class="at">style =</span> <span class="st">"B"</span>),</span>
+<span id="cb11-5"><a href="#cb11-5"></a>    <span class="at">sum_xj =</span> <span class="fu">st_lag</span>(x, complete_nb, wt_b),</span>
+<span id="cb11-6"><a href="#cb11-6"></a>    <span class="at">gi =</span> <span class="fu">scale</span>(x_lag <span class="sc">/</span> sum_xj)</span>
+<span id="cb11-7"><a href="#cb11-7"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb11-8"><a href="#cb11-8"></a>  <span class="fu">select</span>(x, x_lag, sum_xj, gi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 49 features and 4 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 0 ymin: 0 xmax: 7 ymax: 7
+CRS:           NA
+# A tibble: 49 × 5
+       x x_lag sum_xj gi[,1]                    geometry
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;                   &lt;POLYGON&gt;
+ 1 5.70  4.22    92.6  3.22  ((0 0, 1 0, 1 1, 0 1, 0 0))
+ 2 4.71  3.71    93.6  2.44  ((1 0, 2 0, 2 1, 1 1, 1 0))
+ 3 2.94  3.14    95.4  1.57  ((2 0, 3 0, 3 1, 2 1, 2 0))
+ 4 1.87  2.51    96.5  0.681 ((3 0, 4 0, 4 1, 3 1, 3 0))
+ 5 2.46  1.82    95.9 -0.235 ((4 0, 5 0, 5 1, 4 1, 4 0))
+ 6 2.00  1.07    96.3 -1.25  ((5 0, 6 0, 6 1, 5 1, 5 0))
+ 7 0.408 0.807   97.9 -1.62  ((6 0, 7 0, 7 1, 6 1, 6 0))
+ 8 3.96  3.74    94.4  2.44  ((0 1, 1 1, 1 2, 0 2, 0 1))
+ 9 4.00  3.17    94.3  1.67  ((1 1, 2 1, 2 2, 1 2, 1 1))
+10 1.93  2.84    96.4  1.13  ((2 1, 3 1, 3 2, 2 2, 2 1))
+# … with 39 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
 </section>
 <section id="g_i-vs-g_i" class="slide level2">
 <h2><span class="math inline">\(G_i\)</span> vs <span class="math inline">\(G_i^*\)</span></h2>
@@ -395,8 +676,71 @@
 <li class="fragment">I don’t like this because they’re the same except the <code>nb</code> list</li>
 </ul>
 </section>
-<section id="example" class="slide level2">
-<h2>Example:</h2>
+<section id="g_i-2" class="slide level2">
+<h2><span class="math inline">\(G_i^*\)</span></h2>
+<ul>
+<li class="fragment"><em>includes</em> the observed value (focal observation)</li>
+<li class="fragment">use <code>include_self(nb)</code></li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="hot-spot-analysis_files/figure-revealjs/unnamed-chunk-26-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="g_i-3" class="slide level2">
+<h2><span class="math inline">\(G_i^*\)</span></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>grd <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb13-3"><a href="#cb13-3"></a>    <span class="at">nb =</span> <span class="fu">include_self</span>(<span class="fu">st_contiguity</span>(geometry)), <span class="co"># include the self </span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>    <span class="at">wt =</span> <span class="fu">st_weights</span>(nb), </span>
+<span id="cb13-5"><a href="#cb13-5"></a>    <span class="at">x_lag =</span> <span class="fu">st_lag</span>(x, nb, wt), </span>
+<span id="cb13-6"><a href="#cb13-6"></a>    <span class="co"># now we can sum all of x </span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>    <span class="at">denom =</span> <span class="fu">sum</span>(x),</span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="at">gi =</span> <span class="fu">scale</span>(x_lag <span class="sc">/</span> denom)</span>
+<span id="cb13-9"><a href="#cb13-9"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 49 features and 5 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 0 ymin: 0 xmax: 7 ymax: 7
+CRS:           NA
+# A tibble: 49 × 6
+   nb        wt        x_lag denom  gi[,1]                    geometry
+ * &lt;nb&gt;      &lt;list&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;                   &lt;POLYGON&gt;
+ 1 &lt;int [4]&gt; &lt;dbl [4]&gt; 4.59   98.3  3.46   ((0 0, 1 0, 1 1, 0 1, 0 0))
+ 2 &lt;int [6]&gt; &lt;dbl [6]&gt; 3.87   98.3  2.50   ((1 0, 2 0, 2 1, 1 1, 1 0))
+ 3 &lt;int [6]&gt; &lt;dbl [6]&gt; 3.10   98.3  1.47   ((2 0, 3 0, 3 1, 2 1, 2 0))
+ 4 &lt;int [6]&gt; &lt;dbl [6]&gt; 2.40   98.3  0.539  ((3 0, 4 0, 4 1, 3 1, 3 0))
+ 5 &lt;int [6]&gt; &lt;dbl [6]&gt; 1.92   98.3 -0.0988 ((4 0, 5 0, 5 1, 4 1, 4 0))
+ 6 &lt;int [6]&gt; &lt;dbl [6]&gt; 1.22   98.3 -1.03   ((5 0, 6 0, 6 1, 5 1, 5 0))
+ 7 &lt;int [4]&gt; &lt;dbl [4]&gt; 0.707  98.3 -1.72   ((6 0, 7 0, 7 1, 6 1, 6 0))
+ 8 &lt;int [6]&gt; &lt;dbl [6]&gt; 3.77   98.3  2.37   ((0 1, 1 1, 1 2, 0 2, 0 1))
+ 9 &lt;int [9]&gt; &lt;dbl [9]&gt; 3.26   98.3  1.69   ((1 1, 2 1, 2 2, 1 2, 1 1))
+10 &lt;int [9]&gt; &lt;dbl [9]&gt; 2.74   98.3  0.992  ((2 1, 3 1, 3 2, 2 2, 2 1))
+# … with 39 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="g_i-g_i-interpretation" class="slide level2">
+<h2><span class="math inline">\(G_i\)</span> / <span class="math inline">\(G_i^*\)</span> interpretation</h2>
+<ul>
+<li class="fragment">High <span class="math inline">\(G_i\)</span> &gt; 0: location with high value neighborhood</li>
+<li class="fragment">Low <span class="math inline">\(G_i\)</span> &lt; 0: location with low value neighborhood</li>
+</ul>
+</section>
+<section id="hypothesis-testing" class="slide level2">
+<h2>Hypothesis testing</h2>
+<ul>
+<li class="fragment"><span class="math inline">\(H_0\)</span> - observed value is not spatially dependent</li>
+<li class="fragment"><span class="math inline">\(H_1\)</span> - observed value is spatially dependent</li>
+<li class="fragment"><span class="math inline">\(H_0\)</span> - we would expect to find this value under <strong>complete spatial randomness</strong> (CSR)</li>
+<li class="fragment"><span class="math inline">\(H_1\)</span> - we would <strong>not</strong> expect to find this value under CSR</li>
+</ul>
 </section>
 <section id="resources" class="slide level2">
 <h2>resources:</h2>
@@ -618,6 +962,44 @@
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

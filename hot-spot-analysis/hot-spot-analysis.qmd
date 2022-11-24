@@ -9,6 +9,11 @@ format:
     incremental: true   
 ---
 
+```{r, eval = TRUE}
+options(width = 78)
+```
+
+
 # Objective: 
 
 identify clusters of high or low values in space
@@ -19,17 +24,29 @@ identify clusters of high or low values in space
 - decompose global statistics to the local level
 - The Local Moran's I is the most famous
 
+# Local Indicators of Spatial Association—LISA
+Luc Anselin, 1995
+
+
 
 ## Which LISA for hot spots?
 
 - Getis-Ord Gi and Gi*
 - Local versions of the Getis-Ord Global G
-  - _note: the $i$ subscript is a good hint that a measure is local_ 
+
+:::{.aside}
+_note: the $i$ subscript is a good hint that a measure is local_ 
+:::
 
 ## Getis-Ord G
 
 - G informs of the presence of high-high or low-low clustering
-- $$G = \frac{\sum_{i = 1}^{n} \sum_{j = 1}^{n} w_{ij}x_ix_j}{\sum_{i = 1}^{n}\sum_{j = 1}^{n} x_i x_j}$$
+
+. . .
+
+$$
+G = \frac{\sum_{i = 1}^{n} \sum_{j = 1}^{n} w_{ij}x_ix_j}{\sum_{i = 1}^{n}\sum_{j = 1}^{n} x_i x_j}
+$$
 
 ## Local Getis-Ord G ($G_i$)
 
@@ -39,15 +56,179 @@ identify clusters of high or low values in space
 - Decompose the G into a LISA 
 - $Gi = \frac{\sum_j w_{ij} x_j}{\sum_j x_j}$
 
-- "ratio of the weighted average of the values in the neighboring locations" ([GeodaCenter](https://geodacenter.github.io/workbook/6b_local_adv/lab6b.html#getis-ord-statistics))
-- $G_i$ is often returned as a standardized Z-score
+
 
 ## $G_i$
 
 - The numerator is the spatial lag:  $\sum_j w_{ij} x_j$
-- Denominator is the sum of neighbor x values:  $\sum_j x_j$
-- Gi is the ratio of the 2  
-  - $G_i = \frac{\sum_j w_{ij} x_j}{\sum_j x_j}$
+- Denominator is the sum of all x values except $x_i$:  $\sum_j x_j$
+- $G_i = \frac{\sum_j w_{ij} x_j}{\sum_j x_j}$
+  
+. . . 
+
+> "ratio of the weighted average of the values in the neighboring locations to the sum of all values, not including the value at the location" ([GeodaCenter](https://geodacenter.github.io/workbook/6b_local_adv/lab6b.html#getis-ord-statistics))
+
+. . . 
+
+:::{.aside}
+note: $G_i$ is often returned as a Z-score
+:::
+
+## Example
+
+```{r, echo = FALSE, eval=TRUE}
+library(sf)
+library(sfdep)
+library(tidyverse)
+
+grid <- st_make_grid(cellsize = c(1, 1), n = 7, offset = c(0, 0)) |> 
+  as_tibble() |> 
+  st_as_sf() |> 
+  mutate(
+    id = row_number(),
+    nb = st_contiguity(geometry),
+    wt = st_weights(nb)
+  )
+
+nb <- grid[["nb"]]
+wt <- grid[["wt"]]
+
+set.seed(1)
+y_sim <-  geostan::sim_sar(w = wt_as_matrix(nb, wt), rho = 0.78)
+
+grd <- grid |> 
+  mutate(x = y_sim - min(y_sim))
+
+grd |> 
+  ggplot(aes(fill = x)) +
+  geom_sf(color = "black", lwd = 0.15) +
+  scale_fill_viridis_c(option = "magma") + 
+  theme_void()
+```
+
+## Example 
+ 
+```{r, eval = TRUE, echo = FALSE}
+grd |> 
+  ggplot(aes(fill = x, label = round(x, 2))) +
+  geom_sf(color = "black", lwd = 0.15) +
+  geom_sf_text(color = "white") + 
+  scale_fill_viridis_c(option = "magma") + 
+  theme_void()
+```
+
+## Example data
+
+
+```{r, eval = TRUE, echo = FALSE}
+grd |> 
+  select(x)
+```
+## The numerator
+
+```{r, echo  = TRUE, eval = FALSE}
+grd_nb <- grd |> 
+  mutate(
+    nb = st_contiguity(geometry),
+    wt = st_weights(nb),
+    x_lag = st_lag(x, nb, wt)
+  )
+```
+
+
+## The numerator
+
+```{r, echo = FALSE, eval = TRUE}
+grd_nb <- grd |> 
+  mutate(
+    nb = st_contiguity(geometry),
+    wt = st_weights(nb),
+    x_lag = st_lag(x, nb, wt)
+  )
+
+grd_nb
+```
+
+## The numerator 
+
+```{r, echo = FALSE, eval = TRUE}
+ggplot(grd_nb, aes(fill = x_lag, label = round(x_lag, 2))) +
+  geom_sf(color = "black", lwd = 0.15) +
+  geom_sf_text(color = "white") + 
+  scale_fill_viridis_c(limits = range(grd$x), option = "magma") +
+  theme_void()
+```
+
+## The denominator 
+
+- the of sum of all x values
+- OR, spatial lag of a complete graph w/ binary weights
+  - `st_weights(nb, style = "B")`
+- Complete graph: all locations are connected
+  - `st_complete_nb(n, diag = FALSE)`
+
+
+## The denominator
+
+. . .
+
+```{r, eval = TRUE}
+complete_nb <- st_complete_nb(n = nrow(grd), diag = FALSE)
+complete_nb[[1]]
+```
+
+. . .
+
+```{r, eval = TRUE}
+denom <- st_lag(
+  grd_nb$x, 
+  complete_nb, 
+  st_weights(complete_nb, style = "B")
+)
+
+denom
+```
+
+
+
+## The denominator 
+
+```{r, eval = FALSE, echo = TRUE}
+grd_nb |> 
+  mutate(
+    complete_nb = st_complete_nb(n()),
+    wt_b = st_weights(complete_nb, style = "B"),
+    sum_xj = st_lag(x, complete_nb, wt_b)
+  ) |> 
+  select(x, x_lag, sum_xj)
+```
+
+. . . 
+
+```{r, eval = TRUE, echo = FALSE}
+grd_nb <- grd_nb |> 
+  mutate(
+    complete_nb = st_complete_nb(n()),
+    wt_b = st_weights(complete_nb, style = "B"),
+    sum_xj = st_lag(x, complete_nb, wt_b)
+  )  |> 
+  select(x, x_lag, sum_xj)
+
+grd_nb
+```
+
+## $G_i$
+
+```{r, eval = TRUE}
+grd_nb |> 
+  mutate(
+    complete_nb = st_complete_nb(n()),
+    wt_b = st_weights(complete_nb, style = "B"),
+    sum_xj = st_lag(x, complete_nb, wt_b),
+    gi = scale(x_lag / sum_xj)
+  ) |> 
+  select(x, x_lag, sum_xj, gi)
+```
 
 
 ## $G_i$ vs $G_i^*$
@@ -58,10 +239,54 @@ identify clusters of high or low values in space
 - often rewritten as $G_i = \frac{\sum_{j\ne i} w_{ij} x_j}{\sum_{j \ne i} x_j}$
 - I don't like this because they're the same except the `nb` list
 
-## $G_i$ interpretation
+## $G_i^*$
 
-- High $G_i$: location with high value neighbors
-- Low $G_i$: location with low value neighbors
+- _includes_ the observed value (focal observation)
+- use `include_self(nb)`
+
+. . . 
+
+
+```{r, eval = TRUE, echo = FALSE}
+gridExtra::grid.arrange(
+  lattice::levelplot(
+  nb_as_matrix(grd$nb),
+  xlab = "",
+  ylab = "",
+  main = "self not included",
+  scales = list(x = list(at = NULL), y = list(at = NULL))
+  ),
+  lattice::levelplot(
+  nb_as_matrix(include_self(grd$nb)),
+  xlab = "",
+  ylab = "",
+  main = "self included",
+  scales = list(x = list(at = NULL), y = list(at = NULL))
+  ),
+  ncol = 2
+)
+```
+
+## $G_i^*$ 
+
+```{r, eval = TRUE}
+grd |> 
+  transmute(
+    nb = include_self(st_contiguity(geometry)), # include the self 
+    wt = st_weights(nb), 
+    x_lag = st_lag(x, nb, wt), 
+    # now we can sum all of x 
+    denom = sum(x),
+    gi = scale(x_lag / denom)
+  )
+```
+
+
+## $G_i$  / $G_i^*$ interpretation
+
+- High $G_i$ > 0: location with high value neighborhood
+- Low $G_i$ < 0: location with low value neighborhood
+
 
 ## Hypothesis testing
 

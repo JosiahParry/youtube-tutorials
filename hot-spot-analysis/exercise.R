@@ -74,7 +74,7 @@ crime_hot_spots |>
 # somewhat = p <= 0.1
 
 
-crime_hot_spots |> 
+gg <- crime_hot_spots |> 
   select(gi, p_folded_sim) |> 
   mutate(
     classification = case_when(
@@ -104,6 +104,7 @@ crime_hot_spots |>
     title = "Robbery Hot Spots in Metro Atlanta"
   )
 
+ggsave("hot-spot-analysis/output/hotspots.svg")
 
 
 
