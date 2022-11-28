@@ -352,7 +352,7 @@ vectorized functions take a vector and operate on the whole thing at once.
 set.seed(0)
 ```
 
-
+. . . 
 ```{r, echo = TRUE}
 x <- runif(10)
 
@@ -614,7 +614,7 @@ ALWAYS!!! preallocate your vectors and objects
 
 
 ```{r, echo = TRUE}
-results <- numeric(lenght(x))
+results <- numeric(length(x))
 
 for (i in 1:length(x)) {
   
@@ -857,7 +857,7 @@ or, how I used too many apply functions
 
 :::{.notes}
 next, i want to talk through an example where writing a for loop
-helped me speed up my code dramatically
+helped me speed up my code dramatically‚
 This likely isn't true for everyone, but working in a for loop can help me think
 in a different way. 
 :::
@@ -875,12 +875,28 @@ $$
 p_{sim} = \frac{M + 1}{R + 1}
 $$
 
+
+:::{.notes}
+the problem was with how i was calculating simulated p-values
+simulated p-values are calculated by calculating an observed statistic
+then calculating the same measure but using random samples of your data
+after which you count how many times your statistic was more extreme
+than the replications
+then the ratio is the simulated p-value
+:::
+
 ## my previous approach
 
 - calculate a statistic once 
 - abstract the calculation for all inputs using `*apply()`
-- repeat `nsim` times
+- repeat `nsim` times `replicate()`
 
+
+:::{.notes}
+the way i would do this was to first create a function that calculated the statistic
+then i'd abstract that to handle a vector of inputs using apply
+and then id repeat it a number of times with `replicate()`
+:::
 
 ## set contstants {auto-animate=true}
 
@@ -927,6 +943,12 @@ obs <- rnorm(n, sd = 0.5)
 obs
 ```
 
+:::{.notes}
+for the sake of example, 
+our "observed" statistic can  be values from a random normal
+distribution
+:::
+
 
 ## calculate statistic once
 
@@ -944,6 +966,11 @@ stat_calc <- function(k) mean(rnorm(k))
 stat_calc(10)
 ```
 
+:::{.notes}
+and our statistic that we're comparing to is the 
+average of our K (10) random neighbors also from a normal distribution
+this super simple function takes a number k and return the average 
+:::
 
 ## generalize for a vector
 
@@ -955,6 +982,13 @@ simulate_stat <- function(n, k) {
 
 simulate_stat(100, 5)
 ```
+
+
+:::{.notes}
+next i would generalize this with an apply statement
+here we just run stat_calc() n number of times and 
+return a vector
+:::
 
 ## repeat it
 
@@ -969,6 +1003,12 @@ dim(reps)
 head(reps)
 ```
 
+:::{.notes}
+to calculate the simulated p-value 
+this process has to be repeat `nsim` number of times
+this gives us a matrix with n rows and nsim columns 
+and each column is a simulation value
+:::
 
 ## calculate p-value
 
@@ -988,11 +1028,24 @@ divide by number of simulations
 (numerator + 1) / (nsim + 1)
 ```
 
-
+:::{.notes}
+to calculate the p-value would compare the observed value to 
+the simulate values. count up the number of times observed statistic
+was greater than the simulated, then plug and check for the 
+simulated p-value
+this works just fine
+:::
 
 ## 
 
 ![](images/spdep-issue-98.png)
+
+:::{.notes}
+but Roger Bivand pointed out how inneficint these calculations are
+for a small p-value you need a hell of a lot of simulations 
+and what i wrote scaled linearly so if you need 999 simulations instead of 99 that would take 10 times longer. 
+woof! 
+:::
 
 # hm?
 
@@ -1000,6 +1053,11 @@ divide by number of simulations
 
 "This is not vectorization, it is loop-hiding." 
 
+:::{.notes}
+what i thought the apply family is better! 
+nope. another pithy statement from patrick burns
+it's not vectorization it is loop hiding
+:::
 
 ## 
 
@@ -1008,12 +1066,22 @@ knitr::include_graphics("https://i.imgur.com/fDLfM20.gif")
 ```
 
 
+
 # Oops! 
 we're in the 4th circle of hell now
 
+:::{.notes}
+we've traversed all the way to Burns' 4th circle of hell!
+Over-vectorizing
+well how can this be?
+:::
+
 ## the outer loop
 
+. . .
+
 ```{r, eval= FALSE, echo= TRUE}
+#| code-line-numbers: "|1|4|"
 res <- matrix(nrow = n, ncol = nsim)
 
 for (j in 1:nsim) {
@@ -1025,6 +1093,24 @@ for (j in 1:nsim) {
 
 `simulate_stat()` is another for loop
 
+:::{.notes}
+as mentioned earlier, the apply family and purrr is only just loop hiding
+we can think about all the steps i took as a series of for loops
+
+the first can be rewritten like this
+first we preallocate a vector like a good programmer
+then we iterate through our simulations with simulate_stat()
+
+but wait...
+
+simulate_stat uses sapply! well damn. that's another for loop
+
+you got that right. I'm saying I wrote a NESTED for loop
+
+cringe, right?
+:::
+
+
 ## the inner loop
 
 ```{r, echo = TRUE}
@@ -1035,6 +1121,14 @@ for (i in 1:n) {
 }
 ```
 
+
+:::{.notes}
+the inner loop can
+be wewritten like this
+pre allocate the results again
+then populate them with a for loop
+simple enough
+:::
 
 ## both loops
 
@@ -1058,10 +1152,24 @@ for (j in 1:nsim) {
 }
 ```
 
+:::{.notes}
+put together that replicate statement can be rewritten using this 
+nested for loop.
+:::
 
 ## speeding it up
 
 ![](images/spdep-issue-98-2.png)
+
+:::{.notes}
+
+roger kindly pointed out a way to rethink this. Instead of trying to work in a 
+vectorized mindset where I do something to every single element all at once. 
+do the simulations for a single location all at once
+
+he referred to some code of mine he had refactored months ago. 
+after giving it another look, it finally made sense.
+:::
 
 
 ## each element {auto-animate=true}
@@ -1071,6 +1179,12 @@ simulations <- matrix(rnorm(k * nsim), nrow = nsim)
 
 head(simulations)
 ```
+
+:::{.notes}
+for each location we can create a matrix of random draws
+where each row is a simulation 
+and the columns are the number of neighbors
+:::
 
 
 ## each element {auto-animate=true}
@@ -1083,6 +1197,10 @@ stat_sim_i <- rowMeans(simulations)
 head(stat_sim_i)
 ```
 
+:::{.notes}
+and the average of each row
+is the simulation statistic
+:::
 
 ## each element {auto-animate=true}
 
@@ -1095,9 +1213,17 @@ stat_sim_i <- rowMeans(simulations)
 (sum(stat_sim_i <= obs[6]) + 1) / (nsim + 1)
 ```
 
+:::{.notes}
+and taking the row means returns a hand vector
+that can be compared to the observed statistic 
+and the p-value can be measured easily
+:::
 
 # {background-image="images/gimme-the-loop.jpeg"}
 
+:::{.notes}
+next, i generalized this approach to every row using a for loop
+:::
 
 ## the loop
 
@@ -1113,6 +1239,12 @@ for (i in 1:n) {
 
 ```
 
+:::{.notes}
+before every for loop is a preallocated object
+for each location we generate those random samples
+take the mean of each simulation
+then calculate the p-value and fill accordingly
+:::
 
 ## how does it compare? 
 
@@ -1136,6 +1268,8 @@ bench::mark(
 ```
 
 
+
+
 # that's not fair! 
 
 # 
@@ -1151,6 +1285,11 @@ bench::mark(
 
 _not_ the loop. 
 
+:::{.notes}
+
+and this is the point. i wrote the bad code
+it wasn't the apply statements or the for loops that were bad
+:::
 
 ## the point
 
@@ -1159,7 +1298,60 @@ _not_ the loop.
 - you are your worst enemy
 
 
+:::{.notes}
+what we should take away is that there is nothing innately good or bad about 
+using apply or purrr.
+we can't magically make code vectorized.
+and we are not always going to write the best code or the most efficient code
+and thats totally fine. 
+:::
 
-## 
+# rewriting
+
+```{r, echo = TRUE}
+sim_stat <- function(obs, k, nsim) {
+  simulations <- matrix(rnorm(k * nsim), nrow = nsim)
+  stat_sim_i <- rowMeans(simulations)
+  (sum(stat_sim_i <= obs) + 1) / (nsim + 1)
+}
+
+```
 
 
+## a last benchmark
+
+```{r, echo = TRUE}
+nsim = 3999
+bm <- bench::mark(
+  purrr = purrr::map_dbl(obs, sim_stat, k, nsim),
+  lapply = unlist(lapply(obs, sim_stat, k, nsim)),
+  for_loop = {
+    p_vals <- numeric(n)
+    
+    for (i in 1:n) {
+      simulations <- matrix(rnorm(k * nsim), nrow = nsim)
+      stat_sim_i <- rowMeans(simulations)
+      p_vals[i] <- (sum(stat_sim_i <= obs[i]) + 1) / (nsim + 1)
+    }
+  },
+  check = FALSE
+)
+```
+
+
+# getting away with a for loop
+
+- preallocate your vectors
+- use vectorized functions
+
+
+## the take-aways
+
+- for loops aren't worse than apply or purrr
+- you just might be worse at writing code with a for loop
+- writing a for loop doesn't make you a bad programmer
+- for loops can help you think differently 
+- if you care about speed and memory safety, just use rust
+
+# thank you
+try writing a for loop

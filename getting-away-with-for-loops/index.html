@@ -801,7 +801,19 @@
 <section>
 <section id="vectors" class="title-slide slide level1 center">
 <h1>vectors!</h1>
-
+<aside class="notes">
+<p>lets start with vectors</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-powerhouse-of-r" class="slide level2" data-background-image="https://www.nutraingredients-usa.com/var/wrbm_gb_food_pharma/storage/images/_aliases/wrbm_large/publications/food-beverage-nutrition/nutraingredients-usa.com/article/2021/08/17/new-research-will-place-d-ribose-atop-mitochondrial-health-pyramid-expert-says2/12742887-1-eng-GB/New-research-will-place-D-ribose-atop-mitochondrial-health-pyramid-expert-says.jpg">
 <h2>the powerhouse of R</h2>
@@ -830,6 +842,19 @@
 <section id="vectors-2" class="slide level2" data-background-image="https://d33wubrfki0l68.cloudfront.net/eb6730b841e32292d9ff36b33a590e24b6221f43/57192/diagrams/vectors/summary-tree-atomic.png" data-background-size="25%">
 <h2>vectors</h2>
 
+<aside class="notes">
+<p>the basic unit in R is the vector there are two types. atomic and lists atomic vectors are what we think of when we say vector there are 4 main types of them logical, integer, double, and character (or string)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <aside><div>
 <p>Chapter 3, Vectors (Advanced R, Hadley Wickham)</p>
 <p>https://adv-r.hadley.nz/vectors-chap.html</p>
@@ -845,12 +870,38 @@
 <li class="fragment">3 elements</li>
 </ul></li>
 </ul>
+<aside class="notes">
+<p>Atomic vectors store only one type of data at a time and are created with <code>c()</code>. Every vector is composed of n elements. this is a logical vector with 3 elements.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="vectorization" class="title-slide slide level1 center">
 <h1>vectorization</h1>
 <div class="fragment">
 <p>apply a function to all elements of a vector</p>
+<aside class="notes">
+<p>vectorized functions take a vector and operate on the whole thing at once.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="circle-3" class="slide level2">
@@ -861,6 +912,7 @@
 <div class="cell">
 
 </div>
+<div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a></span>
@@ -875,11 +927,39 @@
 <pre><code>[1] -5.71996</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>Let’s take the example straight out of the book!</p>
+<p>The objective? Take the natural logarithm of each element and then add them all up.</p>
+<p>Calculates the log of <span class="math inline">\(x_i\)</span> and adds it the the <code>lsum</code> object which grows until the list ends.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
 </section></section>
 <section>
 <section id="no.-no.-no." class="title-slide slide level1 center">
 <h1>“No.&nbsp;No.&nbsp;No.”</h1>
-
+<aside class="notes">
+<p>as patrick burns said no no no we should be letting R do the leg work, not us. this can be rewritten as a one liner and a far more efficient one liner at that</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="vectorized-solution" class="slide level2">
 <h2>vectorized solution</h2>
@@ -910,16 +990,43 @@
 <pre><code>[1] -5.71996</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>log and sum are both vectorized functions but they are vectorized in different ways <code>log()</code> is vectorized in the way that it does something to each element. <code>sum()</code> is vectorized in the way that it takes an entire vector and does operation on the entire thing.</p>
+<p>log applies the natural log to every element at once and sum sums it all up!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="vectorized-solutions" class="slide level2">
 <h2>vectorized solutions</h2>
 <ul>
+<li class="fragment">you should use them</li>
 <li class="fragment">cleaner</li>
 <li class="fragment">faster</li>
 <li class="fragment">more effective</li>
-<li class="fragment">you should use them</li>
 </ul>
+<aside class="notes">
+<p>you should always look for vectorized solutions they are clearer always faster and since they’re faster, they’re more effective</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="another-example" class="slide level2">
 <h2>another example</h2>
@@ -945,6 +1052,19 @@
 [11,]  5  5  5  8  5.68 4.74  5.73  6.89</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>let’s take another example using anscombes quartet and calculating the average of each row</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="another-example-1" class="slide level2">
@@ -952,8 +1072,9 @@
 <p>using a loop</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(anscombe)) {</span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">print</span>(<span class="fu">mean</span>(anscombe[i,]))</span>
-<span id="cb18-3"><a href="#cb18-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2"></a>  row <span class="ot">&lt;-</span> anscombe[i,]</span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">print</span>(<span class="fu">mean</span>(row))</span>
+<span id="cb18-4"><a href="#cb18-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8.6525
 [1] 7.4525
@@ -968,6 +1089,19 @@
 [1] 5.755</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>this can be accomplished fairly simply using a for loop in which we subset the matrix by its row number then calculate the mean for that row</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="vectorized" class="slide level2">
 <h2>vectorized</h2>
@@ -979,12 +1113,25 @@
  [9]  9.71000  6.92625  5.75500</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>but since there is an already vectorized function <code>rowMeans()</code> we should use that instead.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section id="circle-2-the-gluttons" class="title-slide slide level1 center">
 <h1>Circle 2: the gluttons</h1>
 <p>growing objects</p>
 <aside class="notes">
-<p>I’m saving the best for last. The second circle of hell is where I think most people go wrong.</p>
+<p>I’m saving the best for last. The second circle of hell is where I think most people go really wrong. Burns’ second circle of hell is devoted to growing objects</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1010,6 +1157,19 @@
 <span id="cb22-6"><a href="#cb22-6"></a>  </span>
 <span id="cb22-7"><a href="#cb22-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<aside class="notes">
+<p>does your for loop look like this? where you create an empty vector and make it bigger with each iteration?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 
@@ -1017,13 +1177,38 @@
 <h1>code smells</h1>
 <div class="fragment">
 <p>💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩</p>
+<aside class="notes">
+<p>this smells like bad code. and loops like this are why, in my opinion, for loops have so much shade thrown at them</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 
 <section>
 <section id="growing-objects-is-slow" class="title-slide slide level1 center">
 <h1>growing objects is slow!</h1>
-
+<aside class="notes">
+<p>growing objects is slow! and hogs the memory!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="growing-objects" class="slide level2">
 <h2>growing objects</h2>
@@ -1036,6 +1221,19 @@
 <li class="fragment">and check types each time</li>
 </ul></li>
 </ul>
+<aside class="notes">
+<p>when you create an object in R R only stores the amount of memory necessary for it at that time and when you want to amke it bigger, R needs to move the data, figure out how much space to make, and check the types of data that are being squished every. single. time. and while this is bad….</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="rbind" class="title-slide slide level1 center">
@@ -1064,18 +1262,55 @@
 <span id="cb23-14"><a href="#cb23-14"></a><span class="fu">colnames</span>(table_page_all) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"KEYWORD A"</span>, <span class="st">"KEYWORD B"</span>, <span class="st">"KEYWORD C"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
+<aside class="notes">
+<p>this is a really great example of what <em>not</em> to do when writing a for loop It’s an accepted answer for a stack overflow question from 2019. the challenges arise from line 2 and the rbind statement when we want to fill an object using a for loop we should <em>always</em> make sure there is room for it</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <aside><div>
 <p>https://stackoverflow.com/questions/54328512/how-to-rbind-dataframes-in-a-for-loop</p>
 </div></aside></section></section>
 <section id="tips-for-the-2nd-circle" class="title-slide slide level1 center">
 <h1>2 tips for the 2nd circle</h1>
-
+<aside class="notes">
+<p>i want to give you 2 tips for avoiding the second circle of hell</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section>
 <section id="preallocate-your-vectors" class="title-slide slide level1 center">
 <h1>1. preallocate your vectors!</h1>
-
+<aside class="notes">
+<p>as you may have gathered. ALWAYS!!! preallocate your vectors and objects</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="preallocating-vectors" class="slide level2">
 <h2>preallocating vectors</h2>
@@ -1085,7 +1320,7 @@
 </ul>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>results <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>results <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(x))</span>
 <span id="cb24-2"><a href="#cb24-2"></a></span>
 <span id="cb24-3"><a href="#cb24-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
 <span id="cb24-4"><a href="#cb24-4"></a>  </span>
@@ -1093,6 +1328,19 @@
 <span id="cb24-6"><a href="#cb24-6"></a>  </span>
 <span id="cb24-7"><a href="#cb24-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<aside class="notes">
+<p>make sure that R knows how big an object is going to be we don’t want it figuring it out more than once</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="benchmarking-pre-allocation" class="slide level2">
@@ -1115,10 +1363,23 @@
 <pre><code># A tibble: 2 × 6
   expression         min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 not_allocated   2.01ms   2.27ms      437.    3.88MB     34.0
-2 allocated     747.47µs 792.18µs     1241.   25.37KB     44.8</code></pre>
+1 not_allocated   1.99ms   2.29ms      436.    3.88MB     34.5
+2 allocated     738.53µs 760.82µs     1286.   25.37KB     46.9</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>lets compare the differences in runtime memory and speed when we preallocate our vectors preallocation is sooooo much faster and soooo much more memory efficient</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <aside><div>
 <p>these are <em>still</em> bad because they don’t take advantage of the vectorization of <code>log()</code></p>
 </div></aside></section></section>
@@ -1126,6 +1387,19 @@
 <section id="preallocating-lists" class="title-slide slide level1 center">
 <h1>2. preallocating lists</h1>
 <p>for object of varying sizes and shapes</p>
+<aside class="notes">
+<p>let’s step back to that stack over flow example a super common use case build up a data frame over time</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="a-new-example" class="slide level2">
 <h2>a new example</h2>
@@ -1150,12 +1424,27 @@
 <pre><code>[1] 451   5</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>since the stack over flow example isn’t reproducible let’s make a new one. we’ll take a random number of rows from the iris dataset and then append it to an empty data frame 10 times</p>
+<p>first we create an empty data frame get a random number of rows to sample then we sample random integers, with replacement, as an index to subset the iris dataset then we squish it onto the <code>my_df</code> object</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="example-but-better" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">example but better</h2>
 <div class="cell">
 
 </div>
+<div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29" data-code-line-numbers="|1|9|13|"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb29-1" class="hljs-ln-code"><a href="#cb29-1"></a>results <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"list"</span>, <span class="at">length =</span> <span class="dv">10</span>)</span>
 <span id="cb29-2" class="hljs-ln-code"><a href="#cb29-2"></a></span>
@@ -1175,6 +1464,23 @@
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 451   5</code></pre>
 </div>
+</div>
+<aside class="notes">
+<p>you might be thinking “if i don’t know how many rows im going to have, how can i preallocate a dataframe of a determined size?”</p>
+<p>im going to say “don’t do that” and tell you to use a list lists are so flexible and so useful.</p>
+<p>each element of a list can hold whatever the hell we want lets take advantage of that</p>
+<p>on each iteration let’s store the subset into a list then at the end we can squish them all together using an arcane incantation of <code>do.call()</code> and <code>rbind()</code></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="example-but-better-1" class="slide level2" data-auto-animate="true">
@@ -1199,16 +1505,54 @@
 <span id="cb31-14" class="hljs-ln-code"><a href="#cb31-14"></a></span>
 <span id="cb31-15" class="hljs-ln-code"><a href="#cb31-15"></a><span class="fu">dim</span>(my_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<aside class="notes">
+<p>a more contemporary solution would be to use dplyr’s bind rows function and honestly, yah do that.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="what-about-apply" class="title-slide slide level1 center">
 <h1>what about <code>*apply()</code>?</h1>
-
+<aside class="notes">
+<p>ENOUGH! of the for loops. you say apply is faster just use those! you say</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="section-7" class="slide level2">
 <h2></h2>
 <div class="fragment">
 <p><img data-src="images/cough-bullshit.png"></p>
+<aside class="notes">
+<p>as florian privé wrote in his wonderful blog post “bullshit” hey, i didn’t say it. they did</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="section-8" class="slide level2">
@@ -1226,18 +1570,56 @@
 <li class="fragment"><code>vapply()</code> for example is type-safe</li>
 <li class="fragment">roughly the same speed as for loops</li>
 </ul>
+<aside class="notes">
+<p>let us not be misled. apply functions are not vectorized they are no more than an internal c loop they do their part in preallocating so they probably get right what you dont vapply() is even fancier in that it is type safe but if you wanted that you’d use rust since they’re just loop they’re roughly the same speed as a for loop</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section id="and-what-about-purrr" class="title-slide slide level1 center">
 <h1>and what about <code>{purrr}</code>?</h1>
 <div class="fragment">
 <p>also a C loop</p>
+<aside class="notes">
+<p>and what about purrr you ask? also a C loop</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 
 <section>
 <section id="so-why-should-you-use-apply-or-purrr" class="title-slide slide level1 center">
 <h1>so why should you use <code>apply()</code> or <code>{purrr}</code>?</h1>
-
+<aside class="notes">
+<p>and im not saying you shouldn’t use apply or purrr you should</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="section-9" class="slide level2">
 <h2></h2>
@@ -1247,7 +1629,7 @@
 <li class="fragment">fewer lines of code (typically)</li>
 </ul>
 <aside class="notes">
-<p>next, i want to talk through an example where writing a for loop helped me speed up my code dramatically</p>
+<p>they’re idiomatic they can be easy to read (most of the time) and typically end up in fewer lines of code.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1265,7 +1647,7 @@
 <h1>how I sped up my code with a for loop</h1>
 <p>or, how I used too many apply functions</p>
 <aside class="notes">
-<p>This likely isn’t true for everyone, but working in a for loop can help me think in a different way.</p>
+<p>next, i want to talk through an example where writing a for loop helped me speed up my code dramatically‚ This likely isn’t true for everyone, but working in a for loop can help me think in a different way.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1290,6 +1672,19 @@
 <p><span class="math display">\[
 p_{sim} = \frac{M + 1}{R + 1}
 \]</span></p>
+<aside class="notes">
+<p>the problem was with how i was calculating simulated p-values simulated p-values are calculated by calculating an observed statistic then calculating the same measure but using random samples of your data after which you count how many times your statistic was more extreme than the replications then the ratio is the simulated p-value</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="my-previous-approach" class="slide level2">
@@ -1297,8 +1692,21 @@ p_{sim} = \frac{M + 1}{R + 1}
 <ul>
 <li class="fragment">calculate a statistic once</li>
 <li class="fragment">abstract the calculation for all inputs using <code>*apply()</code></li>
-<li class="fragment">repeat <code>nsim</code> times</li>
+<li class="fragment">repeat <code>nsim</code> times <code>replicate()</code></li>
 </ul>
+<aside class="notes">
+<p>the way i would do this was to first create a function that calculated the statistic then i’d abstract that to handle a vector of inputs using apply and then id repeat it a number of times with <code>replicate()</code></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="set-contstants" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">set contstants</h2>
@@ -1370,6 +1778,19 @@ p_{sim} = \frac{M + 1}{R + 1}
  [96]  0.059858821 -0.141086939  0.727994201  0.114509795  0.498271964</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>for the sake of example, our “observed” statistic can be values from a random normal distribution</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="calculate-statistic-once" class="slide level2">
@@ -1388,6 +1809,19 @@ p_{sim} = \frac{M + 1}{R + 1}
 <pre><code>[1] 0.04043044</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>and our statistic that we’re comparing to is the average of our K (10) random neighbors also from a normal distribution this super simple function takes a number k and return the average</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="generalize-for-a-vector" class="slide level2">
@@ -1422,6 +1856,19 @@ p_{sim} = \frac{M + 1}{R + 1}
  [96] -0.225143093 -0.615895628  0.545072926  0.301983915  0.065925835</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>next i would generalize this with an apply statement here we just run stat_calc() n number of times and return a vector</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="repeat-it" class="slide level2">
 <h2>repeat it</h2>
@@ -2608,6 +3055,19 @@ p_{sim} = \frac{M + 1}{R + 1}
 [6,] -0.447218764 -0.49585636 -0.002403459</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>to calculate the simulated p-value this process has to be repeat <code>nsim</code> number of times this gives us a matrix with n rows and nsim columns and each column is a simulation value</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="calculate-p-value" class="slide level2">
 <h2>calculate p-value</h2>
@@ -2638,17 +3098,56 @@ p_{sim} = \frac{M + 1}{R + 1}
  [97] 0.323 0.989 0.650 0.944</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>to calculate the p-value would compare the observed value to the simulate values. count up the number of times observed statistic was greater than the simulated, then plug and check for the simulated p-value this works just fine</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="section-10" class="slide level2">
 <h2></h2>
 
-<img data-src="images/spdep-issue-98.png" class="r-stretch"></section></section>
+<img data-src="images/spdep-issue-98.png" class="r-stretch"><aside class="notes">
+<p>but Roger Bivand pointed out how inneficint these calculations are for a small p-value you need a hell of a lot of simulations and what i wrote scaled linearly so if you need 999 simulations instead of 99 that would take 10 times longer. woof!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
 <section>
 <section id="hm" class="title-slide slide level1 center">
 <h1>hm?</h1>
 <div class="fragment">
 <p>“This is not vectorization, it is loop-hiding.”</p>
+<aside class="notes">
+<p>what i thought the apply family is better! nope. another pithy statement from patrick burns it’s not vectorization it is loop hiding</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="section-11" class="slide level2">
@@ -2659,18 +3158,51 @@ p_{sim} = \frac{M + 1}{R + 1}
 <section id="oops" class="title-slide slide level1 center">
 <h1>Oops!</h1>
 <p>we’re in the 4th circle of hell now</p>
+<aside class="notes">
+<p>we’ve traversed all the way to Burns’ 4th circle of hell! Over-vectorizing well how can this be?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-outer-loop" class="slide level2">
 <h2>the outer loop</h2>
+<div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>res <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> n, <span class="at">ncol =</span> nsim)</span>
+<div class="sourceCode cell-code" id="cb49" data-code-line-numbers="|1|4|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>res <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> n, <span class="at">ncol =</span> nsim)</span>
 <span id="cb49-2"><a href="#cb49-2"></a></span>
 <span id="cb49-3"><a href="#cb49-3"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsim) {</span>
 <span id="cb49-4"><a href="#cb49-4"></a>  res[,j] <span class="ot">&lt;-</span> <span class="fu">simulate_stat</span>(n, k)</span>
 <span id="cb49-5"><a href="#cb49-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <div class="fragment">
 <p><code>simulate_stat()</code> is another for loop</p>
+<aside class="notes">
+<p>as mentioned earlier, the apply family and purrr is only just loop hiding we can think about all the steps i took as a series of for loops</p>
+<p>the first can be rewritten like this first we preallocate a vector like a good programmer then we iterate through our simulations with simulate_stat()</p>
+<p>but wait…</p>
+<p>simulate_stat uses sapply! well damn. that’s another for loop</p>
+<p>you got that right. I’m saying I wrote a NESTED for loop</p>
+<p>cringe, right?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="the-inner-loop" class="slide level2">
@@ -2682,6 +3214,19 @@ p_{sim} = \frac{M + 1}{R + 1}
 <span id="cb50-4"><a href="#cb50-4"></a>  res[i] <span class="ot">&lt;-</span> <span class="fu">stat_calc</span>(k)</span>
 <span id="cb50-5"><a href="#cb50-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<aside class="notes">
+<p>the inner loop can be wewritten like this pre allocate the results again then populate them with a for loop simple enough</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="both-loops" class="slide level2">
 <h2>both loops</h2>
@@ -2703,11 +3248,38 @@ p_{sim} = \frac{M + 1}{R + 1}
 <span id="cb51-15"><a href="#cb51-15"></a>  res_mat[,j] <span class="ot">&lt;-</span> res</span>
 <span id="cb51-16"><a href="#cb51-16"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<aside class="notes">
+<p>put together that replicate statement can be rewritten using this nested for loop.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="speeding-it-up" class="slide level2">
 <h2>speeding it up</h2>
 
-<img data-src="images/spdep-issue-98-2.png" class="r-stretch"></section>
+<img data-src="images/spdep-issue-98-2.png" class="r-stretch"><aside class="notes">
+<p>roger kindly pointed out a way to rethink this. Instead of trying to work in a vectorized mindset where I do something to every single element all at once. do the simulations for a single location all at once</p>
+<p>he referred to some code of mine he had refactored months ago. after giving it another look, it finally made sense.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="each-element" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">each element</h2>
 <div class="cell">
@@ -2731,6 +3303,19 @@ p_{sim} = \frac{M + 1}{R + 1}
 [6,] -0.38615247  0.81369632 -0.4818380 -0.6493791</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>for each location we can create a matrix of random draws where each row is a simulation and the columns are the number of neighbors</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="each-element-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">each element</h2>
@@ -2744,6 +3329,19 @@ p_{sim} = \frac{M + 1}{R + 1}
 <pre><code>[1] -0.03505480 -0.06722337  0.29473346 -0.41919084  0.12895046  0.08677108</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>and the average of each row is the simulation statistic</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="each-element-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">each element</h2>
@@ -2758,17 +3356,55 @@ p_{sim} = \frac{M + 1}{R + 1}
 <pre><code>[1] 0.007</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>and taking the row means returns a hand vector that can be compared to the observed statistic and the p-value can be measured easily</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="section-12" class="title-slide slide level1 center" data-background-image="images/gimme-the-loop.jpeg">
 <h1></h1>
-
+<aside class="notes">
+<p>next, i generalized this approach to every row using a for loop</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-loop" class="slide level2">
 <h2>the loop</h2>
 <div class="cell">
 
 </div>
+<aside class="notes">
+<p>before every for loop is a preallocated object for each location we generate those random samples take the mean of each simulation then calculate the p-value and fill accordingly</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="how-does-it-compare" class="slide level2">
 <h2>how does it compare?</h2>
@@ -2793,8 +3429,8 @@ p_{sim} = \frac{M + 1}{R + 1}
 <pre><code># A tibble: 2 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 apply       307.7ms  348.9ms      2.87   248.6MB     22.9
-2 for_loop     27.1ms   28.7ms     35.1     16.7MB     17.5</code></pre>
+1 apply         308ms  312.5ms      3.20   248.6MB     24.0
+2 for_loop     27.5ms   29.5ms     34.4     16.7MB     19.1</code></pre>
 </div>
 </div>
 </section></section>
@@ -2820,6 +3456,19 @@ p_{sim} = \frac{M + 1}{R + 1}
 <h1>it was I who was bad</h1>
 <div class="fragment">
 <p><em>not</em> the loop.</p>
+<aside class="notes">
+<p>and this is the point. i wrote the bad code it wasn’t the apply statements or the for loops that were bad</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 <section id="the-point" class="slide level2">
@@ -2829,13 +3478,76 @@ p_{sim} = \frac{M + 1}{R + 1}
 <li class="fragment">no automatic vectorization of code</li>
 <li class="fragment">you are your worst enemy</li>
 </ul>
+<aside class="notes">
+<p>what we should take away is that there is nothing innately good or bad about using apply or purrr. we can’t magically make code vectorized. and we are not always going to write the best code or the most efficient code and thats totally fine.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="rewriting" class="title-slide slide level1 center">
+<h1>rewriting</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>sim_stat <span class="ot">&lt;-</span> <span class="cf">function</span>(obs, k, nsim) {</span>
+<span id="cb60-2"><a href="#cb60-2"></a>  simulations <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(k <span class="sc">*</span> nsim), <span class="at">nrow =</span> nsim)</span>
+<span id="cb60-3"><a href="#cb60-3"></a>  stat_sim_i <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(simulations)</span>
+<span id="cb60-4"><a href="#cb60-4"></a>  (<span class="fu">sum</span>(stat_sim_i <span class="sc">&lt;=</span> obs) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb60-5"><a href="#cb60-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="section-14" class="slide level2">
-<h2></h2>
+<section id="a-last-benchmark" class="slide level2">
+<h2>a last benchmark</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>nsim <span class="ot">=</span> <span class="dv">3999</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>bm <span class="ot">&lt;-</span> bench<span class="sc">::</span><span class="fu">mark</span>(</span>
+<span id="cb61-3"><a href="#cb61-3"></a>  <span class="at">purrr =</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(obs, sim_stat, k, nsim),</span>
+<span id="cb61-4"><a href="#cb61-4"></a>  <span class="at">lapply =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(obs, sim_stat, k, nsim)),</span>
+<span id="cb61-5"><a href="#cb61-5"></a>  <span class="at">for_loop =</span> {</span>
+<span id="cb61-6"><a href="#cb61-6"></a>    p_vals <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb61-7"><a href="#cb61-7"></a>    </span>
+<span id="cb61-8"><a href="#cb61-8"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb61-9"><a href="#cb61-9"></a>      simulations <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(k <span class="sc">*</span> nsim), <span class="at">nrow =</span> nsim)</span>
+<span id="cb61-10"><a href="#cb61-10"></a>      stat_sim_i <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(simulations)</span>
+<span id="cb61-11"><a href="#cb61-11"></a>      p_vals[i] <span class="ot">&lt;-</span> (<span class="fu">sum</span>(stat_sim_i <span class="sc">&lt;=</span> obs[i]) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb61-12"><a href="#cb61-12"></a>    }</span>
+<span id="cb61-13"><a href="#cb61-13"></a>  },</span>
+<span id="cb61-14"><a href="#cb61-14"></a>  <span class="at">check =</span> <span class="cn">FALSE</span></span>
+<span id="cb61-15"><a href="#cb61-15"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section>
+<section>
+<section id="getting-away-with-a-for-loop" class="title-slide slide level1 center">
+<h1>getting away with a for loop</h1>
+<ul>
+<li class="fragment">preallocate your vectors</li>
+<li class="fragment">use vectorized functions</li>
+</ul>
+</section>
+<section id="the-take-aways" class="slide level2">
+<h2>the take-aways</h2>
+<ul>
+<li class="fragment">for loops aren’t worse than apply or purrr</li>
+<li class="fragment">you just might be worse at writing code with a for loop</li>
+<li class="fragment">writing a for loop doesn’t make you a bad programmer</li>
+<li class="fragment">for loops can help you think differently</li>
+<li class="fragment">if you care about speed and memory safety, just use rust</li>
+</ul>
+</section></section>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>thank you</h1>
+<p>try writing a for loop</p>
 <div class="footer footer-default">
 
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
