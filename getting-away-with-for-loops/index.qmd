@@ -1,0 +1,1165 @@
+---
+title: "for loops in R"
+subtitle: "how to write a for loop and get away with it"
+execution:
+  eval: true
+  echo: true
+format:
+  revealjs:
+    incremental: true   
+---
+
+
+# "for loops in R are slow" 
+
+
+
+# {auto-animate=true}
+
+```r
+for (i in
+```
+
+:::{.notes}
+for the uninitiated a for loop is a way to iterate
+we start with the statement of `for` 
+as in  ...
+::::
+
+
+# {auto-animate=true}
+
+```r
+for (i in seq_along(x)) {
+```
+
+:::{.notes}
+for each of these things
+:::
+
+
+# {auto-animate=true}
+
+```r
+for (i in seq_along(x)) {
+  do_a_thing(x[i])
+}
+```
+
+:::{.notes}
+i want to do some thing
+:::
+
+#
+
+- "omg what are you doing" 
+- "for loops aren't functional"
+- "you should be using `purrr::map()` or `lapply()`"
+
+:::{.notes}
+the intermediate and advanced users among you may 
+go "omg"
+"for loops..."
+"you should be ..." 
+
+now, i mostly agree with you. but....i'm not an extremist
+or an absolutist and i think that ...
+:::
+
+
+
+# for loops get a lot of hate
+
+# they're not inherently bad
+
+# they're not slow
+
+# you're allowed to use them
+
+:::{.notes}
+And the world won't stop if you use one.
+:::
+
+# "i don't know how to use a for loop" 
+                                           - a lot of people
+                                           
+                                           
+:::{.notes}
+there are a lot of people who maybe know what a for loop is
+but don't know how to use one or write one
+this next bit is for you
+:::
+                                           
+                                           
+## for loops 
+
+- a way to repeat code a set number of times
+- extremely common in every other programming language 
+
+:::{.notes}
+for loops are a way to repeat a piece of code a set number of times
+they're _very_ common in other programming languages.
+but in R they're not always recommended and for reasons we'll get into
+:::
+
+## for loops {auto-animate=true}
+
+- start by defining a loop with `for` keyword
+
+. . .
+
+```r
+# what you are iterating through
+for () {
+}
+```
+
+:::{.notes}
+to write a for loop we start by declaring it with the keyword `for`
+the parenthesis will be used to definie _what_ we're iterating through
+and the brackets are going to contain the code that will be repeated
+:::
+
+## for loops {auto-animate=true}
+
+- iterate through an index 
+
+. . .
+
+```r
+# what you are iterating through
+for (i in 1:length(x)) {
+}
+```
+
+
+:::{.notes}
+there are two common ways we can iterate.
+the first is to iterate through a sequence of indexes
+in this loop the value i will take the value from 1, 2, 3, 
+and so on until we reach the length of x meaning if there
+are 10 values in x i will take on the value 1, 2, 3, 4, 5, 6, 7, 8, 9, and 100
+:::
+
+
+## for loops {auto-animate=true}
+
+- iterate through values 
+
+. . .
+
+```r
+# what you are iterating through
+for (val in x) {
+}
+```
+
+
+:::{.notes}
+
+alternatively, we can iterate through each value in x.
+at each iteration the placeholder `val` will take on that value of x
+so, the first iteration `val` will have the first value of x the second will 
+have the second value of x, and so on
+:::
+
+## for loops {auto-animate=true}
+
+- indexes are used to subset typically
+
+. . .
+
+```{r eval = FALSE}
+#| code-line-numbers: "|1|3|"
+for (i in 1:length(x)) {
+
+  result <- fx(x[i]) |>
+    do_another_thing()
+    
+}
+```
+
+- most helpful for subsetting multiple things
+
+:::{.notes}
+i like using the i in ... format. this is clearest to me.
+and it's often used for subsetting objects at each 
+step in the for loop
+:::
+
+
+## for loops {auto-animate=true}
+
+- or use values directly
+
+. . .
+
+```r
+for (val in x) {
+  
+  result <- fx(val) |>
+    do_another_thing()
+    
+}
+```
+
+
+:::{.notes}
+taking the values at each iteration is useful
+when you have only one object you're iterating through 
+and you do not need to keep track of the iteration number
+:::
+
+# So, why are they bad?
+
+# `for` loops aren't bad. . . 
+
+:::{.notes}
+and this may offend some of you
+:::
+
+# we are.
+
+:::{.notes}
+we are. 
+Bad code isn't the language's fault. 
+More often than not, it's our fault. 
+I'm not saying you're a bad programmer. 
+I'm saying that we're human and we don't know everything. 
+And we don't always know how the language wants to work. 
+:::
+
+
+## humans are fallible {background-image="https://imgs.xkcd.com/comics/fixing_problems.png" background-size="30%"}
+<!-- ![](https://imgs.xkcd.com/comics/fixing_problems.png) -->
+
+:::{.aside}
+https://xkcd.com/1739/
+:::
+
+
+:::{.notes}
+There are some really valid and good reasons why for loops don't get all that much love. Often, for loops _are_ pretty slow. And I think it mostly boils down to us asking too much of them. And, that's our fault.
+:::
+
+# a special place in hell
+
+
+## {background-image="https://cdn8.openculture.com/2014/06/02015922/botticelli-punishment-of-the-panderers-seducers-and-sycophants.jpg" background-size="50%"}
+
+
+:::{.aside}
+Botticelli's illustration of Dante's Divine Comedy (1481)
+:::
+
+
+:::{.notes}
+What are we doing wrong when we write for loops? For loops pained Patrick Burns so much that he dedicated a special place in hell for them. Two places actually. The second and third circles of hell can be traced back to for loops.
+:::
+
+## Walk with me through hell
+
+<iframe width="2117" height="915" src="https://www.youtube.com/embed/QWkhCxCcWSE" title="Lamb of God - Walk with Me In Hell (Official Video)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+:::{.notes}
+Walk with me in hell for a moment, will you?
+:::
+
+##
+
+![](images/circle-3.png)
+
+:::{.aside}
+The R Inferno - Patrick Burns
+
+https://www.burns-stat.com/pages/Tutor/R_inferno.pdf
+:::
+
+
+:::{.notes}
+R is pretty good at a lot of things. Most cases of bad for loops are because you tried to do something that R can do better. You most likely did something each time in a loop that can be done only once with a vectorized function. Vectorize functions?? Well, I'm so glad you asked. 
+:::
+
+# vectors!
+
+:::{.notes}
+lets start with vectors
+:::
+
+## the powerhouse of R {background-image="https://www.nutraingredients-usa.com/var/wrbm_gb_food_pharma/storage/images/_aliases/wrbm_large/publications/food-beverage-nutrition/nutraingredients-usa.com/article/2021/08/17/new-research-will-place-d-ribose-atop-mitochondrial-health-pyramid-expert-says2/12742887-1-eng-GB/New-research-will-place-D-ribose-atop-mitochondrial-health-pyramid-expert-says.jpg"}
+
+
+:::{.notes}
+Like the mitochondria is the powerhouse of the cell.
+Vectors are the power house of R 
+:::
+
+## vectors
+
+- the basic unit in R
+- atomic and lists 
+- 4 main types of atomic vectors
+
+## vectors {background-image="https://d33wubrfki0l68.cloudfront.net/eb6730b841e32292d9ff36b33a590e24b6221f43/57192/diagrams/vectors/summary-tree-atomic.png" background-size="25%"}
+
+:::{.aside}
+Chapter 3, Vectors (Advanced R, Hadley Wickham)
+
+https://adv-r.hadley.nz/vectors-chap.html
+:::
+
+
+:::{.notes}
+the basic unit in R is the vector
+there are two types. atomic and lists
+atomic vectors are what we think of when we say vector
+there are 4 main types of them
+logical, integer, double, and character (or string)
+:::
+
+## vectors
+
+- are composed of elements
+- elements are of the same type
+- created with `c()`
+- `c(TRUE, FALSE, NA)` 
+  - 3 elements
+
+:::{.notes}
+Atomic vectors store only one type of data at a time and are created with `c()`.
+Every vector is composed of n elements.
+this is a logical vector with 3 elements.
+:::
+
+
+# vectorization
+
+. . . 
+
+apply a function to all elements of a vector
+
+
+:::{.notes}
+vectorized functions take a vector and operate on the whole thing at once. 
+:::
+
+## Circle 3
+
+- find sum of the natural log of x
+
+```{r, echo=FALSE}
+set.seed(0)
+```
+
+
+```{r, echo = TRUE}
+x <- runif(10)
+
+lsum <- 0
+
+for (i in 1:length(x)) {
+  lsum <- lsum + log(x[i])
+}
+
+lsum
+```
+
+:::{.notes}
+Let's take the example straight out of the book! 
+
+The objective? Take the natural logarithm of each element and then add them all up. 
+
+Calculates the log of $x_i$ and adds it the the `lsum` object which grows until the list ends. 
+:::
+
+# "No. No. No." 
+
+:::{.notes}
+as patrick burns said no no no
+we should be letting R do the leg work, not us. 
+this can be rewritten as a one liner 
+and a far more efficient one liner at that
+:::
+
+## vectorized solution
+
+. . .
+
+```{r, echo = TRUE, eval= FALSE}
+sum(log(x))
+```
+
+- `log()` applied to _each_ element
+
+. . . 
+
+```{r, echo = TRUE}
+log(x)
+```
+
+- `sum()` applied to _all_ elements
+
+. . .
+
+```{r echo = TRUE}
+sum(log(x))
+```
+
+:::{.notes}
+log and sum are both vectorized functions
+but they are vectorized in different ways
+`log()` is vectorized in the way that it does something to each element. 
+`sum()` is vectorized in the way that it takes an entire vector and does operation on the entire thing. 
+
+log applies the natural log to every element at once
+and sum sums it all up! 
+:::
+
+
+## vectorized solutions
+
+- you should use them
+- cleaner
+- faster
+- more effective
+
+
+:::{.notes}
+you should always look for vectorized solutions 
+they are clearer 
+always faster
+and since they're faster, they're more effective
+
+:::
+
+## another example
+
+- row means of Anscombe's Quartet
+
+. . .
+
+```{r echo = TRUE}
+anscombe <- as.matrix(datasets::anscombe)
+anscombe
+```
+
+:::{.notes}
+let's take another example using 
+anscombes quartet and calculating the average of each row
+:::
+
+## another example
+
+using a loop
+
+```{r, echo = TRUE}
+for (i in 1:nrow(anscombe)) {
+  row <- anscombe[i,]
+  print(mean(row))
+}
+```
+
+:::{.notes}
+this can be accomplished fairly simply using 
+a for loop in which we subset the matrix by its row number
+then calculate the mean for that row
+:::
+
+## vectorized 
+
+using an existing vectorized function
+
+```{r, echo = TRUE}
+rowMeans(anscombe)
+```
+
+
+:::{.notes}
+but since there is an already vectorized function `rowMeans()`
+we should use that instead.
+:::
+
+# Circle 2: the gluttons 
+growing objects
+
+:::{.notes}
+I'm saving the best for last. 
+The second circle of hell is where I think most people go really wrong. 
+Burns' second circle of hell is devoted to growing objects
+::: 
+
+
+# does your `for` loop look like this?
+
+. . .
+
+```{r, echo = TRUE}
+results <- c()
+
+for (i in 1:length(x)) {
+  
+  results <- c(results, log(x[i]))
+  
+}
+```
+
+
+:::{.notes}
+does your for loop look like this?
+where you create an empty vector and make it bigger with each iteration?
+:::
+
+# code smells
+
+. . .
+
+💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩 💩
+
+
+:::{.notes}
+this smells like bad code. 
+and loops like this are why, in my opinion, for loops 
+have so much shade thrown at them
+:::
+
+# growing objects is slow! 
+
+:::{.notes}
+growing objects is slow! and hogs the memory!
+:::
+
+## growing objects
+
+- R only allocated what it needed with `results <- c()`
+- `c(results, log(x[i]))` needs to 
+  - move the data, 
+  - make space, 
+  - and check types each time
+
+:::{.notes}
+when you create an object in R 
+R only stores the amount of memory necessary for it at that time
+and when you want to amke it bigger, R  needs to
+move the data, figure out how much space to make, and check the types of 
+data that are being squished 
+every. single. time.
+and while this is bad....
+:::
+
+
+# `rbind()` 
+_the real offender_
+
+
+
+## 
+
+### "How to rbind dataframes in a for loop"
+
+Asked Jan 23, 2019
+
+Solution: 
+
+```{r, eval=FALSE, echo = TRUE}
+#| code-line-numbers: "|2|10,11|"
+i=1
+table_page_all  <- data.frame()
+for (page in as.character(df$website)){
+
+  keywordA <- data.frame(matrix(page))
+  keywordB <- data.frame(matrix("REVIEW"))
+  keywordC <- data.frame(df$keyword_page[i])
+
+   i <- i +1
+   table_page_all  <- rbind(table_page_all, 
+                            data.frame(keywordA, keywordB, keywordC))
+}
+
+colnames(table_page_all) <- c("KEYWORD A", "KEYWORD B", "KEYWORD C")
+```
+
+
+:::{.aside}
+https://stackoverflow.com/questions/54328512/how-to-rbind-dataframes-in-a-for-loop
+:::
+
+
+:::{.notes}
+this is a really great example of what _not_ to do when writing a for loop
+It's an accepted answer for a stack overflow question from 2019. 
+the challenges arise from line 2 and the rbind statement
+when we want to fill an object using a for loop we should _always_ make sure there is room for it
+:::
+
+# 2 tips for the 2nd circle
+
+:::{.notes}
+i want to give you 2 tips for avoiding the second circle of hell
+:::
+
+# 1. preallocate your vectors! 
+
+:::{.notes}
+as you may have gathered.
+ALWAYS!!! preallocate your vectors and objects
+:::
+
+## preallocating vectors
+
+- growing objects is slow
+- if R knows the size, it is okay
+
+. . .
+
+
+```{r, echo = TRUE}
+results <- numeric(lenght(x))
+
+for (i in 1:length(x)) {
+  
+  results[i] <- log(x)[i]
+  
+}
+```
+
+
+:::{.notes}
+make sure that R knows how big an object is going to be
+we don't want it figuring it out more than once
+:::
+
+## benchmarking pre-allocation
+
+:::{.aside}
+these are _still_ bad because they don't take advantage of the vectorization of `log()`
+:::
+
+```{r, echo=TRUE}
+
+x <- runif(1000)
+
+bench::mark(
+  not_allocated = {
+    results <- c()
+    for (i in 1:length(x)) results <- c(results, log(x[i]))
+  },
+  allocated = {
+    results <- numeric(length(x))
+    for (i in 1:length(x)) results[i] <- log(x[i])
+  }
+)
+
+```
+
+:::{.notes}
+lets compare the differences in runtime memory and speed
+when we preallocate our vectors
+preallocation is sooooo much faster and soooo much more memory efficient 
+:::
+
+
+# 2. preallocating lists 
+for object of varying sizes and shapes
+
+:::{.notes}
+let's step back to that stack over flow example
+a super common use case build up a data frame over time
+:::
+
+## a new example
+
+```{r}
+set.seed(0)
+```
+
+```{r, echo = TRUE}
+#| code-line-numbers: "|1|5|7|9|"
+my_df <- data.frame()
+
+for (i in 1:10) {
+  
+  n_samples <- rbinom(1, 100, runif(1))
+  
+  index <- sample.int(nrow(iris), size = n_samples, replace = TRUE)
+  
+  my_df <- rbind(my_df, iris[index,])
+  
+}
+
+dim(my_df)
+```
+
+:::{.notes}
+since the stack over flow example isn't reproducible
+let's make a new one. we'll take a random number of rows from the iris dataset 
+and then append it to an empty data frame 10 times
+
+first we create an empty data frame
+get a random number of rows to sample
+then we sample random integers, with replacement, as an index to subset 
+the iris dataset
+then we squish it onto the `my_df` object
+:::
+
+## example but better {auto-animate=true}
+
+```{r}
+set.seed(0)
+```
+. . .
+
+```{r, echo = TRUE}
+#| code-line-numbers: "|1|9|13|"
+results <- vector(mode = "list", length = 10)
+
+for (i in 1:10) {
+
+  n_samples <- rbinom(1, 100, runif(1))
+  
+  index <- sample.int(nrow(iris), size = n_samples, replace = TRUE)
+  
+  results[[i]] <- iris[index,]
+  
+}
+
+my_df <- do.call(rbind, results)
+
+dim(my_df)
+```
+
+:::{.notes}
+you might be thinking
+"if i don't know how many rows im going to have, how can i preallocate
+a dataframe of a determined size?"
+
+im going to say "don't do that"  and tell you to use a list
+lists are so flexible and so useful. 
+
+each element of a list can hold whatever the hell we want 
+lets take advantage of that
+
+on each iteration let's store the subset into a list
+then at the end we can squish them all together using 
+an arcane incantation of `do.call()` and `rbind()`
+
+:::
+
+## example but better {auto-animate=true}
+
+```{r}
+set.seed(0)
+```
+
+```{r, echo = TRUE, eval = FALSE}
+results <- vector(mode = "list", length = 10)
+
+for (i in 1:10) {
+
+  n_samples <- rbinom(1, 100, runif(1))
+  
+  index <- sample.int(nrow(iris), size = n_samples, replace = TRUE)
+  
+  results[[i]] <- iris[index,]
+  
+}
+
+my_df <- dplyr::bind_rows(results)
+
+dim(my_df)
+```
+
+
+:::{.notes}
+a more contemporary solution would be to use dplyr's bind rows function
+and honestly, yah do that. 
+:::
+
+# what about `*apply()`?
+
+:::{.notes}
+ENOUGH! of the for loops. you say
+apply is faster just use those! you say
+:::
+
+## 
+
+. . .
+
+![](images/cough-bullshit.png)
+
+:::{.notes}
+as florian privé wrote in his wonderful blog post
+"bullshit" 
+hey, i didn't say it. they did
+:::
+
+## 
+
+:::{.aside}
+Why loops are slow in R - Florian Privé
+
+https://privefl.github.io/blog/why-loops-are-slow-in-r/
+:::
+
+## `apply()` functions
+
+- are nothing more than an internal C loop
+- they do their part in preallocating
+- `vapply()` for example is type-safe
+- roughly the same speed as for loops
+
+:::{.notes}
+let us not be misled. 
+apply functions are not vectorized
+they are no more than an internal c loop
+they do their part in preallocating so they probably get right what you dont
+vapply() is even fancier in that it is type safe 
+but if you wanted that you'd use rust
+since they're just loop they're roughly the same speed as a for loop
+:::
+
+# and what about `{purrr}`?
+
+. . . 
+
+also a C loop
+
+:::{.notes}
+and what about purrr you ask?
+also a C loop
+:::
+
+# so why should you use `apply()` or `{purrr}`?
+
+:::{.notes}
+and im not saying you shouldn't use apply or purrr
+you should
+:::
+
+## 
+
+- they're idiomatic
+- can be easier to read
+- fewer lines of code (typically)
+
+
+
+:::{.notes}
+they're idiomatic
+they can be easy to read (most of the time)
+and typically end up in fewer lines of code.
+:::
+
+
+# how I sped up my code with a for loop
+or, how I used too many apply functions 
+
+:::{.notes}
+next, i want to talk through an example where writing a for loop
+helped me speed up my code dramatically
+This likely isn't true for everyone, but working in a for loop can help me think
+in a different way. 
+:::
+
+## Scenario: simulated p-values
+
+- calculate a statistic once (observed)
+- create replicates with random samples (reps)
+- count how many times the observed was more extreme than the reps
+- the ratio is the simulated p-value
+
+. . .
+
+$$
+p_{sim} = \frac{M + 1}{R + 1}
+$$
+
+## my previous approach
+
+- calculate a statistic once 
+- abstract the calculation for all inputs using `*apply()`
+- repeat `nsim` times
+
+
+## set contstants {auto-animate=true}
+
+```{r, echo = TRUE, eval = TRUE}
+nsim = 999
+```
+
+## set contstants {auto-animate=true}
+
+```{r, echo = TRUE, eval = TRUE}
+nsim = 999
+n = 100
+```
+
+## set contstants {auto-animate=true}
+
+```{r, echo = TRUE, eval = TRUE}
+nsim = 999
+n = 100
+k = 10
+```
+
+:::{.notes}
+first, specify the number of simulations
+then the number of observations
+then the number or neighbors for each location
+:::
+
+
+## calculate "observed" observations
+
+- sampling from a random normal distribution
+
+. . .
+
+```{r}
+set.seed(0)
+```
+
+
+```{r, echo = TRUE}
+obs <- rnorm(n, sd = 0.5)
+
+obs
+```
+
+
+## calculate statistic once
+
+. . .
+
+in this case the "statistic" is the mean of 10 random values
+
+. . .
+
+```{r, echo = TRUE}
+# calculate the statistic for one location i
+stat_calc <- function(k) mean(rnorm(k))
+
+# for example
+stat_calc(10)
+```
+
+
+## generalize for a vector
+
+```{r, echo = TRUE}
+# write a function that abstracts to all [i, n]
+simulate_stat <- function(n, k) {
+  sapply(1:n, \(x) stat_calc(k))
+}
+
+simulate_stat(100, 5)
+```
+
+## repeat it
+
+```{r, echo = TRUE}
+reps <- replicate(
+  nsim,
+  simulate_stat(n, k)
+)
+
+dim(reps)
+
+head(reps)
+```
+
+
+## calculate p-value
+
+```{r, echo = TRUE}
+# calculate the simulate p-values
+numerator <- rowSums(reps <= obs)
+
+head(numerator)
+```
+. . .
+
+divide by number of simulations
+
+. . .
+
+```{r echo = TRUE}
+(numerator + 1) / (nsim + 1)
+```
+
+
+
+## 
+
+![](images/spdep-issue-98.png)
+
+# hm?
+
+. . . 
+
+"This is not vectorization, it is loop-hiding." 
+
+
+## 
+
+```{r}
+knitr::include_graphics("https://i.imgur.com/fDLfM20.gif")
+```
+
+
+# Oops! 
+we're in the 4th circle of hell now
+
+## the outer loop
+
+```{r, eval= FALSE, echo= TRUE}
+res <- matrix(nrow = n, ncol = nsim)
+
+for (j in 1:nsim) {
+  res[,j] <- simulate_stat(n, k)
+}
+```
+
+. . .
+
+`simulate_stat()` is another for loop
+
+## the inner loop
+
+```{r, echo = TRUE}
+res <- numeric(n)
+
+for (i in 1:n) {
+  res[i] <- stat_calc(k)
+}
+```
+
+
+## both loops
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-line-numbers: "|2|4|7|10,11|15|"
+# instantiate results matrix 
+res_mat <- matrix(nrow = n, ncol = nsim)
+
+for (j in 1:nsim) {
+  
+  # allocate results vector
+  res <- numeric(n) 
+  
+  # populate results vector 
+  for (i in 1:n) {
+    res[i] <- stat_calc(k)
+  }
+  
+  # fill results matrix with stat vector
+  res_mat[,j] <- res
+}
+```
+
+
+## speeding it up
+
+![](images/spdep-issue-98-2.png)
+
+
+## each element {auto-animate=true}
+
+```{r, echo= TRUE}
+simulations <- matrix(rnorm(k * nsim), nrow = nsim)
+
+head(simulations)
+```
+
+
+## each element {auto-animate=true}
+
+```{r,echo=TRUE}
+simulations <- matrix(rnorm(k * nsim), nrow = nsim)
+
+stat_sim_i <- rowMeans(simulations)
+
+head(stat_sim_i)
+```
+
+
+## each element {auto-animate=true}
+
+```{r,echo=TRUE}
+simulations <- matrix(rnorm(k * nsim), nrow = nsim)
+
+stat_sim_i <- rowMeans(simulations)
+
+# print p-value
+(sum(stat_sim_i <= obs[6]) + 1) / (nsim + 1)
+```
+
+
+# {background-image="images/gimme-the-loop.jpeg"}
+
+
+## the loop
+
+```{r}
+#| code-line-numbers: "|1|3|4|5|6|"
+p_vals <- numeric(n)
+
+for (i in 1:n) {
+  simulations <- matrix(rnorm(k * nsim), nrow = nsim)
+  stat_sim_i <- rowMeans(simulations)
+  p_vals[i] <- (sum(stat_sim_i <= obs[i]) + 1) / (nsim + 1)
+}
+
+```
+
+
+## how does it compare? 
+
+```{r, echo = TRUE}
+bench::mark(
+  apply = {
+    reps <- replicate(nsim, simulate_stat(n, k))
+    p_vals <- (rowSums(reps <= obs) + 1) / (nsim + 1)
+  },
+  
+  for_loop = {
+    p_vals <- numeric(n)
+
+    for (i in 1:n) {
+      simulations <- matrix(rnorm(k * nsim), nrow = nsim)
+      stat_sim_i <- rowMeans(simulations)
+      p_vals[i] <- (sum(stat_sim_i <= obs[i]) + 1) / (nsim + 1)
+    }
+  }, check = FALSE
+)
+```
+
+
+# that's not fair! 
+
+# 
+
+> "your for loop is better written than your apply statements!"
+
+
+# we arrive at the point
+
+# it was I who was bad
+
+. . .
+
+_not_ the loop. 
+
+
+## the point
+
+- there is no innate virtue in apply() or `purrr`
+- no automatic vectorization of code
+- you are your worst enemy
+
+
+
+## 
+
+
