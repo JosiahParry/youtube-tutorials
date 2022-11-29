@@ -1363,8 +1363,8 @@
 <pre><code># A tibble: 2 × 6
   expression         min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 not_allocated   1.99ms   2.29ms      436.    3.88MB     34.5
-2 allocated     738.53µs 760.82µs     1286.   25.37KB     46.9</code></pre>
+1 not_allocated    2.1ms   2.35ms      416.    3.88MB     32.0
+2 allocated        756µs 817.46µs     1193.   25.37KB     40.3</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -3390,7 +3390,13 @@ p_{sim} = \frac{M + 1}{R + 1}
 <section id="the-loop" class="slide level2">
 <h2>the loop</h2>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb58" data-code-line-numbers="|1|3|4|5|6|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>p_vals <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb58-2"><a href="#cb58-2"></a></span>
+<span id="cb58-3"><a href="#cb58-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb58-4"><a href="#cb58-4"></a>  simulations <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(k <span class="sc">*</span> nsim), <span class="at">nrow =</span> nsim)</span>
+<span id="cb58-5"><a href="#cb58-5"></a>  stat_sim_i <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(simulations)</span>
+<span id="cb58-6"><a href="#cb58-6"></a>  p_vals[i] <span class="ot">&lt;-</span> (<span class="fu">sum</span>(stat_sim_i <span class="sc">&lt;=</span> obs[i]) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb58-7"><a href="#cb58-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
 <p>before every for loop is a preallocated object for each location we generate those random samples take the mean of each simulation then calculate the p-value and fill accordingly</p>
@@ -3409,28 +3415,28 @@ p_{sim} = \frac{M + 1}{R + 1}
 <section id="how-does-it-compare" class="slide level2">
 <h2>how does it compare?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb58-2"><a href="#cb58-2"></a>  <span class="at">apply =</span> {</span>
-<span id="cb58-3"><a href="#cb58-3"></a>    reps <span class="ot">&lt;-</span> <span class="fu">replicate</span>(nsim, <span class="fu">simulate_stat</span>(n, k))</span>
-<span id="cb58-4"><a href="#cb58-4"></a>    p_vals <span class="ot">&lt;-</span> (<span class="fu">rowSums</span>(reps <span class="sc">&lt;=</span> obs) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb58-5"><a href="#cb58-5"></a>  },</span>
-<span id="cb58-6"><a href="#cb58-6"></a>  </span>
-<span id="cb58-7"><a href="#cb58-7"></a>  <span class="at">for_loop =</span> {</span>
-<span id="cb58-8"><a href="#cb58-8"></a>    p_vals <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
-<span id="cb58-9"><a href="#cb58-9"></a></span>
-<span id="cb58-10"><a href="#cb58-10"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
-<span id="cb58-11"><a href="#cb58-11"></a>      simulations <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(k <span class="sc">*</span> nsim), <span class="at">nrow =</span> nsim)</span>
-<span id="cb58-12"><a href="#cb58-12"></a>      stat_sim_i <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(simulations)</span>
-<span id="cb58-13"><a href="#cb58-13"></a>      p_vals[i] <span class="ot">&lt;-</span> (<span class="fu">sum</span>(stat_sim_i <span class="sc">&lt;=</span> obs[i]) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb58-14"><a href="#cb58-14"></a>    }</span>
-<span id="cb58-15"><a href="#cb58-15"></a>  }, <span class="at">check =</span> <span class="cn">FALSE</span></span>
-<span id="cb58-16"><a href="#cb58-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
+<span id="cb59-2"><a href="#cb59-2"></a>  <span class="at">apply =</span> {</span>
+<span id="cb59-3"><a href="#cb59-3"></a>    reps <span class="ot">&lt;-</span> <span class="fu">replicate</span>(nsim, <span class="fu">simulate_stat</span>(n, k))</span>
+<span id="cb59-4"><a href="#cb59-4"></a>    p_vals <span class="ot">&lt;-</span> (<span class="fu">rowSums</span>(reps <span class="sc">&lt;=</span> obs) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb59-5"><a href="#cb59-5"></a>  },</span>
+<span id="cb59-6"><a href="#cb59-6"></a>  </span>
+<span id="cb59-7"><a href="#cb59-7"></a>  <span class="at">for_loop =</span> {</span>
+<span id="cb59-8"><a href="#cb59-8"></a>    p_vals <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb59-9"><a href="#cb59-9"></a></span>
+<span id="cb59-10"><a href="#cb59-10"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb59-11"><a href="#cb59-11"></a>      simulations <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(k <span class="sc">*</span> nsim), <span class="at">nrow =</span> nsim)</span>
+<span id="cb59-12"><a href="#cb59-12"></a>      stat_sim_i <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(simulations)</span>
+<span id="cb59-13"><a href="#cb59-13"></a>      p_vals[i] <span class="ot">&lt;-</span> (<span class="fu">sum</span>(stat_sim_i <span class="sc">&lt;=</span> obs[i]) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb59-14"><a href="#cb59-14"></a>    }</span>
+<span id="cb59-15"><a href="#cb59-15"></a>  }, <span class="at">check =</span> <span class="cn">FALSE</span></span>
+<span id="cb59-16"><a href="#cb59-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 apply         308ms  312.5ms      3.20   248.6MB     24.0
-2 for_loop     27.5ms   29.5ms     34.4     16.7MB     19.1</code></pre>
+1 apply       314.4ms  361.1ms      2.77   248.6MB     22.2
+2 for_loop     27.9ms   28.9ms     34.2     16.7MB     17.1</code></pre>
 </div>
 </div>
 </section></section>
@@ -3496,31 +3502,39 @@ p_{sim} = \frac{M + 1}{R + 1}
 <section id="rewriting" class="title-slide slide level1 center">
 <h1>rewriting</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>sim_stat <span class="ot">&lt;-</span> <span class="cf">function</span>(obs, k, nsim) {</span>
-<span id="cb60-2"><a href="#cb60-2"></a>  simulations <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(k <span class="sc">*</span> nsim), <span class="at">nrow =</span> nsim)</span>
-<span id="cb60-3"><a href="#cb60-3"></a>  stat_sim_i <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(simulations)</span>
-<span id="cb60-4"><a href="#cb60-4"></a>  (<span class="fu">sum</span>(stat_sim_i <span class="sc">&lt;=</span> obs) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb60-5"><a href="#cb60-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>sim_stat <span class="ot">&lt;-</span> <span class="cf">function</span>(obs, k, nsim) {</span>
+<span id="cb61-2"><a href="#cb61-2"></a>  simulations <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(k <span class="sc">*</span> nsim), <span class="at">nrow =</span> nsim)</span>
+<span id="cb61-3"><a href="#cb61-3"></a>  stat_sim_i <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(simulations)</span>
+<span id="cb61-4"><a href="#cb61-4"></a>  (<span class="fu">sum</span>(stat_sim_i <span class="sc">&lt;=</span> obs) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb61-5"><a href="#cb61-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="a-last-benchmark" class="slide level2">
 <h2>a last benchmark</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>nsim <span class="ot">=</span> <span class="dv">3999</span></span>
-<span id="cb61-2"><a href="#cb61-2"></a>bm <span class="ot">&lt;-</span> bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb61-3"><a href="#cb61-3"></a>  <span class="at">purrr =</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(obs, sim_stat, k, nsim),</span>
-<span id="cb61-4"><a href="#cb61-4"></a>  <span class="at">lapply =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(obs, sim_stat, k, nsim)),</span>
-<span id="cb61-5"><a href="#cb61-5"></a>  <span class="at">for_loop =</span> {</span>
-<span id="cb61-6"><a href="#cb61-6"></a>    p_vals <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
-<span id="cb61-7"><a href="#cb61-7"></a>    </span>
-<span id="cb61-8"><a href="#cb61-8"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
-<span id="cb61-9"><a href="#cb61-9"></a>      simulations <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(k <span class="sc">*</span> nsim), <span class="at">nrow =</span> nsim)</span>
-<span id="cb61-10"><a href="#cb61-10"></a>      stat_sim_i <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(simulations)</span>
-<span id="cb61-11"><a href="#cb61-11"></a>      p_vals[i] <span class="ot">&lt;-</span> (<span class="fu">sum</span>(stat_sim_i <span class="sc">&lt;=</span> obs[i]) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb61-12"><a href="#cb61-12"></a>    }</span>
-<span id="cb61-13"><a href="#cb61-13"></a>  },</span>
-<span id="cb61-14"><a href="#cb61-14"></a>  <span class="at">check =</span> <span class="cn">FALSE</span></span>
-<span id="cb61-15"><a href="#cb61-15"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>nsim <span class="ot">=</span> <span class="dv">3999</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
+<span id="cb62-3"><a href="#cb62-3"></a>  <span class="at">purrr =</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(obs, sim_stat, k, nsim),</span>
+<span id="cb62-4"><a href="#cb62-4"></a>  <span class="at">lapply =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(obs, sim_stat, k, nsim)),</span>
+<span id="cb62-5"><a href="#cb62-5"></a>  <span class="at">for_loop =</span> {</span>
+<span id="cb62-6"><a href="#cb62-6"></a>    p_vals <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb62-7"><a href="#cb62-7"></a>    </span>
+<span id="cb62-8"><a href="#cb62-8"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb62-9"><a href="#cb62-9"></a>      simulations <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(k <span class="sc">*</span> nsim), <span class="at">nrow =</span> nsim)</span>
+<span id="cb62-10"><a href="#cb62-10"></a>      stat_sim_i <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(simulations)</span>
+<span id="cb62-11"><a href="#cb62-11"></a>      p_vals[i] <span class="ot">&lt;-</span> (<span class="fu">sum</span>(stat_sim_i <span class="sc">&lt;=</span> obs[i]) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> (nsim <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb62-12"><a href="#cb62-12"></a>    }</span>
+<span id="cb62-13"><a href="#cb62-13"></a>  },</span>
+<span id="cb62-14"><a href="#cb62-14"></a>  <span class="at">check =</span> <span class="cn">FALSE</span></span>
+<span id="cb62-15"><a href="#cb62-15"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  expression      min   median `itr/sec` mem_alloc `gc/sec`
+  &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
+1 purrr         105ms    105ms      9.50    66.1MB     9.50
+2 lapply        104ms    105ms      9.55    65.9MB     9.55
+3 for_loop      107ms    107ms      9.36    65.9MB     9.36</code></pre>
+</div>
 </div>
 </section></section>
 <section>

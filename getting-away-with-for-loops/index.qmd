@@ -1227,7 +1227,7 @@ next, i generalized this approach to every row using a for loop
 
 ## the loop
 
-```{r}
+```{r, echo = TRUE}
 #| code-line-numbers: "|1|3|4|5|6|"
 p_vals <- numeric(n)
 
@@ -1320,9 +1320,9 @@ sim_stat <- function(obs, k, nsim) {
 
 ## a last benchmark
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, eval= TRUE}
 nsim = 3999
-bm <- bench::mark(
+bench::mark(
   purrr = purrr::map_dbl(obs, sim_stat, k, nsim),
   lapply = unlist(lapply(obs, sim_stat, k, nsim)),
   for_loop = {
