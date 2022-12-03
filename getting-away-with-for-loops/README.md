@@ -1,8 +1,8 @@
 ## write for loops in R and get away with it
 
-for loops are a divicive topic in the R community. 
-
 I'm here to tell you that for loops aren't the problem—you are. 
+
+for loops are a divisive topic in the R community. 
 
 
 R Inferno - https://www.burns-stat.com/pages/Tutor/R_inferno.pdf

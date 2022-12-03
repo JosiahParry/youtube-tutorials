@@ -1,0 +1,462 @@
+---
+title: "understanding functions"
+format: 
+  revealjs:
+    incremental: true
+execution:
+  echo: true
+---
+
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+
+# R is _functional_
+
+:::{.notes}
+As you know, R is a programming language. 
+And all programming languages fall broadly into 2 categories
+Object Oriented Programming languages and 
+functional programming langauges
+R is a functional programming language
+
+:::
+
+# $y = mx + b$
+
+
+:::{.notes}
+functional programming languages emphasize the use of functions
+y = mx + b is a function that anyone who paid even an iota of attention
+in high school remembers
+:::
+
+# $f(x) = mx + b$
+
+. . .
+
+```{r, eval = TRUE, echo = FALSE}
+library(tidyverse)
+
+x <- 1:10
+y <- x * 3.5 + 2
+plot(x, y)
+abline(2, 3.5)
+```
+
+
+:::{.notes}
+y = mx + b can be rewritten like this 
+where f(x) = mx + b 
+or read differently mx + b is a function of x
+we plug in values of x, hence a function of x and get new values
+:::
+
+# functions do things
+
+:::{.notes}
+functions always do something.
+:::
+
+
+# $input \implies output$
+
+:::{.notes}
+functions take an input 
+and produce an output
+:::
+
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = FALSE}
+function()
+```
+
+
+:::{.notes}
+functions are created using the function keyword
+:::
+
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = FALSE}
+function(arguments)
+```
+
+:::{.notes}
+functions typically take one or more arguments 
+:::
+
+
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = FALSE}
+function(arg1, arg2)
+```
+
+:::{.notes}
+arguments are unquoted names, separated by commas
+:::
+
+
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = FALSE}
+function(arguments) {
+  
+}
+```
+
+:::{.notes}
+functions contain a body
+that is contained within the curly braces 
+:::
+
+
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = FALSE}
+function(arguments) {
+  # function body
+  # . . . 
+  # do things here
+}
+```
+
+:::{.notes}
+the body of the function defines
+what a function will actually do
+:::
+
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = FALSE}
+function(arguments) {
+  print(arguments)
+}
+```
+
+:::{.notes}
+the body of a function can contain any valid
+R code that you would like to put in there
+:::
+
+
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = FALSE}
+print_argument <- function(arguments) {
+  print(arguments)
+}
+```
+
+:::{.notes}
+like all things in R, functions are objects
+functions are special because you create the object and then
+call that object taking other objects as input! 
+:::
+
+
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = TRUE}
+print_argument <- function(arguments) {
+  print(arguments)
+  10
+}
+
+hw <- print_argument("hello world")
+hw
+```
+
+:::{.notes}
+whatever is printed last in a function
+gets returned from the function
+:::
+
+
+
+# making the slope intercept function
+
+#  {auto-animate=true}
+
+```{r, eval = FALSE}
+slope_intercept <- 
+```
+
+
+#  {auto-animate=true}
+
+```{r}
+slope_intercept <- function()
+```
+
+
+#  {auto-animate=true}
+
+```{r}
+slope_intercept <- function(x)
+```
+
+
+#  {auto-animate=true}
+
+```{r}
+slope_intercept <- function(x) {
+  
+}
+```
+
+
+#  {auto-animate=true}
+
+```{r}
+slope_intercept <- function(x) {
+  m <- 2.5
+}
+```
+
+
+#  {auto-animate=true}
+
+```{r}
+slope_intercept <- function(x) {
+  m <- 2.5
+  b <- 10
+}
+```
+
+
+#  {auto-animate=true}
+
+```{r}
+slope_intercept <- function(x) {
+  m <- 2.5
+  b <- 10
+  
+  m * x + b 
+}
+```
+
+
+#  
+
+```{r, eval = TRUE, echo = FALSE}
+slope_intercept <- function(x) {
+  m <- 2.5
+  b <- 10
+  
+  m * x + b 
+}
+```
+
+```{r, eval = TRUE}
+#| code-line-numbers: "1|2|3"
+x <- 1:10
+y <- slope_intercept(x)
+y
+```
+
+
+# 
+
+```{r, eval = TRUE}
+plot(x, y)
+abline(10, 2.5)
+```
+
+# function arguments
+
+:::{.notes}
+let's be a bit more explicit with regards to function 
+arguments
+:::
+
+
+# `function(arg1, arg2)`
+
+
+:::{.notes}
+think of function arguments as objects that are 
+only available in the body of the function. to 
+access the value of the argument we refer to the argument 
+as if it is a regular R object
+:::
+
+## function arguments
+
+```{r, eval = TRUE}
+#| code-line-numbers: "1|2|5|"
+add <- function(x, y) {
+  x + y 
+}
+
+add(10, 2)
+```
+
+
+# default arguments {auto-animate=true}
+
+. . .
+
+```{r}
+power <- function(x, power = 1) {
+  x ^ power
+}
+```
+
+:::{.notes}
+in the examples so far each argument has not had a default value.
+we can set the default value of a function in the function definition
+by using an equal sign.
+:::
+
+
+# default arguments {auto-animate=true}
+
+
+```{r, eval = TRUE}
+power <- function(x, power = 1) {
+  x ^ power
+}
+
+power(3)
+```
+
+
+
+:::{.notes}
+this power function doesn't have a default value of x
+but it _does_ have a default value for the argument `power` which is set to
+true. so if power isn't set it will use the value of 1 
+:::
+
+
+# missing defaults are required
+
+```{r, eval = TRUE, error = TRUE}
+power()
+```
+
+# handle with care
+
+. . . 
+
+`missing(arg)` checks if arguments are missing! 
+
+
+# {auto-animate=true}
+
+```{r}
+is_missing <- function(x) {
+  missing(x)
+}
+```
+
+
+# {auto-animate=true}
+
+```{r, eval = TRUE}
+is_missing <- function(x) {
+  missing(x)
+}
+
+is_missing()
+```
+
+
+
+# {auto-animate=true}
+
+```{r, eval = TRUE}
+is_missing <- function(x) {
+  missing(x)
+}
+
+is_missing("nope!")
+```
+
+# abort early! 
+
+. . . 
+
+if things aren't looking good, `rlang::abort()`
+
+
+# {auto-animate=true}
+
+```{r, error=FALSE, eval = FALSE}
+rlang::abort("something isn't right ...")
+```
+
+# {auto-animate=true}
+
+```{r, error=TRUE, eval = TRUE}
+rlang::abort("something isn't right ...")
+```
+
+# 
+
+```{r}
+#| code-line-numbers: "2|3|"
+power <- function(x, power = 1) {
+  if (power == 0) {
+    rlang::abort("i'm not letting this happen")
+  }
+  
+  x ^ power
+}
+```
+
+
+# 
+
+```{r, eval = TRUE, error = TRUE}
+power <- function(x, power = 1) {
+  if (power == 0) {
+    rlang::abort("i'm not letting this happen")
+  }
+  
+  x ^ power
+}
+
+power(3.14159, power = 0)
+```
+
+# putting it together
+
+
+```{r}
+average <- function(x, na.rm = TRUE) {
+  if (!is.numeric(x)) {
+    rlang::abort("`x` must be numeric")
+  } 
+  
+  if (na.rm) {
+    missing_index <- is.na(x)
+    x <- x[!missing_index]
+  }
+  
+  sum(x) / length(x)
+}
+
+average(c(1:20),)
+```
+
+
+-------
+
+- arguments are placeholder objects
+- default arguments
+
+
+# gpt notes:
+
+> can you describe what functions are in R and why they are important for new progammers
+
+In R, a function is a set of instructions that perform a specific task. Functions are important for several reasons. First, they allow you to reuse code, which can save you time and make your programs more efficient. Second, they help you to organize your code and make it more readable, which can make it easier to understand and debug. Finally, many powerful features of R are implemented as functions, so understanding and using functions is essential for taking full advantage of the language.
+
+
+
