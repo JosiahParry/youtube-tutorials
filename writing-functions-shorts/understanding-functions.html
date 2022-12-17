@@ -381,6 +381,13 @@
       margin-right: 0; 
     }
   </style>
+  
+  <script src="understanding-functions_files/libs/core-js-2.5.3/shim.min.js"></script>
+  <script src="understanding-functions_files/libs/react-17.0.0/react.min.js"></script>
+  <script src="understanding-functions_files/libs/react-17.0.0/react-dom.min.js"></script>
+  <script src="understanding-functions_files/libs/reactwidget-1.0.0/react-tools.js"></script>
+  <script src="understanding-functions_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+  <script src="understanding-functions_files/libs/reactable-binding-0.2.3/reactable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -433,12 +440,18 @@
       }</style></aside>
 </section>
 
-<section id="fx-mx-b" class="title-slide slide level1 center">
-<h1><span class="math inline">\(f(x) = mx + b\)</span></h1>
-<div class="fragment">
+<section id="fx-mx-b" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"><span class="math inline">\(f(x) = mx + b\)</span></h1>
+
+</section>
+
+<section id="fx-mx-b-1" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"><span class="math inline">\(f(x) = mx + b\)</span></h1>
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="understanding-functions_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+
+<div id="htmlwidget-aa85683293979cb483f8" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-aa85683293979cb483f8">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"x":[1,2,3,4,5],"y":[5.5,9,12.5,16,19.5]},"columns":[{"accessor":"x","name":"x","type":"numeric"},{"accessor":"y","name":"y","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"bd455b41c825c8c58918f62cd2db93c7","key":"bd455b41c825c8c58918f62cd2db93c7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <aside class="notes">
@@ -454,7 +467,6 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 
 <section id="functions-do-things" class="title-slide slide level1 center">
@@ -601,7 +613,7 @@
 <h1 data-id="quarto-animate-title">anatomy of a function</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb6-1" class="hljs-ln-code"><a href="#cb6-1"></a><span class="cf">function</span>(arguments) {</span>
-<span id="cb6-2" class="hljs-ln-code"><a href="#cb6-2"></a>  <span class="fu">print</span>(arguments)</span>
+<span id="cb6-2" class="hljs-ln-code"><a href="#cb6-2"></a>  arguments</span>
 <span id="cb6-3" class="hljs-ln-code"><a href="#cb6-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
@@ -623,7 +635,7 @@
 <h1 data-id="quarto-animate-title">anatomy of a function</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb7-1" class="hljs-ln-code"><a href="#cb7-1"></a>print_argument <span class="ot">&lt;-</span> <span class="cf">function</span>(arguments) {</span>
-<span id="cb7-2" class="hljs-ln-code"><a href="#cb7-2"></a>  <span class="fu">print</span>(arguments)</span>
+<span id="cb7-2" class="hljs-ln-code"><a href="#cb7-2"></a>  arguments</span>
 <span id="cb7-3" class="hljs-ln-code"><a href="#cb7-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
@@ -644,19 +656,19 @@
 <section id="anatomy-of-a-function-7" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title">anatomy of a function</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>print_argument <span class="ot">&lt;-</span> <span class="cf">function</span>(arguments) {</span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">print</span>(arguments)</span>
-<span id="cb8-3"><a href="#cb8-3"></a>  <span class="dv">10</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>}</span>
-<span id="cb8-5"><a href="#cb8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6"></a>hw <span class="ot">&lt;-</span> <span class="fu">print_argument</span>(<span class="st">"hello world"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb8-1" class="hljs-ln-code"><a href="#cb8-1"></a><span class="fu">print_argument</span>(<span class="st">"the first argument"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "hello world"</code></pre>
+<pre><code>[1] "the first argument"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>hw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
 </div>
+</section>
+
+<section id="anatomy-of-a-function-8" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb10-1" class="hljs-ln-code"><a href="#cb10-1"></a>print_argument <span class="ot">&lt;-</span> <span class="cf">function</span>(arguments) {</span>
+<span id="cb10-2" class="hljs-ln-code"><a href="#cb10-2"></a>  <span class="dv">10</span></span>
+<span id="cb10-3" class="hljs-ln-code"><a href="#cb10-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
 <p>whatever is printed last in a function gets returned from the function</p>
@@ -673,6 +685,30 @@
       }</style></aside>
 </section>
 
+<section>
+<section id="anatomy-of-a-function-9" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>print_argument <span class="ot">&lt;-</span> <span class="cf">function</span>(arguments) {</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="dv">10</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">print_argument</span>(<span class="st">"hello world"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+</section>
+<section id="functions-rock-because" class="slide level2">
+<h2>functions rock because…</h2>
+<ul>
+<li class="fragment">repeating code is easy</li>
+<li class="fragment">easier to read</li>
+<li class="fragment">makes your code simpler</li>
+<li class="fragment">(somewhat) easy to share</li>
+</ul>
+</section></section>
 <section id="making-the-slope-intercept-function" class="title-slide slide level1 center">
 <h1>making the slope intercept function</h1>
 
@@ -681,61 +717,61 @@
 <section id="section" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb12-1" class="hljs-ln-code"><a href="#cb12-1"></a>slope_intercept <span class="ot">&lt;-</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb14-1" class="hljs-ln-code"><a href="#cb14-1"></a>slope_intercept <span class="ot">&lt;-</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
 <section id="section-1" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb13-1" class="hljs-ln-code"><a href="#cb13-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb15-1" class="hljs-ln-code"><a href="#cb15-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
 <section id="section-2" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb14-1" class="hljs-ln-code"><a href="#cb14-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb16-1" class="hljs-ln-code"><a href="#cb16-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
 <section id="section-3" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb15-1" class="hljs-ln-code"><a href="#cb15-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb15-2" class="hljs-ln-code"><a href="#cb15-2"></a>  </span>
-<span id="cb15-3" class="hljs-ln-code"><a href="#cb15-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb17-1" class="hljs-ln-code"><a href="#cb17-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb17-2" class="hljs-ln-code"><a href="#cb17-2"></a>  </span>
+<span id="cb17-3" class="hljs-ln-code"><a href="#cb17-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
 <section id="section-4" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb16-1" class="hljs-ln-code"><a href="#cb16-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb16-2" class="hljs-ln-code"><a href="#cb16-2"></a>  m <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
-<span id="cb16-3" class="hljs-ln-code"><a href="#cb16-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb18-1" class="hljs-ln-code"><a href="#cb18-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb18-2" class="hljs-ln-code"><a href="#cb18-2"></a>  m <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb18-3" class="hljs-ln-code"><a href="#cb18-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
 <section id="section-5" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb17-1" class="hljs-ln-code"><a href="#cb17-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb17-2" class="hljs-ln-code"><a href="#cb17-2"></a>  m <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
-<span id="cb17-3" class="hljs-ln-code"><a href="#cb17-3"></a>  b <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb17-4" class="hljs-ln-code"><a href="#cb17-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb19-1" class="hljs-ln-code"><a href="#cb19-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb19-2" class="hljs-ln-code"><a href="#cb19-2"></a>  m <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb19-3" class="hljs-ln-code"><a href="#cb19-3"></a>  b <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb19-4" class="hljs-ln-code"><a href="#cb19-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
 <section id="section-6" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb18-1" class="hljs-ln-code"><a href="#cb18-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb18-2" class="hljs-ln-code"><a href="#cb18-2"></a>  m <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
-<span id="cb18-3" class="hljs-ln-code"><a href="#cb18-3"></a>  b <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb18-4" class="hljs-ln-code"><a href="#cb18-4"></a>  </span>
-<span id="cb18-5" class="hljs-ln-code"><a href="#cb18-5"></a>  m <span class="sc">*</span> x <span class="sc">+</span> b </span>
-<span id="cb18-6" class="hljs-ln-code"><a href="#cb18-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb20-1" class="hljs-ln-code"><a href="#cb20-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb20-2" class="hljs-ln-code"><a href="#cb20-2"></a>  m <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb20-3" class="hljs-ln-code"><a href="#cb20-3"></a>  b <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb20-4" class="hljs-ln-code"><a href="#cb20-4"></a>  </span>
+<span id="cb20-5" class="hljs-ln-code"><a href="#cb20-5"></a>  m <span class="sc">*</span> x <span class="sc">+</span> b </span>
+<span id="cb20-6" class="hljs-ln-code"><a href="#cb20-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
@@ -745,11 +781,14 @@
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="1|2|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>y <span class="ot">&lt;-</span> <span class="fu">slope_intercept</span>(x)</span>
-<span id="cb19-3"><a href="#cb19-3"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21" data-code-line-numbers="1|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>y <span class="ot">&lt;-</span> <span class="fu">slope_intercept</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 12.5 15.0 17.5 20.0 22.5 25.0 27.5 30.0 32.5 35.0</code></pre>
+</div>
 </div>
 </div>
 </section>
@@ -757,12 +796,13 @@
 <section id="section-8" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">plot</span>(x, y)</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">abline</span>(<span class="dv">10</span>, <span class="fl">2.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">plot</span>(x, y)</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">abline</span>(<span class="dv">10</span>, <span class="fl">2.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="understanding-functions_files/figure-revealjs/unnamed-chunk-40-1.png" width="960" class="r-stretch"></section>
+<img data-src="understanding-functions_files/figure-revealjs/unnamed-chunk-48-1.png" width="960" class="r-stretch"></section>
 
+<section>
 <section id="function-arguments" class="title-slide slide level1 center">
 <h1>function arguments</h1>
 <aside class="notes">
@@ -778,11 +818,6 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
-
-<section>
-<section id="functionarg1-arg2" class="title-slide slide level1 center">
-<h1><code>function(arg1, arg2)</code></h1>
 <aside class="notes">
 <p>think of function arguments as objects that are only available in the body of the function. to access the value of the argument we refer to the argument as if it is a regular R object</p>
 <style type="text/css">
@@ -800,11 +835,11 @@
 <section id="function-arguments-1" class="slide level2">
 <h2>function arguments</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22" data-code-line-numbers="1|2|5|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>add <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb22-2"><a href="#cb22-2"></a>  x <span class="sc">+</span> y </span>
-<span id="cb22-3"><a href="#cb22-3"></a>}</span>
-<span id="cb22-4"><a href="#cb22-4"></a></span>
-<span id="cb22-5"><a href="#cb22-5"></a><span class="fu">add</span>(<span class="dv">10</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24" data-code-line-numbers="1|2|5|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>add <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb24-2"><a href="#cb24-2"></a>  x <span class="sc">+</span> y </span>
+<span id="cb24-3"><a href="#cb24-3"></a>}</span>
+<span id="cb24-4"><a href="#cb24-4"></a></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="fu">add</span>(<span class="dv">10</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12</code></pre>
 </div>
@@ -814,12 +849,13 @@
 <h1 data-id="quarto-animate-title">default arguments</h1>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb24-1" class="hljs-ln-code"><a href="#cb24-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
-<span id="cb24-2" class="hljs-ln-code"><a href="#cb24-2"></a>  x <span class="sc">^</span> power</span>
-<span id="cb24-3" class="hljs-ln-code"><a href="#cb24-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb26-1" class="hljs-ln-code"><a href="#cb26-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
+<span id="cb26-2" class="hljs-ln-code"><a href="#cb26-2"></a>  x <span class="sc">^</span> power</span>
+<span id="cb26-3" class="hljs-ln-code"><a href="#cb26-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
 <p>in the examples so far each argument has not had a default value. we can set the default value of a function in the function definition by using an equal sign.</p>
+<p>the argument power has a default value of 1 the argument x does not have a default value</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -837,17 +873,17 @@
 <section id="default-arguments-1" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title">default arguments</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb25-1" class="hljs-ln-code"><a href="#cb25-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
-<span id="cb25-2" class="hljs-ln-code"><a href="#cb25-2"></a>  x <span class="sc">^</span> power</span>
-<span id="cb25-3" class="hljs-ln-code"><a href="#cb25-3"></a>}</span>
-<span id="cb25-4" class="hljs-ln-code"><a href="#cb25-4"></a></span>
-<span id="cb25-5" class="hljs-ln-code"><a href="#cb25-5"></a><span class="fu">power</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb27-1" class="hljs-ln-code"><a href="#cb27-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
+<span id="cb27-2" class="hljs-ln-code"><a href="#cb27-2"></a>  x <span class="sc">^</span> power</span>
+<span id="cb27-3" class="hljs-ln-code"><a href="#cb27-3"></a>}</span>
+<span id="cb27-4" class="hljs-ln-code"><a href="#cb27-4"></a></span>
+<span id="cb27-5" class="hljs-ln-code"><a href="#cb27-5"></a><span class="fu">power</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
 </div>
 <aside class="notes">
-<p>this power function doesn’t have a default value of x but it <em>does</em> have a default value for the argument <code>power</code> which is set to true. so if power isn’t set it will use the value of 1</p>
+<p>since there is a default value for the argument <code>power</code> which is set to 1 the power function will always return x to the first power which is x itself</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -864,147 +900,402 @@
 <section id="missing-defaults-are-required" class="title-slide slide level1 center">
 <h1>missing defaults are required</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">power</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">power</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in power(): argument "x" is missing, with no default</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>when a function is called without any arguments, it resorts to all of the default arguments but, if there is an arguments <em>without</em> a default value the code errors out. thats because arguemnts without defaults are required arguments</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="handle-with-care" class="title-slide slide level1 center">
 <h1>handle with care</h1>
 <div class="fragment">
 <p><code>missing(arg)</code> checks if arguments are missing!</p>
+<aside class="notes">
+<p>so we should always be ready to handle missing arguments if we need to. we can capture if arguments are missing using the … yup. missing function. it returns a true or false value depending on if the argument is missing or not</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 
 <section id="section-9" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb29-1" class="hljs-ln-code"><a href="#cb29-1"></a>is_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb29-2" class="hljs-ln-code"><a href="#cb29-2"></a>  <span class="fu">missing</span>(x)</span>
-<span id="cb29-3" class="hljs-ln-code"><a href="#cb29-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb31-1" class="hljs-ln-code"><a href="#cb31-1"></a>is_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb31-2" class="hljs-ln-code"><a href="#cb31-2"></a>  <span class="fu">missing</span>(x)</span>
+<span id="cb31-3" class="hljs-ln-code"><a href="#cb31-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<aside class="notes">
+<p>missing can be super helpful if we want to have special behavior if an acecks rgument is missing this function checks see if the argument <code>x</code> is missing or not very simple and quite useless honestly. but it gets the point accross, right?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="section-10" class="title-slide slide level1 center" data-auto-animate="true">
-<h1 data-id="quarto-animate-title"></h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb30-1" class="hljs-ln-code"><a href="#cb30-1"></a>is_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb30-2" class="hljs-ln-code"><a href="#cb30-2"></a>  <span class="fu">missing</span>(x)</span>
-<span id="cb30-3" class="hljs-ln-code"><a href="#cb30-3"></a>}</span>
-<span id="cb30-4" class="hljs-ln-code"><a href="#cb30-4"></a></span>
-<span id="cb30-5" class="hljs-ln-code"><a href="#cb30-5"></a><span class="fu">is_missing</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
-</div>
-</section>
-
-<section id="section-11" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb32-1" class="hljs-ln-code"><a href="#cb32-1"></a>is_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb32-2" class="hljs-ln-code"><a href="#cb32-2"></a>  <span class="fu">missing</span>(x)</span>
 <span id="cb32-3" class="hljs-ln-code"><a href="#cb32-3"></a>}</span>
 <span id="cb32-4" class="hljs-ln-code"><a href="#cb32-4"></a></span>
-<span id="cb32-5" class="hljs-ln-code"><a href="#cb32-5"></a><span class="fu">is_missing</span>(<span class="st">"nope!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-5" class="hljs-ln-code"><a href="#cb32-5"></a><span class="fu">is_missing</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>if we run the function without any arguments, guess what? its missing!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="section-11" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb34-1" class="hljs-ln-code"><a href="#cb34-1"></a>is_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb34-2" class="hljs-ln-code"><a href="#cb34-2"></a>  <span class="fu">missing</span>(x)</span>
+<span id="cb34-3" class="hljs-ln-code"><a href="#cb34-3"></a>}</span>
+<span id="cb34-4" class="hljs-ln-code"><a href="#cb34-4"></a></span>
+<span id="cb34-5" class="hljs-ln-code"><a href="#cb34-5"></a><span class="fu">is_missing</span>(<span class="st">"nope!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>and if we give it a value, there’s not a missing value!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="abort-early" class="title-slide slide level1 center">
 <h1>abort early!</h1>
 <div class="fragment">
 <p>if things aren’t looking good, <code>rlang::abort()</code></p>
+<aside class="notes">
+<p>now, what if when we have a missing argument we want to exit the function? rlangs abort function to the rescue</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 
 <section id="section-12" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb34-1" class="hljs-ln-code"><a href="#cb34-1"></a>rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"something isn't right ..."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb36-1" class="hljs-ln-code"><a href="#cb36-1"></a>rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"something isn't right ..."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<aside class="notes">
+<p>the simplest way to use this function is to pass a message to abort and it will cause the function to stop and print out the error message</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="section-13" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb35-1" class="hljs-ln-code"><a href="#cb35-1"></a>rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"something isn't right ..."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb37-1" class="hljs-ln-code"><a href="#cb37-1"></a>rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"something isn't right ..."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error:
 ! something isn't right ...</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>like this</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
-<section id="section-14" class="title-slide slide level1 center">
-<h1></h1>
+<section id="section-14" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37" data-code-line-numbers="2|3|"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="cf">if</span> (power <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb37-3"><a href="#cb37-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"i'm not letting this happen"</span>)</span>
-<span id="cb37-4"><a href="#cb37-4"></a>  }</span>
-<span id="cb37-5"><a href="#cb37-5"></a>  </span>
-<span id="cb37-6"><a href="#cb37-6"></a>  x <span class="sc">^</span> power</span>
-<span id="cb37-7"><a href="#cb37-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb39-1" class="hljs-ln-code"><a href="#cb39-1"></a>is_missing <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb39-2" class="hljs-ln-code"><a href="#cb39-2"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(x)) {</span>
+<span id="cb39-3" class="hljs-ln-code"><a href="#cb39-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` shouldn't be missing!"</span>)</span>
+<span id="cb39-4" class="hljs-ln-code"><a href="#cb39-4"></a>  }</span>
+<span id="cb39-5" class="hljs-ln-code"><a href="#cb39-5"></a>  x</span>
+<span id="cb39-6" class="hljs-ln-code"><a href="#cb39-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
-<section id="section-15" class="title-slide slide level1 center">
+<section id="section-15" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb40-1" class="hljs-ln-code"><a href="#cb40-1"></a><span class="fu">is_missing</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `is_missing()`:
+! `x` shouldn't be missing!</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-16" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb42-1" class="hljs-ln-code"><a href="#cb42-1"></a><span class="fu">is_missing</span>(<span class="st">"x isn't missing now!!!!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "x isn't missing now!!!!"</code></pre>
+</div>
+</div>
+</section>
+
+<section id="another-example" class="title-slide slide level1 center">
+<h1>another example</h1>
+
+</section>
+
+<section id="section-17" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="cf">if</span> (power <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb38-3"><a href="#cb38-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"i'm not letting this happen"</span>)</span>
-<span id="cb38-4"><a href="#cb38-4"></a>  }</span>
-<span id="cb38-5"><a href="#cb38-5"></a>  </span>
-<span id="cb38-6"><a href="#cb38-6"></a>  x <span class="sc">^</span> power</span>
-<span id="cb38-7"><a href="#cb38-7"></a>}</span>
-<span id="cb38-8"><a href="#cb38-8"></a></span>
-<span id="cb38-9"><a href="#cb38-9"></a><span class="fu">power</span>(<span class="fl">3.14159</span>, <span class="at">power =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44" data-code-line-numbers="2|3|6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="cf">if</span> (power <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb44-3"><a href="#cb44-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"power cannot be 0"</span>)</span>
+<span id="cb44-4"><a href="#cb44-4"></a>  }</span>
+<span id="cb44-5"><a href="#cb44-5"></a>  </span>
+<span id="cb44-6"><a href="#cb44-6"></a>  x <span class="sc">^</span> power</span>
+<span id="cb44-7"><a href="#cb44-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="section-18" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
+<span id="cb45-2"><a href="#cb45-2"></a>  <span class="cf">if</span> (power <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb45-3"><a href="#cb45-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"power cannot be 0"</span>)</span>
+<span id="cb45-4"><a href="#cb45-4"></a>  }</span>
+<span id="cb45-5"><a href="#cb45-5"></a>  </span>
+<span id="cb45-6"><a href="#cb45-6"></a>  x <span class="sc">^</span> power</span>
+<span id="cb45-7"><a href="#cb45-7"></a>}</span>
+<span id="cb45-8"><a href="#cb45-8"></a></span>
+<span id="cb45-9"><a href="#cb45-9"></a><span class="fu">power</span>(<span class="fl">3.14159</span>, <span class="at">power =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `power()`:
-! i'm not letting this happen</code></pre>
+! power cannot be 0</code></pre>
 </div>
 </div>
+</section>
+
+<section id="section-19" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="cf">if</span> (power <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb47-3"><a href="#cb47-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"power cannot be 0"</span>)</span>
+<span id="cb47-4"><a href="#cb47-4"></a>  }</span>
+<span id="cb47-5"><a href="#cb47-5"></a>  </span>
+<span id="cb47-6"><a href="#cb47-6"></a>  x <span class="sc">^</span> power</span>
+<span id="cb47-7"><a href="#cb47-7"></a>}</span>
+<span id="cb47-8"><a href="#cb47-8"></a></span>
+<span id="cb47-9"><a href="#cb47-9"></a><span class="fu">power</span>(<span class="fl">3.14159</span>, <span class="at">power =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.869588</code></pre>
+</div>
+</div>
+</section>
+
+<section id="putting-it-together" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title">putting it together</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb49-1" class="hljs-ln-code"><a href="#cb49-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb49-2" class="hljs-ln-code"><a href="#cb49-2"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="section-20" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50" data-code-line-numbers="2|3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb50-1" class="hljs-ln-code"><a href="#cb50-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb50-2" class="hljs-ln-code"><a href="#cb50-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb50-3" class="hljs-ln-code"><a href="#cb50-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` must be numeric"</span>)</span>
+<span id="cb50-4" class="hljs-ln-code"><a href="#cb50-4"></a>  } </span>
+<span id="cb50-5" class="hljs-ln-code"><a href="#cb50-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="section-21" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51" data-code-line-numbers="6"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb51-1" class="hljs-ln-code"><a href="#cb51-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb51-2" class="hljs-ln-code"><a href="#cb51-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb51-3" class="hljs-ln-code"><a href="#cb51-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` must be numeric"</span>)</span>
+<span id="cb51-4" class="hljs-ln-code"><a href="#cb51-4"></a>  } </span>
+<span id="cb51-5" class="hljs-ln-code"><a href="#cb51-5"></a>  </span>
+<span id="cb51-6" class="hljs-ln-code"><a href="#cb51-6"></a>  <span class="cf">if</span> (na.rm) {</span>
+<span id="cb51-7" class="hljs-ln-code"><a href="#cb51-7"></a>    </span>
+<span id="cb51-8" class="hljs-ln-code"><a href="#cb51-8"></a>  }</span>
+<span id="cb51-9" class="hljs-ln-code"><a href="#cb51-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="section-22" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52" data-code-line-numbers="7|8"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb52-1" class="hljs-ln-code"><a href="#cb52-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb52-2" class="hljs-ln-code"><a href="#cb52-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb52-3" class="hljs-ln-code"><a href="#cb52-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` must be numeric"</span>)</span>
+<span id="cb52-4" class="hljs-ln-code"><a href="#cb52-4"></a>  } </span>
+<span id="cb52-5" class="hljs-ln-code"><a href="#cb52-5"></a>  </span>
+<span id="cb52-6" class="hljs-ln-code"><a href="#cb52-6"></a>  <span class="cf">if</span> (na.rm) {</span>
+<span id="cb52-7" class="hljs-ln-code"><a href="#cb52-7"></a>    missing_index <span class="ot">&lt;-</span> <span class="fu">is.na</span>(x)</span>
+<span id="cb52-8" class="hljs-ln-code"><a href="#cb52-8"></a>    x <span class="ot">&lt;-</span> x[<span class="sc">!</span>missing_index]</span>
+<span id="cb52-9" class="hljs-ln-code"><a href="#cb52-9"></a>  }</span>
+<span id="cb52-10" class="hljs-ln-code"><a href="#cb52-10"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="section-23" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53" data-code-line-numbers="11"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb53-1" class="hljs-ln-code"><a href="#cb53-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb53-2" class="hljs-ln-code"><a href="#cb53-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb53-3" class="hljs-ln-code"><a href="#cb53-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` must be numeric"</span>)</span>
+<span id="cb53-4" class="hljs-ln-code"><a href="#cb53-4"></a>  } </span>
+<span id="cb53-5" class="hljs-ln-code"><a href="#cb53-5"></a>  </span>
+<span id="cb53-6" class="hljs-ln-code"><a href="#cb53-6"></a>  <span class="cf">if</span> (na.rm) {</span>
+<span id="cb53-7" class="hljs-ln-code"><a href="#cb53-7"></a>    missing_index <span class="ot">&lt;-</span> <span class="fu">is.na</span>(x)</span>
+<span id="cb53-8" class="hljs-ln-code"><a href="#cb53-8"></a>    x <span class="ot">&lt;-</span> x[<span class="sc">!</span>missing_index]</span>
+<span id="cb53-9" class="hljs-ln-code"><a href="#cb53-9"></a>  }</span>
+<span id="cb53-10" class="hljs-ln-code"><a href="#cb53-10"></a>  </span>
+<span id="cb53-11" class="hljs-ln-code"><a href="#cb53-11"></a>  <span class="fu">sum</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x)</span>
+<span id="cb53-12" class="hljs-ln-code"><a href="#cb53-12"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="section-24" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">average</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 50.5</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-25" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">average</span>(<span class="fu">c</span>(<span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `average()`:
+! `x` must be numeric</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-26" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">average</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cn">NA</span>, <span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>), <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+</section>
+
+<section id="thats-the-basics" class="title-slide slide level1 center">
+<h1>that’s the basics</h1>
+
 </section>
 
 <section>
-<section id="putting-it-together" class="title-slide slide level1 center">
-<h1>putting it together</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb40-2"><a href="#cb40-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
-<span id="cb40-3"><a href="#cb40-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` must be numeric"</span>)</span>
-<span id="cb40-4"><a href="#cb40-4"></a>  } </span>
-<span id="cb40-5"><a href="#cb40-5"></a>  </span>
-<span id="cb40-6"><a href="#cb40-6"></a>  <span class="cf">if</span> (na.rm) {</span>
-<span id="cb40-7"><a href="#cb40-7"></a>    missing_index <span class="ot">&lt;-</span> <span class="fu">is.na</span>(x)</span>
-<span id="cb40-8"><a href="#cb40-8"></a>    x <span class="ot">&lt;-</span> x[<span class="sc">!</span>missing_index]</span>
-<span id="cb40-9"><a href="#cb40-9"></a>  }</span>
-<span id="cb40-10"><a href="#cb40-10"></a>  </span>
-<span id="cb40-11"><a href="#cb40-11"></a>  <span class="fu">sum</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x)</span>
-<span id="cb40-12"><a href="#cb40-12"></a>}</span>
-<span id="cb40-13"><a href="#cb40-13"></a></span>
-<span id="cb40-14"><a href="#cb40-14"></a><span class="fu">average</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>),)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section class="slide level2">
+<section id="recap" class="title-slide slide level1 center">
+<h1>recap</h1>
 
+</section>
+<section id="functions" class="slide level2">
+<h2>functions:</h2>
 <ul>
-<li class="fragment">arguments are placeholder objects</li>
-<li class="fragment">default arguments</li>
+<li class="fragment">are objects</li>
+<li class="fragment">that take inputs (arguments)</li>
+<li class="fragment">return an output</li>
+<li class="fragment">contain valid R code</li>
+</ul>
+</section>
+<section id="make-good-functions-by" class="slide level2">
+<h2>make good functions by:</h2>
+<ul>
+<li class="fragment">handle missing arguments</li>
+<li class="fragment">exiting the function early</li>
+<li class="fragment">checking types</li>
 </ul>
 </section></section>
-<section id="gpt-notes" class="title-slide slide level1 center">
-<h1>gpt notes:</h1>
-<blockquote>
-<p>can you describe what functions are in R and why they are important for new progammers</p>
-</blockquote>
-<p>In R, a function is a set of instructions that perform a specific task. Functions are important for several reasons. First, they allow you to reuse code, which can save you time and make your programs more efficient. Second, they help you to organize your code and make it more readable, which can make it easier to understand and debug. Finally, many powerful features of R are implemented as functions, so understanding and using functions is essential for taking full advantage of the language.</p>
+<section id="write-your-own-function" class="title-slide slide level1 center">
+<h1>write your own function</h1>
 <div class="footer footer-default">
 
 </div>

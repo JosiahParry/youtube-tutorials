@@ -1363,8 +1363,8 @@
 <pre><code># A tibble: 2 × 6
   expression         min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 not_allocated    2.1ms   2.35ms      416.    3.88MB     32.0
-2 allocated        756µs 817.46µs     1193.   25.37KB     40.3</code></pre>
+1 not_allocated   2.08ms   2.45ms      406.    3.88MB     32.0
+2 allocated     747.72µs 815.43µs     1166.   25.37KB     41.0</code></pre>
 </div>
 </div>
 <aside class="notes">
@@ -3435,8 +3435,8 @@ p_{sim} = \frac{M + 1}{R + 1}
 <pre><code># A tibble: 2 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 apply       314.4ms  361.1ms      2.77   248.6MB     22.2
-2 for_loop     27.9ms   28.9ms     34.2     16.7MB     17.1</code></pre>
+1 apply       311.3ms  313.5ms      3.19   248.6MB     33.5
+2 for_loop     27.5ms   29.3ms     34.1     16.7MB     26.5</code></pre>
 </div>
 </div>
 </section></section>
@@ -3531,9 +3531,9 @@ p_{sim} = \frac{M + 1}{R + 1}
 <pre><code># A tibble: 3 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 purrr         105ms    105ms      9.50    66.1MB     9.50
-2 lapply        104ms    105ms      9.55    65.9MB     9.55
-3 for_loop      107ms    107ms      9.36    65.9MB     9.36</code></pre>
+1 purrr         104ms    107ms      7.72    66.1MB    21.2 
+2 lapply        102ms    103ms      9.68    65.9MB     9.68
+3 for_loop      105ms    106ms      9.43    65.9MB    11.3 </code></pre>
 </div>
 </div>
 </section></section>

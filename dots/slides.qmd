@@ -1,0 +1,237 @@
+---
+title: ". . ."
+format: 
+  revealjs:
+    incremental: true
+echo: true
+---
+
+
+:::{.notes}
+you may have seen these before
+you may have an intuition of what they are 
+but do you really know what they do and how they work?
+:::
+
+# "dots"
+
+
+:::{.notes}
+those three little dots are, quite uncreatively, called dots.
+And they're everywhere in R
+:::
+
+
+## `dplyr::select(.data, ...)`
+
+> One or more unquoted expressions separated by commas. Variable names can be used as if they were positions in the data frame, so expressions like x:y can be used to select a range of variables.
+
+:::{.notes}
+there's a really good chance you've used the select function from dplyr
+select uses dots—albeit a special kind called dynamic dots—to let you select many 
+different columns with freedom
+:::
+
+## `dplyr::mutate(.data, ...)`
+
+
+>  Name-value pairs. The name gives the name of the column in the output.
+
+:::{.notes}
+dots are also used in the mutate function from dplyr to let you create any 
+columns you'd like by passing in expressions to names
+:::
+
+## `paste(...)`
+
+> one or more R objects, to be converted to character vectors.
+
+:::{.notes}
+the function paste from base R lets you pass in as many R objects as you would like
+to create nice character strings
+:::
+
+## `lapply(x, FUN, ...)`
+
+> optional arguments to FUN
+
+# what is `...` actually doing?
+
+:::{.notes}
+so if dots do all these things what do they actually do?
+:::
+
+
+
+# dots pass arguments
+
+:::{.notes}
+everything that dots do can be distilled to 
+passing arguments. 
+
+how we do this and in what contexts we do this can be varied 
+to a fabulous degree
+:::
+
+
+## 2 primary uses
+
+- passing arguments from one function to another
+- with S3 methods
+
+
+:::{.aside}
+https://adv-r.hadley.nz/functions.html#fun-dot-dot-dot
+:::
+
+:::{.notes}
+according to advanced R there are two primary uses of dots
+they are to pass arguments from one function to another 
+and secondly, which we will not go over in this video,
+is the use of dots to allow different s3 methods to take 
+different arguments (like the very very very many predict methods)
+:::
+
+
+# pass args with `...`
+
+:::{.notes}
+lets first look at how we can pass arguments direclty 
+into another function using dots
+:::
+
+# {auto-animate=true}
+
+```{r}
+print_dots <- function(...) {
+}
+```
+
+:::{.notes}
+to use dots in a function you have to specify an argument with the dots
+:::
+
+
+# {auto-animate=true}
+
+```{r}
+print_dots <- function(...) {
+  paste(...)
+}
+```
+
+
+:::{.notes}
+to pass the dots directly into another function you can include them
+as an argument.
+
+R will match the arguments for us like magic.
+
+here we paste together whatever we put in to the function
+:::
+
+# {auto-animate=true}
+
+```{r}
+print_dots <- function(...) {
+  paste(...)
+}
+
+print_dots("hello", "world")
+```
+
+:::{.notes}
+lacking creativity lets print hello world
+:::
+
+# {auto-animate=true}
+
+```{r}
+print_dots("my favorite letter is", letters[1:10])
+```
+
+# a real example
+
+:::{.notes}
+this way of using dots, when you get it, is super super simple! and super powerful
+it's actually underpinning a majority of the functions in my package sfdep.
+i want to show you one of them as an example
+:::
+
+# 
+
+```{r}
+sfdep::local_g
+```
+:::{.notes}
+this function takes 3 required arguments
+and other arguments that are optional to dots
+:::
+
+# {auto-animate=true}
+
+```{r, eval = FALSE}
+#| code-line-numbers: "1|2|3"
+function(x, nb, wt, alternative = "two.sided", ...) {
+  listw <- recreate_listw(nb, wt)
+  res <- spdep::localG(x, listw, alternative = alternative, ...)
+  unclass(res)
+}
+```
+
+
+:::{.notes}
+the reason why this is so powerful in this case is that 
+it lets us take different objects, restructure them into the 
+required format, then pass in arguments to another function
+
+1. dots are defines as an argument
+2. an object called listw which is required by the spdep local C function is created
+3. then x and the new listw function are passed to localC
+4. if any other arguments are passed in via dots they are sent to spdep localC so if you want to change the number of simulations etc. 
+:::
+
+# {auto-animate=true}
+
+```{r, echo = FALSE}
+library(spdep)
+orig <- spData::africa.rook.nb
+listw <- nb2listw(orig)
+x <- spData::afcon$totcon
+
+nb <- listw[[2]]
+wt <- listw[[3]]
+```
+
+```{r}
+spdep::localG(x, listw)
+```
+
+:::{.notes}
+let's try calling the function as it is with its default arugments using 
+spdep directly
+:::
+
+# {auto-animate=true} 
+
+
+
+```{r, eval = FALSE}
+sfdep::local_g(x, nb, wt, return_internals = TRUE)
+```
+
+. . .
+
+```{r, include = TRUE, echo = FALSE}
+sfdep::local_g(x, nb, wt, return_internals = TRUE)
+```
+
+:::{.notes}
+the localG function has an argument `retunr_internals` that additional data 
+as an attribute. this isn't a defined argument in sfdep::local_g but it can 
+be accessed through dots
+:::
+
+# capturing dots
+
+# capture a specific argument

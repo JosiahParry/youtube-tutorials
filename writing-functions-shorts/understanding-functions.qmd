@@ -33,17 +33,16 @@ y = mx + b is a function that anyone who paid even an iota of attention
 in high school remembers
 :::
 
-# $f(x) = mx + b$
+# $f(x) = mx + b$ {auto-animate=true}
 
-. . .
+# $f(x) = mx + b$ {auto-animate=true}
 
 ```{r, eval = TRUE, echo = FALSE}
-library(tidyverse)
-
-x <- 1:10
+x <- 1:5
 y <- x * 3.5 + 2
-plot(x, y)
-abline(2, 3.5)
+
+data.frame(x, y) |> 
+  reactable::reactable()
 ```
 
 
@@ -134,7 +133,7 @@ what a function will actually do
 
 ```{r, eval = FALSE}
 function(arguments) {
-  print(arguments)
+  arguments
 }
 ```
 
@@ -146,9 +145,9 @@ R code that you would like to put in there
 
 # anatomy of a function {auto-animate=true}
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 print_argument <- function(arguments) {
-  print(arguments)
+  arguments
 }
 ```
 
@@ -158,17 +157,20 @@ functions are special because you create the object and then
 call that object taking other objects as input! 
 :::
 
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = TRUE}
+print_argument("the first argument")
+```
+
+
 
 # anatomy of a function {auto-animate=true}
 
 ```{r, eval = TRUE}
 print_argument <- function(arguments) {
-  print(arguments)
   10
 }
-
-hw <- print_argument("hello world")
-hw
 ```
 
 :::{.notes}
@@ -176,6 +178,31 @@ whatever is printed last in a function
 gets returned from the function
 :::
 
+
+
+# anatomy of a function {auto-animate=true}
+
+```{r, eval = TRUE}
+print_argument <- function(arguments) {
+  10
+}
+```
+
+```{r, echo = TRUE, eval = TRUE}
+print_argument("hello world")
+
+```
+
+
+
+
+## functions rock because... 
+
+
+- repeating code is easy
+- easier to read
+- makes your code simpler
+- (somewhat) easy to share
 
 
 # making the slope intercept function
@@ -253,12 +280,16 @@ slope_intercept <- function(x) {
 ```
 
 ```{r, eval = TRUE}
-#| code-line-numbers: "1|2|3"
+#| code-line-numbers: "1|2"
 x <- 1:10
 y <- slope_intercept(x)
-y
 ```
 
+. . . 
+
+```{r, echo = FALSE, eval = TRUE}
+y
+```
 
 # 
 
@@ -273,9 +304,6 @@ abline(10, 2.5)
 let's be a bit more explicit with regards to function 
 arguments
 :::
-
-
-# `function(arg1, arg2)`
 
 
 :::{.notes}
@@ -311,6 +339,9 @@ power <- function(x, power = 1) {
 in the examples so far each argument has not had a default value.
 we can set the default value of a function in the function definition
 by using an equal sign.
+
+the argument power has a default value of 1
+the argument x does not have a default value
 :::
 
 
@@ -328,9 +359,10 @@ power(3)
 
 
 :::{.notes}
-this power function doesn't have a default value of x
-but it _does_ have a default value for the argument `power` which is set to
-true. so if power isn't set it will use the value of 1 
+
+since there is a default value for the argument `power` which is set to
+1 the power function will always return x to the first power which is
+x itself
 :::
 
 
@@ -340,12 +372,27 @@ true. so if power isn't set it will use the value of 1
 power()
 ```
 
+:::{.notes}
+when a function is called without any arguments, it resorts to 
+all of the default arguments
+but, if there is an arguments _without_ a default value the code 
+errors out. thats because arguemnts without defaults are required arguments
+:::
+
 # handle with care
 
 . . . 
 
 `missing(arg)` checks if arguments are missing! 
 
+
+:::{.notes}
+so we should always be ready to handle missing arguments if we 
+need to.
+we can capture if arguments are missing using the ... yup. missing
+function. it returns a true or false value depending on if the 
+argument is missing or not
+:::
 
 # {auto-animate=true}
 
@@ -355,6 +402,14 @@ is_missing <- function(x) {
 }
 ```
 
+
+:::{.notes}
+missing can be super helpful if we want to have special 
+behavior if an acecks rgument is missing
+this function checks see if the argument `x` is missing or not
+very simple and quite useless honestly. 
+but it gets the point accross, right?
+:::
 
 # {auto-animate=true}
 
@@ -368,6 +423,11 @@ is_missing()
 
 
 
+:::{.notes}
+if we run the function without any arguments, guess what? 
+its missing!
+:::
+
 # {auto-animate=true}
 
 ```{r, eval = TRUE}
@@ -378,11 +438,22 @@ is_missing <- function(x) {
 is_missing("nope!")
 ```
 
+:::{.notes}
+and if we give it a value, there's not a missing value! 
+:::
+
 # abort early! 
 
 . . . 
 
 if things aren't looking good, `rlang::abort()`
+
+:::{.notes}
+now, what if when we have a missing argument we want to 
+exit the function? 
+rlangs abort function to the rescue
+:::
+
 
 
 # {auto-animate=true}
@@ -391,19 +462,59 @@ if things aren't looking good, `rlang::abort()`
 rlang::abort("something isn't right ...")
 ```
 
+
+:::{.notes}
+the simplest way to use this function is to pass a message to 
+abort and it will cause the function to stop and print out
+the error message
+:::
+
+
 # {auto-animate=true}
 
 ```{r, error=TRUE, eval = TRUE}
 rlang::abort("something isn't right ...")
 ```
 
+:::{.notes}
+like this
+:::
+
+# {auto-animate=true}
+
+```{r eval = TRUE}
+is_missing <- function(x) {
+  if (missing(x)) {
+    rlang::abort("`x` shouldn't be missing!")
+  }
+  x
+}
+```
+
+
+# {auto-animate=true}
+
+```{r eval = TRUE, error = TRUE}
+is_missing()
+```
+
+
+# {auto-animate=true}
+
+```{r eval = TRUE}
+is_missing("x isn't missing now!!!!")
+```
+
+
+# another example
+
 # 
 
 ```{r}
-#| code-line-numbers: "2|3|"
+#| code-line-numbers: "2|3|6"
 power <- function(x, power = 1) {
   if (power == 0) {
-    rlang::abort("i'm not letting this happen")
+    rlang::abort("power cannot be 0")
   }
   
   x ^ power
@@ -414,9 +525,10 @@ power <- function(x, power = 1) {
 # 
 
 ```{r, eval = TRUE, error = TRUE}
+#| code-line-numbers: "9"
 power <- function(x, power = 1) {
   if (power == 0) {
-    rlang::abort("i'm not letting this happen")
+    rlang::abort("power cannot be 0")
   }
   
   x ^ power
@@ -425,10 +537,83 @@ power <- function(x, power = 1) {
 power(3.14159, power = 0)
 ```
 
-# putting it together
+# 
+
+```{r, eval = TRUE, error = TRUE}
+#| code-line-numbers: "9"
+power <- function(x, power = 1) {
+  if (power == 0) {
+    rlang::abort("power cannot be 0")
+  }
+  
+  x ^ power
+}
+
+power(3.14159, power = 2)
+```
+
+# putting it together {auto-animate=true}
 
 
 ```{r}
+#| code-line-numbers: "1"
+average <- function(x, na.rm = TRUE) {
+}
+```
+
+# {auto-animate=true}
+
+
+```{r}
+#| code-line-numbers: "2|3"
+average <- function(x, na.rm = TRUE) {
+  if (!is.numeric(x)) {
+    rlang::abort("`x` must be numeric")
+  } 
+}
+```
+
+
+#  {auto-animate=true}
+
+
+```{r}
+#| code-line-numbers: "6"
+average <- function(x, na.rm = TRUE) {
+  if (!is.numeric(x)) {
+    rlang::abort("`x` must be numeric")
+  } 
+  
+  if (na.rm) {
+    
+  }
+}
+```
+
+
+# {auto-animate=true}
+
+
+```{r}
+#| code-line-numbers: "7|8"
+average <- function(x, na.rm = TRUE) {
+  if (!is.numeric(x)) {
+    rlang::abort("`x` must be numeric")
+  } 
+  
+  if (na.rm) {
+    missing_index <- is.na(x)
+    x <- x[!missing_index]
+  }
+}
+```
+
+
+# {auto-animate=true}
+
+
+```{r eval=TRUE}
+#| code-line-numbers: "11"
 average <- function(x, na.rm = TRUE) {
   if (!is.numeric(x)) {
     rlang::abort("`x` must be numeric")
@@ -441,22 +626,47 @@ average <- function(x, na.rm = TRUE) {
   
   sum(x) / length(x)
 }
-
-average(c(1:20),)
 ```
 
 
--------
 
-- arguments are placeholder objects
-- default arguments
+# 
 
-
-# gpt notes:
-
-> can you describe what functions are in R and why they are important for new progammers
-
-In R, a function is a set of instructions that perform a specific task. Functions are important for several reasons. First, they allow you to reuse code, which can save you time and make your programs more efficient. Second, they help you to organize your code and make it more readable, which can make it easier to understand and debug. Finally, many powerful features of R are implemented as functions, so understanding and using functions is essential for taking full advantage of the language.
+```{r, eval = TRUE}
+average(1:100)
+```
 
 
+#
 
+```{r, eval = TRUE, error = TRUE}
+average(c("one", "two", "three"))
+```
+
+#
+
+```{r, eval = TRUE, error = FALSE}
+average(c(1:10, NA, 11:20), na.rm = FALSE)
+```
+
+
+
+# that's the basics
+
+
+# recap
+
+##  functions:
+
+- are objects
+- that take inputs (arguments)
+- return an output
+- contain valid R code
+
+## make good functions by:
+
+- handle missing arguments
+- exiting the function early
+- checking types
+
+# write your own function
