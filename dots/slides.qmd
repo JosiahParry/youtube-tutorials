@@ -153,9 +153,9 @@ print_dots("my favorite letter is", letters[1:10])
 # a real example
 
 :::{.notes}
-this way of using dots, when you get it, is super super simple! and super powerful
+this way of using dots, when you get it, is  super powerful
 it's actually underpinning a majority of the functions in my package sfdep.
-i want to show you one of them as an example
+lets take a look at one of them as an example
 :::
 
 # 
@@ -164,8 +164,8 @@ i want to show you one of them as an example
 sfdep::local_g
 ```
 :::{.notes}
+here'es a helpful tip. if you remove the parens from a function it will print its definition
 this function takes 3 required arguments
-and other arguments that are optional to dots
 :::
 
 # {auto-animate=true}
@@ -181,14 +181,25 @@ function(x, nb, wt, alternative = "two.sided", ...) {
 
 
 :::{.notes}
-the reason why this is so powerful in this case is that 
+
+Line 1: 
+x, nb, wt, are required, alternative is set to a default value of two.sided
+and the dots as an argument.
+
+the reason why dots in this case is so powerful is that 
 it lets us take different objects, restructure them into the 
 required format, then pass in arguments to another function
 
-1. dots are defines as an argument
-2. an object called listw which is required by the spdep local C function is created
-3. then x and the new listw function are passed to localC
-4. if any other arguments are passed in via dots they are sent to spdep localC so if you want to change the number of simulations etc. 
+
+Line 2: 
+
+spdep uses a `listw` object which contains two lists. 1 for identifying neighbors and the 2nd to store the spatial weights for them.
+
+In the line we turn our arguments nb and wt into an object called listw
+
+Line 3:
+
+then x and the new listw function are passed to localG if any other arguments are passed in via dots they are sent to spdep
 :::
 
 # {auto-animate=true}
@@ -212,8 +223,34 @@ let's try calling the function as it is with its default arugments using
 spdep directly
 :::
 
+
 # {auto-animate=true} 
 
+
+
+```{r, eval = TRUE}
+sfdep::local_g(x, nb, wt)
+```
+
+
+:::{.notes}
+compare this to the function that calls spdep but with different arguments.
+the results are identical
+:::
+
+# 
+
+```{r, echo = TRUE, eval = TRUE}
+args(spdep::localG)
+```
+
+:::{.notes}
+
+spdep::localG takes additional arguments that aren't handled by sfdep directly
+we can try setting one of these arguments by dots
+:::
+
+# {auto-animate=true} 
 
 
 ```{r, eval = FALSE}
@@ -227,11 +264,129 @@ sfdep::local_g(x, nb, wt, return_internals = TRUE)
 ```
 
 :::{.notes}
-the localG function has an argument `retunr_internals` that additional data 
+
+the localG function has an argument `return_internals` that additional data 
 as an attribute. this isn't a defined argument in sfdep::local_g but it can 
 be accessed through dots
+
+when the object is printed the difference is quite pronounced! 
 :::
 
-# capturing dots
+# 
+
+
+:::{.notes}
+
+dots are useful when used by themselves with no special sauce. 
+but its not the only way that they can be utilized. we can actually 
+"capture" ... them
+:::
+
+# capture
+
+:::{.notes}
+by capture, i mean make them less ephemeral and "capturing" them into a 
+data format the is familiar and useful like a list
+:::
+
+
+# {auto-animate=true}
+
+```{r}
+#| code-line-numbers: "2|"
+dots <- function(...) {
+  list(...)
+}
+```
+
+:::{.notes}
+capturing dots is actually quite simple. 
+the `list()` function is acting like a pokeball. 
+capturing and taming our wild arguments
+:::
+
+# {auto-animate=true}
+
+```{r}
+dots <- function(...) {
+  list(...)
+}
+
+dots(hello = "world")
+```
+
+:::{.notes}
+if we pass in the value "world" to an argument "hello"
+we receive a named list
+this is only true, though, if we use argument names
+if we don't...
+:::
+
+# {auto-animate=true}
+
+```{r}
+dots("hello", "world")
+```
+
+:::{.notes}
+we are returned a list without names
+:::
+
+
+# use case 
+
+crafting data frames
+
+# {auto-animate=true}
+
+```{r}
+#| code-line-numbers: true
+data_frame <- function(...) {
+  dots <- list(...)
+  list2DF(dots)
+}
+```
+
+
+. . .
+
+```{r}
+data_frame(x = 10, 11)
+```
+
+# {auto-animate=true}
+
+```{r}
+data_frame <- function(...) {
+  dots <- list(...)
+  dots_names <- names(dots)
+  res <- list2DF(dots)
+  colnames(res) <- dots_names
+  
+  res
+}
+```
+
+# {auto-animate=true}
+
+```{r}
+data_frame <- function(...) {
+  dots <- list(...)
+  
+  dots_names <- names(dots)
+  
+  if (is.null(dots_names) || "" %in% dots_names) {
+    stop("all arguments must be named")
+  }
+  
+  res <- list2DF(dots)
+  colnames(res) <- dots_names
+  
+  res
+}
+```
+
+
+
 
 # capture a specific argument

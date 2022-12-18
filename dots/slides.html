@@ -653,7 +653,7 @@
 <section id="a-real-example" class="title-slide slide level1 center">
 <h1>a real example</h1>
 <aside class="notes">
-<p>this way of using dots, when you get it, is super super simple! and super powerful it’s actually underpinning a majority of the functions in my package sfdep. i want to show you one of them as an example</p>
+<p>this way of using dots, when you get it, is super powerful it’s actually underpinning a majority of the functions in my package sfdep. lets take a look at one of them as an example</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -680,12 +680,12 @@
   res &lt;- spdep::localG(x, listw, alternative = alternative, ...)
   unclass(res)
 }
-&lt;bytecode: 0x139b1de38&gt;
+&lt;bytecode: 0x12e862c48&gt;
 &lt;environment: namespace:sfdep&gt;</code></pre>
 </div>
 </div>
 <aside class="notes">
-<p>this function takes 3 required arguments and other arguments that are optional to dots</p>
+<p>here’es a helpful tip. if you remove the parens from a function it will print its definition this function takes 3 required arguments</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -709,13 +709,13 @@
 <span id="cb9-5" class="hljs-ln-code"><a href="#cb9-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
-<p>the reason why this is so powerful in this case is that it lets us take different objects, restructure them into the required format, then pass in arguments to another function</p>
-<ol type="1">
-<li>dots are defines as an argument</li>
-<li>an object called listw which is required by the spdep local C function is created</li>
-<li>then x and the new listw function are passed to localC</li>
-<li>if any other arguments are passed in via dots they are sent to spdep localC so if you want to change the number of simulations etc.</li>
-</ol>
+<p>Line 1: x, nb, wt, are required, alternative is set to a default value of two.sided and the dots as an argument.</p>
+<p>the reason why dots in this case is so powerful is that it lets us take different objects, restructure them into the required format, then pass in arguments to another function</p>
+<p>Line 2:</p>
+<p>spdep uses a <code>listw</code> object which contains two lists. 1 for identifying neighbors and the 2nd to store the spatial weights for them.</p>
+<p>In the line we turn our arguments nb and wt into an object called listw</p>
+<p>Line 3:</p>
+<p>then x and the new listw function are passed to localG if any other arguments are passed in via dots they are sent to spdep</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -775,7 +775,70 @@ attr(,"class")
 <section id="section-7" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb12-1" class="hljs-ln-code"><a href="#cb12-1"></a>sfdep<span class="sc">::</span><span class="fu">local_g</span>(x, nb, wt, <span class="at">return_internals =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb12-1" class="hljs-ln-code"><a href="#cb12-1"></a>sfdep<span class="sc">::</span><span class="fu">local_g</span>(x, nb, wt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  0.68466144 -0.40605202  0.07383123  2.38196237  3.49570413 -0.75967568
+ [7] -1.47075897 -0.80197945  0.63984614  3.68140093  2.71055652 -1.42476463
+[13] -1.52840421 -1.18797787 -0.40025085 -0.94197599 -1.42699800 -1.27442420
+[19]  0.95260051 -1.11613385 -0.87305053  1.53226882 -1.30140672 -0.48257276
+[25] -0.99299807  1.19613531  3.43442369  3.00599480 -0.13401838 -0.62625063
+[31]  0.10448258  1.96469389  1.24368535  1.24089584  0.63585914  0.59413290
+[37] -0.11850431  0.01405564 -0.02251821 -1.39782829 -0.06004508  0.44914259
+attr(,"cluster")
+ [1] High High High High High Low  Low  Low  Low  High High Low  Low  Low  Low 
+[16] Low  Low  Low  High Low  Low  Low  Low  Low  Low  High High High Low  Low 
+[31] High Low  Low  High High Low  Low  Low  Low  High Low  Low 
+Levels: Low High
+attr(,"gstari")
+[1] FALSE
+attr(,"call")
+spdep::localG(x = x, listw = listw, alternative = alternative)</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>compare this to the function that calls spdep but with different arguments. the results are identical</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="section-8" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">args</span>(spdep<span class="sc">::</span>localG)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (x, listw, zero.policy = NULL, spChk = NULL, return_internals = FALSE, 
+    GeoDa = FALSE, alternative = "two.sided") 
+NULL</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>spdep::localG takes additional arguments that aren’t handled by sfdep directly we can try setting one of these arguments by dots</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="section-9" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb16-1" class="hljs-ln-code"><a href="#cb16-1"></a>sfdep<span class="sc">::</span><span class="fu">local_g</span>(x, nb, wt, <span class="at">return_internals =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="cell">
@@ -844,7 +907,8 @@ spdep::localG(x = x, listw = listw, return_internals = TRUE,
 </div>
 </div>
 <aside class="notes">
-<p>the localG function has an argument <code>retunr_internals</code> that additional data as an attribute. this isn’t a defined argument in sfdep::local_g but it can be accessed through dots</p>
+<p>the localG function has an argument <code>return_internals</code> that additional data as an attribute. this isn’t a defined argument in sfdep::local_g but it can be accessed through dots</p>
+<p>when the object is printed the difference is quite pronounced!</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -859,9 +923,173 @@ spdep::localG(x = x, listw = listw, return_internals = TRUE,
 </div>
 </section>
 
-<section id="capturing-dots" class="title-slide slide level1 center">
-<h1>capturing dots</h1>
+<section id="section-10" class="title-slide slide level1 center">
+<h1></h1>
+<aside class="notes">
+<p>dots are useful when used by themselves with no special sauce. but its not the only way that they can be utilized. we can actually “capture” … them</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 
+<section id="capture" class="title-slide slide level1 center">
+<h1>capture</h1>
+<aside class="notes">
+<p>by capture, i mean make them less ephemeral and “capturing” them into a data format the is familiar and useful like a list</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="section-11" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="2|"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb18-1" class="hljs-ln-code"><a href="#cb18-1"></a>dots <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb18-2" class="hljs-ln-code"><a href="#cb18-2"></a>  <span class="fu">list</span>(...)</span>
+<span id="cb18-3" class="hljs-ln-code"><a href="#cb18-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside class="notes">
+<p>capturing dots is actually quite simple. the <code>list()</code> function is acting like a pokeball. capturing and taming our wild arguments</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="section-12" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb19-1" class="hljs-ln-code"><a href="#cb19-1"></a>dots <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb19-2" class="hljs-ln-code"><a href="#cb19-2"></a>  <span class="fu">list</span>(...)</span>
+<span id="cb19-3" class="hljs-ln-code"><a href="#cb19-3"></a>}</span>
+<span id="cb19-4" class="hljs-ln-code"><a href="#cb19-4"></a></span>
+<span id="cb19-5" class="hljs-ln-code"><a href="#cb19-5"></a><span class="fu">dots</span>(<span class="at">hello =</span> <span class="st">"world"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$hello
+[1] "world"</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>if we pass in the value “world” to an argument “hello” we receive a named list this is only true, though, if we use argument names if we don’t…</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="section-13" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb21-1" class="hljs-ln-code"><a href="#cb21-1"></a><span class="fu">dots</span>(<span class="st">"hello"</span>, <span class="st">"world"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "hello"
+
+[[2]]
+[1] "world"</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>we are returned a list without names</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
+<section id="use-case" class="title-slide slide level1 center">
+<h1>use case</h1>
+<p>crafting data frames</p>
+</section>
+
+<section id="section-14" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23" data-code-line-numbers="true"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>data_frame <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  dots <span class="ot">&lt;-</span> <span class="fu">list</span>(...)</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">list2DF</span>(dots)</span>
+<span id="cb23-4"><a href="#cb23-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">data_frame</span>(<span class="at">x =</span> <span class="dv">10</span>, <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   x   
+1 10 11</code></pre>
+</div>
+</div>
+</div>
+</section>
+
+<section id="section-15" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb26-1" class="hljs-ln-code"><a href="#cb26-1"></a>data_frame <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb26-2" class="hljs-ln-code"><a href="#cb26-2"></a>  dots <span class="ot">&lt;-</span> <span class="fu">list</span>(...)</span>
+<span id="cb26-3" class="hljs-ln-code"><a href="#cb26-3"></a>  dots_names <span class="ot">&lt;-</span> <span class="fu">names</span>(dots)</span>
+<span id="cb26-4" class="hljs-ln-code"><a href="#cb26-4"></a>  res <span class="ot">&lt;-</span> <span class="fu">list2DF</span>(dots)</span>
+<span id="cb26-5" class="hljs-ln-code"><a href="#cb26-5"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> dots_names</span>
+<span id="cb26-6" class="hljs-ln-code"><a href="#cb26-6"></a>  </span>
+<span id="cb26-7" class="hljs-ln-code"><a href="#cb26-7"></a>  res</span>
+<span id="cb26-8" class="hljs-ln-code"><a href="#cb26-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="section-16" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb27-1" class="hljs-ln-code"><a href="#cb27-1"></a>data_frame <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb27-2" class="hljs-ln-code"><a href="#cb27-2"></a>  dots <span class="ot">&lt;-</span> <span class="fu">list</span>(...)</span>
+<span id="cb27-3" class="hljs-ln-code"><a href="#cb27-3"></a>  </span>
+<span id="cb27-4" class="hljs-ln-code"><a href="#cb27-4"></a>  dots_names <span class="ot">&lt;-</span> <span class="fu">names</span>(dots)</span>
+<span id="cb27-5" class="hljs-ln-code"><a href="#cb27-5"></a>  </span>
+<span id="cb27-6" class="hljs-ln-code"><a href="#cb27-6"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(dots_names) <span class="sc">||</span> <span class="st">""</span> <span class="sc">%in%</span> dots_names) {</span>
+<span id="cb27-7" class="hljs-ln-code"><a href="#cb27-7"></a>    <span class="fu">stop</span>(<span class="st">"all arguments must be named"</span>)</span>
+<span id="cb27-8" class="hljs-ln-code"><a href="#cb27-8"></a>  }</span>
+<span id="cb27-9" class="hljs-ln-code"><a href="#cb27-9"></a>  </span>
+<span id="cb27-10" class="hljs-ln-code"><a href="#cb27-10"></a>  res <span class="ot">&lt;-</span> <span class="fu">list2DF</span>(dots)</span>
+<span id="cb27-11" class="hljs-ln-code"><a href="#cb27-11"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> dots_names</span>
+<span id="cb27-12" class="hljs-ln-code"><a href="#cb27-12"></a>  </span>
+<span id="cb27-13" class="hljs-ln-code"><a href="#cb27-13"></a>  res</span>
+<span id="cb27-14" class="hljs-ln-code"><a href="#cb27-14"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 
 <section id="capture-a-specific-argument" class="title-slide slide level1 center">
