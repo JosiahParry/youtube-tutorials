@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>GIS fundamentals:</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="script_files/libs/clipboard/clipboard.min.js"></script>
+<script src="script_files/libs/quarto-html/quarto.js"></script>
+<script src="script_files/libs/quarto-html/popper.min.js"></script>
+<script src="script_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="script_files/libs/quarto-html/anchor.min.js"></script>
+<link href="script_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="script_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="script_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="script_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="script_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">GIS fundamentals:</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Hey, fellow programmers and geospatial nerds. Josiah here. It’s been a while since my last video. The subject for this video is one a topic that feels so rudimentary, but is often skipped over. It’s a fundamental that folks like myself don’t truly learn until later in life. It’s got to do with vector data: points lines and polygons.</p>
+<p>I’ve been doing geospatial analysis in some way, shape, or form since 2014. Only recently have I felt I truly understood vector data. We’re going to walk through the <a href="https://www.ogc.org/standard/sfa/">simple feature standard</a> from the <a href="https://www.ogc.org/">Open Geospatial Consortium (OGC)</a>.</p>
+<div class="callout-note callout callout-style-simple">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The OGC is a neutral organization who’s sole purpose is to bolster and organize the geospatial community through “publicly available and open standards” that drive innovation and ensure interoperability across tech stacks.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</div>
+</div>
+</div>
+<p>Let’s think about all the different types of data we can gather about the world around us: locations of cities, roads, UFO sightings, rivers, houses, and quite literally anything that can be observed in the world around us (including things on other planets). All of this data can be represented by simple geometry features such as points, lines, and polygons. The Simple Feature Standard gives us a way to do that. The SF standard makes it easy to describe geometries in a consistent way using <em>geometric primitives</em> so that they can be understood no matter what programming language or software is being used.</p>
+<div class="callout-tip callout callout-style-simple">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>A geometric primitive is an <em>atomic</em> unit. It is the smallest unit that a shape can be broken down into. Geometric primitives are the building blocks for all other geometries.</p>
+</div>
+</div>
+</div>
+<section id="ogc-and-standards" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="ogc-and-standards">OGC and Standards</h2>
+<blockquote class="blockquote">
+<p>“This standard enumerates the requirements for defining and representing geographic features in geographic information systems, applications and transmittable data formats.”</p>
+</blockquote>
+<p>The simple feature standard (SF) defines how vector data is recorded and transmitted. Of course data need to be recorded and transmitted, but is a whole standard really necessary? What does it mean to be a standard and why are they important? Well, that gets to the core of why the OGC exists if you ask me.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>There could, and maybe should, be a whole video dedicated to the OGC and the work that they do. I’ll provide links in the description and this will be available as a blog on my website.</p>
+</div></div><p>OGC standards formalize how something should be built, function, or behave. Because they are generally agreed upon and fairly exhaustive, they ensure that users can expect the same behavior regardless of what tool or language they may be using. Standards are critical for the open source community and commercial entities that rely upon open source. These standards define, in words, how software should behave.</p>
+</section>
+<section id="simple-feature-standard" class="level2">
+<h2 class="anchored" data-anchor-id="simple-feature-standard">Simple Feature Standard</h2>
+<p>The simple feature (SF) standard is broken up into two parts. The first defines the “common architecture” and the second defines how a SQL interface should interact with the simple features. We don’t care about SQL today. Only about the first part.</p>
+<p>We’re going to get quite specific. So get ready for a journey.</p>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>https://www.ogc.org/about/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
