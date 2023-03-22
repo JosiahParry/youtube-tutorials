@@ -1,7 +1,5 @@
 ---
 title: "GIS fundamentals:"
-format: html
-callout-appearance: simple
 ---
 
 Hey, fellow programmers and geospatial nerds. Josiah here. It’s been a while since my last video. The subject for this video is one a topic that feels so rudimentary, but is often skipped over. It's a fundamental that folks like myself don't truly learn until later in life. It’s got to do with vector data: points lines and polygons. 

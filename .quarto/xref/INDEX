@@ -31,5 +31,14 @@
   },
   "simple-features/script.qmd": {
     "script.html": "f26ed677"
+  },
+  "index.qmd": {
+    "index.html": "3deb2628"
+  },
+  "writing-functions-shorts/functions-intermediate.qmd": {
+    "functions-intermediate.html": "667a666d"
+  },
+  "about.qmd": {
+    "about.html": "5281d7be"
   }
 }

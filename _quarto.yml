@@ -1,5 +1,30 @@
 project:
+  type: website
+
+website:
   title: "youtube-tutorials"
+  sidebar:
+    style: "docked"
+    contents:
+      - href: index.qmd
+        text: home
+      - about.qmd
+      - href: simple-features/script.qmd
+        text: Simple Features
+      
 
-
+format:
+  html:
+    twitter-card:
+      creator: "@josiahparry"
+      card-style: summary_large_image
+    toc: true
+    toc-location: "left"
+    code-link: true
+    anchor-sections: true
+    fig-cap-location: margin
+    reference-location: margin
+    footnotes-hover: true
+    fontsize: 1em
+    # theme: lux
 
