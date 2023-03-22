@@ -28,5 +28,8 @@
   },
   "dots/slides.qmd": {
     "slides.html": "05c47af5"
+  },
+  "simple-features/script.qmd": {
+    "script.html": "f26ed677"
   }
 }

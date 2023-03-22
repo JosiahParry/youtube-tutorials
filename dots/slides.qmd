@@ -351,42 +351,241 @@ data_frame <- function(...) {
 . . .
 
 ```{r}
-data_frame(x = 10, 11)
+data_frame(x = 10, y = 20)
 ```
+
+
+:::{.notes}
+we can define a simple function that 
+captures dots into a list that then passes that list 
+to list2DF to create a data frame
+
+. . . 
+
+we can use it to create a data frame with two columns x and y
+but what about unnamed arguments to dots? 
+. . . 
+
+this works but it has unnamed columns. that's bad behaviortw
+:::
+
+
 
 # {auto-animate=true}
 
 ```{r}
+#| code-line-numbers: "3"
 data_frame <- function(...) {
   dots <- list(...)
   dots_names <- names(dots)
-  res <- list2DF(dots)
-  colnames(res) <- dots_names
-  
-  res
+
+  list2DF(dots)
+
 }
 ```
 
+
+
 # {auto-animate=true}
 
 ```{r}
+#| code-line-numbers: "5,6,7"
 data_frame <- function(...) {
   dots <- list(...)
-  
   dots_names <- names(dots)
-  
+
   if (is.null(dots_names) || "" %in% dots_names) {
     stop("all arguments must be named")
   }
-  
-  res <- list2DF(dots)
-  colnames(res) <- dots_names
-  
-  res
+
+  list2DF(dots)
+
 }
 ```
 
 
 
+# {auto-animate=true}
 
-# capture a specific argument
+```{r, error = TRUE}
+data_frame(1:10, letters[1:10])
+```
+
+. . .
+
+```{r}
+data_frame(id = 1:10, alphabet = letters[1:10])
+```
+
+
+# dots helpers
+
+. . .
+rarely useful, but good to know!
+
+# reference by position
+
+. . .
+
+each argument as `..1`, `..2`, `..3`, `..n`
+
+# {auto-animate=true}
+
+```{r}
+add2 <- function(...) {
+  ..1 + ..2
+}
+```
+
+. . .
+
+```{r}
+add2(3, .14)
+```
+
+# `...length()`
+
+. . . 
+
+how many arguments? 
+
+
+# 
+
+```{r}
+nargs <- function(...) {
+  ...length()
+}
+```
+
+
+. . .
+
+```{r}
+nargs(1, 2, 3, 4, 5)
+```
+
+# arg `n`
+
+`...elt(n)`
+
+
+# first and last args
+
+```{r}
+#| code-line-numbers: "2|3|4|6"
+first_last <- function(...) {
+ arg1 <- ..1 
+ n <- ...length()
+ last_arg <- ...elt(n)
+ 
+ list(arg1, last_arg)
+}
+```
+
+
+. . .
+
+```{r}
+first_last("first argument", 2, NA, Inf)
+```
+
+
+# WARNING:
+
+. . .
+
+unused dots are "swallowed" 
+
+
+# 
+
+```{r}
+add2(3, 0.14, 10)
+```
+
+
+# check yer dots
+
+`r-lib/ellipsis`: Tools for Working with ...
+
+
+# 
+
+`ellipsis::check_dots_used()`
+
+- error if any arguments passed to dots aren't used
+
+# 
+
+```{r}
+#| code-line-numbers: "2"
+add2 <- function(...) {
+  ellipsis::check_dots_used()
+ 
+  ..1 + ..2
+}
+```
+
+# 
+
+```{r}
+add2(3, 0.14)
+```
+
+. . .
+
+```{r, error = TRUE}
+add2(3, 0.14, 0.0015)
+```
+
+# `{ellipsis}` helpers
+
+- `check_dots_empty()`
+- `check_dots_unnamed()`
+
+
+# 
+
+```{r}
+#| code-line-numbers: "3"
+data_frame <- function(...) {
+  dots <- list(...)
+  ellipsis::check_dots_unnamed()
+  
+  list2DF(dots)
+}
+```
+
+. . .
+
+```{r, error = TRUE}
+data_frame(y = pi, exp(1))
+```
+
+# but wait, there's more! 
+
+. . . 
+
+but that's for a later time
+
+# `{rlang}` dynamic dots 
+
+https://rlang.r-lib.org/reference/dyn-dots.html
+
+
+## recap
+
+Dots can: 
+
+- pass arguments from one function to another
+- be collected using `list()`
+- be sneaky and "swallow" arguments
+
+. . . 
+
+You should check them with `{ellipsis}`
+
+# what's next?
+
+# thanks! 

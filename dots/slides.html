@@ -680,7 +680,7 @@
   res &lt;- spdep::localG(x, listw, alternative = alternative, ...)
   unclass(res)
 }
-&lt;bytecode: 0x12e862c48&gt;
+&lt;bytecode: 0x111bcdd28&gt;
 &lt;environment: namespace:sfdep&gt;</code></pre>
 </div>
 </div>
@@ -1049,51 +1049,297 @@ spdep::localG(x = x, listw = listw, return_internals = TRUE,
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">data_frame</span>(<span class="at">x =</span> <span class="dv">10</span>, <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">data_frame</span>(<span class="at">x =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   x   
-1 10 11</code></pre>
+<pre><code>   x  y
+1 10 20</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>we can define a simple function that captures dots into a list that then passes that list to list2DF to create a data frame</p>
+<p>. . .</p>
+<p>we can use it to create a data frame with two columns x and y but what about unnamed arguments to dots? . . .</p>
+<p>this works but it has unnamed columns. that’s bad behaviortw</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </div>
 </section>
 
 <section id="section-15" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb26-1" class="hljs-ln-code"><a href="#cb26-1"></a>data_frame <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<div class="sourceCode cell-code" id="cb26" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb26-1" class="hljs-ln-code"><a href="#cb26-1"></a>data_frame <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
 <span id="cb26-2" class="hljs-ln-code"><a href="#cb26-2"></a>  dots <span class="ot">&lt;-</span> <span class="fu">list</span>(...)</span>
 <span id="cb26-3" class="hljs-ln-code"><a href="#cb26-3"></a>  dots_names <span class="ot">&lt;-</span> <span class="fu">names</span>(dots)</span>
-<span id="cb26-4" class="hljs-ln-code"><a href="#cb26-4"></a>  res <span class="ot">&lt;-</span> <span class="fu">list2DF</span>(dots)</span>
-<span id="cb26-5" class="hljs-ln-code"><a href="#cb26-5"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> dots_names</span>
-<span id="cb26-6" class="hljs-ln-code"><a href="#cb26-6"></a>  </span>
-<span id="cb26-7" class="hljs-ln-code"><a href="#cb26-7"></a>  res</span>
-<span id="cb26-8" class="hljs-ln-code"><a href="#cb26-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-4" class="hljs-ln-code"><a href="#cb26-4"></a></span>
+<span id="cb26-5" class="hljs-ln-code"><a href="#cb26-5"></a>  <span class="fu">list2DF</span>(dots)</span>
+<span id="cb26-6" class="hljs-ln-code"><a href="#cb26-6"></a></span>
+<span id="cb26-7" class="hljs-ln-code"><a href="#cb26-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
 <section id="section-16" class="title-slide slide level1 center" data-auto-animate="true">
 <h1 data-id="quarto-animate-title"></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb27-1" class="hljs-ln-code"><a href="#cb27-1"></a>data_frame <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<div class="sourceCode cell-code" id="cb27" data-code-line-numbers="5,6,7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb27-1" class="hljs-ln-code"><a href="#cb27-1"></a>data_frame <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
 <span id="cb27-2" class="hljs-ln-code"><a href="#cb27-2"></a>  dots <span class="ot">&lt;-</span> <span class="fu">list</span>(...)</span>
-<span id="cb27-3" class="hljs-ln-code"><a href="#cb27-3"></a>  </span>
-<span id="cb27-4" class="hljs-ln-code"><a href="#cb27-4"></a>  dots_names <span class="ot">&lt;-</span> <span class="fu">names</span>(dots)</span>
-<span id="cb27-5" class="hljs-ln-code"><a href="#cb27-5"></a>  </span>
-<span id="cb27-6" class="hljs-ln-code"><a href="#cb27-6"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(dots_names) <span class="sc">||</span> <span class="st">""</span> <span class="sc">%in%</span> dots_names) {</span>
-<span id="cb27-7" class="hljs-ln-code"><a href="#cb27-7"></a>    <span class="fu">stop</span>(<span class="st">"all arguments must be named"</span>)</span>
-<span id="cb27-8" class="hljs-ln-code"><a href="#cb27-8"></a>  }</span>
-<span id="cb27-9" class="hljs-ln-code"><a href="#cb27-9"></a>  </span>
-<span id="cb27-10" class="hljs-ln-code"><a href="#cb27-10"></a>  res <span class="ot">&lt;-</span> <span class="fu">list2DF</span>(dots)</span>
-<span id="cb27-11" class="hljs-ln-code"><a href="#cb27-11"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> dots_names</span>
-<span id="cb27-12" class="hljs-ln-code"><a href="#cb27-12"></a>  </span>
-<span id="cb27-13" class="hljs-ln-code"><a href="#cb27-13"></a>  res</span>
-<span id="cb27-14" class="hljs-ln-code"><a href="#cb27-14"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-3" class="hljs-ln-code"><a href="#cb27-3"></a>  dots_names <span class="ot">&lt;-</span> <span class="fu">names</span>(dots)</span>
+<span id="cb27-4" class="hljs-ln-code"><a href="#cb27-4"></a></span>
+<span id="cb27-5" class="hljs-ln-code"><a href="#cb27-5"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(dots_names) <span class="sc">||</span> <span class="st">""</span> <span class="sc">%in%</span> dots_names) {</span>
+<span id="cb27-6" class="hljs-ln-code"><a href="#cb27-6"></a>    <span class="fu">stop</span>(<span class="st">"all arguments must be named"</span>)</span>
+<span id="cb27-7" class="hljs-ln-code"><a href="#cb27-7"></a>  }</span>
+<span id="cb27-8" class="hljs-ln-code"><a href="#cb27-8"></a></span>
+<span id="cb27-9" class="hljs-ln-code"><a href="#cb27-9"></a>  <span class="fu">list2DF</span>(dots)</span>
+<span id="cb27-10" class="hljs-ln-code"><a href="#cb27-10"></a></span>
+<span id="cb27-11" class="hljs-ln-code"><a href="#cb27-11"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
-<section id="capture-a-specific-argument" class="title-slide slide level1 center">
-<h1>capture a specific argument</h1>
+<section id="section-17" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">data_frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in data_frame(1:10, letters[1:10]): all arguments must be named</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">data_frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">alphabet =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id alphabet
+1   1        a
+2   2        b
+3   3        c
+4   4        d
+5   5        e
+6   6        f
+7   7        g
+8   8        h
+9   9        i
+10 10        j</code></pre>
+</div>
+</div>
+</div>
+</section>
+
+<section id="dots-helpers" class="title-slide slide level1 center">
+<h1>dots helpers</h1>
+<p>. . . rarely useful, but good to know!</p>
+</section>
+
+<section id="reference-by-position" class="title-slide slide level1 center">
+<h1>reference by position</h1>
+<div class="fragment">
+<p>each argument as <code>..1</code>, <code>..2</code>, <code>..3</code>, <code>..n</code></p>
+</div>
+</section>
+
+<section id="section-18" class="title-slide slide level1 center" data-auto-animate="true">
+<h1 data-id="quarto-animate-title"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>add2 <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb32-2"><a href="#cb32-2"></a>  ..<span class="dv">1</span> <span class="sc">+</span> ..<span class="dv">2</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">add2</span>(<span class="dv">3</span>, .<span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.14</code></pre>
+</div>
+</div>
+</div>
+</section>
+
+<section id="length" class="title-slide slide level1 center">
+<h1><code>...length()</code></h1>
+<div class="fragment">
+<p>how many arguments?</p>
+</div>
+</section>
+
+<section id="section-19" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>nargs <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">...length</span>()</span>
+<span id="cb35-3"><a href="#cb35-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">nargs</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+</div>
+</section>
+
+<section id="arg-n" class="title-slide slide level1 center">
+<h1>arg <code>n</code></h1>
+<p><code>...elt(n)</code></p>
+</section>
+
+<section id="first-and-last-args" class="title-slide slide level1 center">
+<h1>first and last args</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38" data-code-line-numbers="2|3|4|6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>first_last <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb38-2"><a href="#cb38-2"></a> arg1 <span class="ot">&lt;-</span> ..<span class="dv">1</span> </span>
+<span id="cb38-3"><a href="#cb38-3"></a> n <span class="ot">&lt;-</span> <span class="fu">...length</span>()</span>
+<span id="cb38-4"><a href="#cb38-4"></a> last_arg <span class="ot">&lt;-</span> <span class="fu">...elt</span>(n)</span>
+<span id="cb38-5"><a href="#cb38-5"></a> </span>
+<span id="cb38-6"><a href="#cb38-6"></a> <span class="fu">list</span>(arg1, last_arg)</span>
+<span id="cb38-7"><a href="#cb38-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">first_last</span>(<span class="st">"first argument"</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "first argument"
+
+[[2]]
+[1] Inf</code></pre>
+</div>
+</div>
+</div>
+</section>
+
+<section id="warning" class="title-slide slide level1 center">
+<h1>WARNING:</h1>
+<div class="fragment">
+<p>unused dots are “swallowed”</p>
+</div>
+</section>
+
+<section id="section-20" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">add2</span>(<span class="dv">3</span>, <span class="fl">0.14</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.14</code></pre>
+</div>
+</div>
+</section>
+
+<section id="check-yer-dots" class="title-slide slide level1 center">
+<h1>check yer dots</h1>
+<p><code>r-lib/ellipsis</code>: Tools for Working with …</p>
+</section>
+
+<section id="section-21" class="title-slide slide level1 center">
+<h1></h1>
+<p><code>ellipsis::check_dots_used()</code></p>
+<ul>
+<li class="fragment">error if any arguments passed to dots aren’t used</li>
+</ul>
+</section>
+
+<section id="section-22" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>add2 <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb43-2"><a href="#cb43-2"></a>  ellipsis<span class="sc">::</span><span class="fu">check_dots_used</span>()</span>
+<span id="cb43-3"><a href="#cb43-3"></a> </span>
+<span id="cb43-4"><a href="#cb43-4"></a>  ..<span class="dv">1</span> <span class="sc">+</span> ..<span class="dv">2</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="section-23" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">add2</span>(<span class="dv">3</span>, <span class="fl">0.14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.14</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">add2</span>(<span class="dv">3</span>, <span class="fl">0.14</span>, <span class="fl">0.0015</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `add2()`:
+! Arguments in `...` must be used.
+✖ Problematic argument:
+• ..1 = 0.0015
+ℹ Did you misspell an argument name?</code></pre>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ellipsis-helpers" class="title-slide slide level1 center">
+<h1><code>{ellipsis}</code> helpers</h1>
+<ul>
+<li class="fragment"><code>check_dots_empty()</code></li>
+<li class="fragment"><code>check_dots_unnamed()</code></li>
+</ul>
+</section>
+
+<section id="section-24" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>data_frame <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb48-2"><a href="#cb48-2"></a>  dots <span class="ot">&lt;-</span> <span class="fu">list</span>(...)</span>
+<span id="cb48-3"><a href="#cb48-3"></a>  ellipsis<span class="sc">::</span><span class="fu">check_dots_unnamed</span>()</span>
+<span id="cb48-4"><a href="#cb48-4"></a>  </span>
+<span id="cb48-5"><a href="#cb48-5"></a>  <span class="fu">list2DF</span>(dots)</span>
+<span id="cb48-6"><a href="#cb48-6"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">data_frame</span>(<span class="at">y =</span> pi, <span class="fu">exp</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `data_frame()`:
+! Arguments in `...` must be passed by position, not name.
+✖ Problematic argument:
+• y = pi</code></pre>
+</div>
+</div>
+</div>
+</section>
+
+<section id="but-wait-theres-more" class="title-slide slide level1 center">
+<h1>but wait, there’s more!</h1>
+<div class="fragment">
+<p>but that’s for a later time</p>
+</div>
+</section>
+
+<section>
+<section id="rlang-dynamic-dots" class="title-slide slide level1 center">
+<h1><code>{rlang}</code> dynamic dots</h1>
+<p>https://rlang.r-lib.org/reference/dyn-dots.html</p>
+</section>
+<section id="recap" class="slide level2">
+<h2>recap</h2>
+<p>Dots can:</p>
+<ul>
+<li class="fragment">pass arguments from one function to another</li>
+<li class="fragment">be collected using <code>list()</code></li>
+<li class="fragment">be sneaky and “swallow” arguments</li>
+</ul>
+<div class="fragment">
+<p>You should check them with <code>{ellipsis}</code></p>
+</div>
+</section></section>
+<section id="whats-next" class="title-slide slide level1 center">
+<h1>what’s next?</h1>
+
+</section>
+
+<section id="thanks" class="title-slide slide level1 center">
+<h1>thanks!</h1>
 <div class="footer footer-default">
 
 </div>
