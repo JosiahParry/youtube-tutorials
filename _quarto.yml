@@ -10,6 +10,8 @@ website:
       - href: index.qmd
         text: home
       - about.qmd
+      - href: dots/slides.qmd
+        text: Dots ... 
       - href: simple-features/script.qmd
         text: Simple Features
       

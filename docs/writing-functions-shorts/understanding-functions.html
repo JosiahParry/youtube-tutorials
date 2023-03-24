@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>youtube-tutorials - understanding functions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script src="understanding-functions_files/libs/core-js-2.5.3/shim.min.js"></script><script src="understanding-functions_files/libs/react-17.0.0/react.min.js"></script><script src="understanding-functions_files/libs/react-17.0.0/react-dom.min.js"></script><script src="understanding-functions_files/libs/reactwidget-1.0.0/react-tools.js"></script><script src="understanding-functions_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="understanding-functions_files/libs/reactable-binding-0.2.3/reactable.js"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<meta name="twitter:title" content="youtube-tutorials - understanding functions">
+<meta name="twitter:creator" content="@josiahparry">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">understanding functions</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">youtube-tutorials</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">home</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link">About</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dots/slides.html" class="sidebar-item-text sidebar-link">Dots …</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../simple-features/script.html" class="sidebar-item-text sidebar-link">Simple Features</a>
+  </div>
+</li>
+    </ul>
+</div>
+    <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#r-is-functional" id="toc-r-is-functional" class="nav-link active" data-scroll-target="#r-is-functional">R is <em>functional</em></a></li>
+  <li><a href="#y-mx-b" id="toc-y-mx-b" class="nav-link" data-scroll-target="#y-mx-b"><span class="math inline">\(y = mx + b\)</span></a></li>
+  <li><a href="#fx-mx-b" id="toc-fx-mx-b" class="nav-link" data-scroll-target="#fx-mx-b"><span class="math inline">\(f(x) = mx + b\)</span></a></li>
+  <li><a href="#fx-mx-b-1" id="toc-fx-mx-b-1" class="nav-link" data-scroll-target="#fx-mx-b-1"><span class="math inline">\(f(x) = mx + b\)</span></a></li>
+  <li><a href="#functions-do-things" id="toc-functions-do-things" class="nav-link" data-scroll-target="#functions-do-things">functions do things</a></li>
+  <li><a href="#input-implies-output" id="toc-input-implies-output" class="nav-link" data-scroll-target="#input-implies-output"><span class="math inline">\(input \implies output\)</span></a></li>
+  <li><a href="#anatomy-of-a-function" id="toc-anatomy-of-a-function" class="nav-link" data-scroll-target="#anatomy-of-a-function">anatomy of a function</a></li>
+  <li><a href="#anatomy-of-a-function-1" id="toc-anatomy-of-a-function-1" class="nav-link" data-scroll-target="#anatomy-of-a-function-1">anatomy of a function</a></li>
+  <li><a href="#anatomy-of-a-function-2" id="toc-anatomy-of-a-function-2" class="nav-link" data-scroll-target="#anatomy-of-a-function-2">anatomy of a function</a></li>
+  <li><a href="#anatomy-of-a-function-3" id="toc-anatomy-of-a-function-3" class="nav-link" data-scroll-target="#anatomy-of-a-function-3">anatomy of a function</a></li>
+  <li><a href="#anatomy-of-a-function-4" id="toc-anatomy-of-a-function-4" class="nav-link" data-scroll-target="#anatomy-of-a-function-4">anatomy of a function</a></li>
+  <li><a href="#anatomy-of-a-function-5" id="toc-anatomy-of-a-function-5" class="nav-link" data-scroll-target="#anatomy-of-a-function-5">anatomy of a function</a></li>
+  <li><a href="#anatomy-of-a-function-6" id="toc-anatomy-of-a-function-6" class="nav-link" data-scroll-target="#anatomy-of-a-function-6">anatomy of a function</a></li>
+  <li><a href="#anatomy-of-a-function-7" id="toc-anatomy-of-a-function-7" class="nav-link" data-scroll-target="#anatomy-of-a-function-7">anatomy of a function</a></li>
+  <li><a href="#anatomy-of-a-function-8" id="toc-anatomy-of-a-function-8" class="nav-link" data-scroll-target="#anatomy-of-a-function-8">anatomy of a function</a></li>
+  <li>
+<a href="#anatomy-of-a-function-9" id="toc-anatomy-of-a-function-9" class="nav-link" data-scroll-target="#anatomy-of-a-function-9">anatomy of a function</a>
+  <ul class="collapse">
+<li><a href="#functions-rock-because" id="toc-functions-rock-because" class="nav-link" data-scroll-target="#functions-rock-because">functions rock because…</a></li>
+  </ul>
+</li>
+  <li><a href="#making-the-slope-intercept-function" id="toc-making-the-slope-intercept-function" class="nav-link" data-scroll-target="#making-the-slope-intercept-function">making the slope intercept function</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"></a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"></a></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5"></a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6"></a></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7"></a></li>
+  <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8"></a></li>
+  <li>
+<a href="#function-arguments" id="toc-function-arguments" class="nav-link" data-scroll-target="#function-arguments">function arguments</a>
+  <ul class="collapse">
+<li><a href="#function-arguments-1" id="toc-function-arguments-1" class="nav-link" data-scroll-target="#function-arguments-1">function arguments</a></li>
+  </ul>
+</li>
+  <li><a href="#default-arguments" id="toc-default-arguments" class="nav-link" data-scroll-target="#default-arguments">default arguments</a></li>
+  <li><a href="#default-arguments-1" id="toc-default-arguments-1" class="nav-link" data-scroll-target="#default-arguments-1">default arguments</a></li>
+  <li><a href="#missing-defaults-are-required" id="toc-missing-defaults-are-required" class="nav-link" data-scroll-target="#missing-defaults-are-required">missing defaults are required</a></li>
+  <li><a href="#handle-with-care" id="toc-handle-with-care" class="nav-link" data-scroll-target="#handle-with-care">handle with care</a></li>
+  <li><a href="#section-9" id="toc-section-9" class="nav-link" data-scroll-target="#section-9"></a></li>
+  <li><a href="#section-10" id="toc-section-10" class="nav-link" data-scroll-target="#section-10"></a></li>
+  <li><a href="#section-11" id="toc-section-11" class="nav-link" data-scroll-target="#section-11"></a></li>
+  <li><a href="#abort-early" id="toc-abort-early" class="nav-link" data-scroll-target="#abort-early">abort early!</a></li>
+  <li><a href="#section-12" id="toc-section-12" class="nav-link" data-scroll-target="#section-12"></a></li>
+  <li><a href="#section-13" id="toc-section-13" class="nav-link" data-scroll-target="#section-13"></a></li>
+  <li><a href="#section-14" id="toc-section-14" class="nav-link" data-scroll-target="#section-14"></a></li>
+  <li><a href="#section-15" id="toc-section-15" class="nav-link" data-scroll-target="#section-15"></a></li>
+  <li><a href="#section-16" id="toc-section-16" class="nav-link" data-scroll-target="#section-16"></a></li>
+  <li><a href="#another-example" id="toc-another-example" class="nav-link" data-scroll-target="#another-example">another example</a></li>
+  <li><a href="#section-17" id="toc-section-17" class="nav-link" data-scroll-target="#section-17"></a></li>
+  <li><a href="#section-18" id="toc-section-18" class="nav-link" data-scroll-target="#section-18"></a></li>
+  <li><a href="#section-19" id="toc-section-19" class="nav-link" data-scroll-target="#section-19"></a></li>
+  <li><a href="#putting-it-together" id="toc-putting-it-together" class="nav-link" data-scroll-target="#putting-it-together">putting it together</a></li>
+  <li><a href="#section-20" id="toc-section-20" class="nav-link" data-scroll-target="#section-20"></a></li>
+  <li><a href="#section-21" id="toc-section-21" class="nav-link" data-scroll-target="#section-21"></a></li>
+  <li><a href="#section-22" id="toc-section-22" class="nav-link" data-scroll-target="#section-22"></a></li>
+  <li><a href="#section-23" id="toc-section-23" class="nav-link" data-scroll-target="#section-23"></a></li>
+  <li><a href="#section-24" id="toc-section-24" class="nav-link" data-scroll-target="#section-24"></a></li>
+  <li><a href="#section-25" id="toc-section-25" class="nav-link" data-scroll-target="#section-25"></a></li>
+  <li><a href="#section-26" id="toc-section-26" class="nav-link" data-scroll-target="#section-26"></a></li>
+  <li><a href="#thats-the-basics" id="toc-thats-the-basics" class="nav-link" data-scroll-target="#thats-the-basics">that’s the basics</a></li>
+  <li>
+<a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">recap</a>
+  <ul class="collapse">
+<li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">functions:</a></li>
+  <li><a href="#make-good-functions-by" id="toc-make-good-functions-by" class="nav-link" data-scroll-target="#make-good-functions-by">make good functions by:</a></li>
+  </ul>
+</li>
+  <li><a href="#write-your-own-function" id="toc-write-your-own-function" class="nav-link" data-scroll-target="#write-your-own-function">write your own function</a></li>
+  </ul></nav>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title d-none d-lg-block">understanding functions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header><div class="cell">
+
+</div>
+<section id="r-is-functional" class="level1"><h1>R is <em>functional</em>
+</h1>
+<div class="notes">
+<p>As you know, R is a programming language. And all programming languages fall broadly into 2 categories Object Oriented Programming languages and functional programming langauges R is a functional programming language</p>
+</div>
+</section><section id="y-mx-b" class="level1"><h1><span class="math inline">\(y = mx + b\)</span></h1>
+<div class="notes">
+<p>functional programming languages emphasize the use of functions y = mx + b is a function that anyone who paid even an iota of attention in high school remembers</p>
+</div>
+</section><section id="fx-mx-b" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"><span class="math inline">\(f(x) = mx + b\)</span></h1>
+</section><section id="fx-mx-b-1" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"><span class="math inline">\(f(x) = mx + b\)</span></h1>
+<div class="cell">
+<div class="cell-output-display">
+
+<div id="htmlwidget-d4d060bd1fdae7be2081" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d4d060bd1fdae7be2081">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"x":[1,2,3,4,5],"y":[5.5,9,12.5,16,19.5]},"columns":[{"accessor":"x","name":"x","type":"numeric"},{"accessor":"y","name":"y","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"bd455b41c825c8c58918f62cd2db93c7","key":"bd455b41c825c8c58918f62cd2db93c7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="notes">
+<p>y = mx + b can be rewritten like this where f(x) = mx + b or read differently mx + b is a function of x we plug in values of x, hence a function of x and get new values</p>
+</div>
+</section><section id="functions-do-things" class="level1"><h1>functions do things</h1>
+<div class="notes">
+<p>functions always do something.</p>
+</div>
+</section><section id="input-implies-output" class="level1"><h1><span class="math inline">\(input \implies output\)</span></h1>
+<div class="notes">
+<p>functions take an input and produce an output</p>
+</div>
+</section><section id="anatomy-of-a-function" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>functions are created using the function keyword</p>
+</div>
+</section><section id="anatomy-of-a-function-1" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span>(arguments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>functions typically take one or more arguments</p>
+</div>
+</section><section id="anatomy-of-a-function-2" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span>(arg1, arg2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>arguments are unquoted names, separated by commas</p>
+</div>
+</section><section id="anatomy-of-a-function-3" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">function</span><span class="op">(</span><span class="va">arguments</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>functions contain a body that is contained within the curly braces</p>
+</div>
+</section><section id="anatomy-of-a-function-4" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">function</span><span class="op">(</span><span class="va">arguments</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># function body</span></span>
+<span>  <span class="co"># . . . </span></span>
+<span>  <span class="co"># do things here</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>the body of the function defines what a function will actually do</p>
+</div>
+</section><section id="anatomy-of-a-function-5" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">function</span><span class="op">(</span><span class="va">arguments</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">arguments</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>the body of a function can contain any valid R code that you would like to put in there</p>
+</div>
+</section><section id="anatomy-of-a-function-6" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">print_argument</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">arguments</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">arguments</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>like all things in R, functions are objects functions are special because you create the object and then call that object taking other objects as input!</p>
+</div>
+</section><section id="anatomy-of-a-function-7" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">print_argument</span><span class="op">(</span><span class="st">"the first argument"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "the first argument"</code></pre>
+</div>
+</div>
+</section><section id="anatomy-of-a-function-8" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">print_argument</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">arguments</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fl">10</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>whatever is printed last in a function gets returned from the function</p>
+</div>
+</section><section id="anatomy-of-a-function-9" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">anatomy of a function</h1>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">print_argument</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">arguments</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fl">10</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">print_argument</span><span class="op">(</span><span class="st">"hello world"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<section id="functions-rock-because" class="level2"><h2 class="anchored" data-anchor-id="functions-rock-because">functions rock because…</h2>
+<ul>
+<li>repeating code is easy</li>
+<li>easier to read</li>
+<li>makes your code simpler</li>
+<li>(somewhat) easy to share</li>
+</ul></section></section><section id="making-the-slope-intercept-function" class="level1"><h1>making the slope intercept function</h1>
+</section><section id="section" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>slope_intercept <span class="ot">&lt;-</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-1" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-2" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>slope_intercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-3" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">slope_intercept</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-4" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">slope_intercept</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">m</span> <span class="op">&lt;-</span> <span class="fl">2.5</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-5" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">slope_intercept</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">m</span> <span class="op">&lt;-</span> <span class="fl">2.5</span></span>
+<span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-6" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">slope_intercept</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">m</span> <span class="op">&lt;-</span> <span class="fl">2.5</span></span>
+<span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span>  </span>
+<span>  <span class="va">m</span> <span class="op">*</span> <span class="va">x</span> <span class="op">+</span> <span class="va">b</span> </span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-7" class="level1"><h1></h1>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>y <span class="ot">&lt;-</span> <span class="fu">slope_intercept</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="incremental">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 12.5 15.0 17.5 20.0 22.5 25.0 27.5 30.0 32.5 35.0</code></pre>
+</div>
+</div>
+</div>
+</section><section id="section-8" class="level1"><h1></h1>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">2.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="understanding-functions_files/figure-revealjs/unnamed-chunk-48-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+</section><section id="function-arguments" class="level1"><h1>function arguments</h1>
+<div class="notes">
+<p>let’s be a bit more explicit with regards to function arguments</p>
+</div>
+<div class="notes">
+<p>think of function arguments as objects that are only available in the body of the function. to access the value of the argument we refer to the argument as if it is a regular R object</p>
+</div>
+<section id="function-arguments-1" class="level2"><h2 class="anchored" data-anchor-id="function-arguments-1">function arguments</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>add <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb24-2"><a href="#cb24-2"></a>  x <span class="sc">+</span> y </span>
+<span id="cb24-3"><a href="#cb24-3"></a>}</span>
+<span id="cb24-4"><a href="#cb24-4"></a></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="fu">add</span>(<span class="dv">10</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12</code></pre>
+</div>
+</div>
+</section></section><section id="default-arguments" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">default arguments</h1>
+<div class="incremental">
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">power</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">power</span> <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">^</span> <span class="va">power</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>in the examples so far each argument has not had a default value. we can set the default value of a function in the function definition by using an equal sign.</p>
+<p>the argument power has a default value of 1 the argument x does not have a default value</p>
+</div>
+</div>
+</section><section id="default-arguments-1" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">default arguments</h1>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">power</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">power</span> <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">^</span> <span class="va">power</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/power.html">power</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<div class="notes">
+<p>since there is a default value for the argument <code>power</code> which is set to 1 the power function will always return x to the first power which is x itself</p>
+</div>
+</section><section id="missing-defaults-are-required" class="level1"><h1>missing defaults are required</h1>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/power.html">power</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in power(): argument "x" is missing, with no default</code></pre>
+</div>
+</div>
+<div class="notes">
+<p>when a function is called without any arguments, it resorts to all of the default arguments but, if there is an arguments <em>without</em> a default value the code errors out. thats because arguemnts without defaults are required arguments</p>
+</div>
+</section><section id="handle-with-care" class="level1"><h1>handle with care</h1>
+<div class="incremental">
+<p><code>missing(arg)</code> checks if arguments are missing!</p>
+<div class="notes">
+<p>so we should always be ready to handle missing arguments if we need to. we can capture if arguments are missing using the … yup. missing function. it returns a true or false value depending on if the argument is missing or not</p>
+</div>
+</div>
+</section><section id="section-9" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">is_missing</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/missing.html">missing</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>missing can be super helpful if we want to have special behavior if an acecks rgument is missing this function checks see if the argument <code>x</code> is missing or not very simple and quite useless honestly. but it gets the point accross, right?</p>
+</div>
+</section><section id="section-10" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">is_missing</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/missing.html">missing</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">is_missing</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<div class="notes">
+<p>if we run the function without any arguments, guess what? its missing!</p>
+</div>
+</section><section id="section-11" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">is_missing</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/missing.html">missing</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">is_missing</span><span class="op">(</span><span class="st">"nope!"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<div class="notes">
+<p>and if we give it a value, there’s not a missing value!</p>
+</div>
+</section><section id="abort-early" class="level1"><h1>abort early!</h1>
+<div class="incremental">
+<p>if things aren’t looking good, <code><a href="https://rlang.r-lib.org/reference/abort.html">rlang::abort()</a></code></p>
+<div class="notes">
+<p>now, what if when we have a missing argument we want to exit the function? rlangs abort function to the rescue</p>
+</div>
+</div>
+</section><section id="section-12" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"something isn't right ..."</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="notes">
+<p>the simplest way to use this function is to pass a message to abort and it will cause the function to stop and print out the error message</p>
+</div>
+</section><section id="section-13" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"something isn't right ..."</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! something isn't right ...</code></pre>
+</div>
+</div>
+<div class="notes">
+<p>like this</p>
+</div>
+</section><section id="section-14" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">is_missing</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/missing.html">missing</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"`x` shouldn't be missing!"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">x</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-15" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">is_missing</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `is_missing()`:
+! `x` shouldn't be missing!</code></pre>
+</div>
+</div>
+</section><section id="section-16" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">is_missing</span><span class="op">(</span><span class="st">"x isn't missing now!!!!"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "x isn't missing now!!!!"</code></pre>
+</div>
+</div>
+</section><section id="another-example" class="level1"><h1>another example</h1>
+</section><section id="section-17" class="level1"><h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="cf">if</span> (power <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb44-3"><a href="#cb44-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"power cannot be 0"</span>)</span>
+<span id="cb44-4"><a href="#cb44-4"></a>  }</span>
+<span id="cb44-5"><a href="#cb44-5"></a>  </span>
+<span id="cb44-6"><a href="#cb44-6"></a>  x <span class="sc">^</span> power</span>
+<span id="cb44-7"><a href="#cb44-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-18" class="level1"><h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
+<span id="cb45-2"><a href="#cb45-2"></a>  <span class="cf">if</span> (power <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb45-3"><a href="#cb45-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"power cannot be 0"</span>)</span>
+<span id="cb45-4"><a href="#cb45-4"></a>  }</span>
+<span id="cb45-5"><a href="#cb45-5"></a>  </span>
+<span id="cb45-6"><a href="#cb45-6"></a>  x <span class="sc">^</span> power</span>
+<span id="cb45-7"><a href="#cb45-7"></a>}</span>
+<span id="cb45-8"><a href="#cb45-8"></a></span>
+<span id="cb45-9"><a href="#cb45-9"></a><span class="fu">power</span>(<span class="fl">3.14159</span>, <span class="at">power =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `power()`:
+! power cannot be 0</code></pre>
+</div>
+</div>
+</section><section id="section-19" class="level1"><h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>power <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">power =</span> <span class="dv">1</span>) {</span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="cf">if</span> (power <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb47-3"><a href="#cb47-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"power cannot be 0"</span>)</span>
+<span id="cb47-4"><a href="#cb47-4"></a>  }</span>
+<span id="cb47-5"><a href="#cb47-5"></a>  </span>
+<span id="cb47-6"><a href="#cb47-6"></a>  x <span class="sc">^</span> power</span>
+<span id="cb47-7"><a href="#cb47-7"></a>}</span>
+<span id="cb47-8"><a href="#cb47-8"></a></span>
+<span id="cb47-9"><a href="#cb47-9"></a><span class="fu">power</span>(<span class="fl">3.14159</span>, <span class="at">power =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.869588</code></pre>
+</div>
+</div>
+</section><section id="putting-it-together" class="level1" data-auto-animate="true"><h1 data-auto-animate="true">putting it together</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb49-2"><a href="#cb49-2"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-20" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb50-2"><a href="#cb50-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb50-3"><a href="#cb50-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` must be numeric"</span>)</span>
+<span id="cb50-4"><a href="#cb50-4"></a>  } </span>
+<span id="cb50-5"><a href="#cb50-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-21" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb51-3"><a href="#cb51-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` must be numeric"</span>)</span>
+<span id="cb51-4"><a href="#cb51-4"></a>  } </span>
+<span id="cb51-5"><a href="#cb51-5"></a>  </span>
+<span id="cb51-6"><a href="#cb51-6"></a>  <span class="cf">if</span> (na.rm) {</span>
+<span id="cb51-7"><a href="#cb51-7"></a>    </span>
+<span id="cb51-8"><a href="#cb51-8"></a>  }</span>
+<span id="cb51-9"><a href="#cb51-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-22" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb52-2"><a href="#cb52-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb52-3"><a href="#cb52-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` must be numeric"</span>)</span>
+<span id="cb52-4"><a href="#cb52-4"></a>  } </span>
+<span id="cb52-5"><a href="#cb52-5"></a>  </span>
+<span id="cb52-6"><a href="#cb52-6"></a>  <span class="cf">if</span> (na.rm) {</span>
+<span id="cb52-7"><a href="#cb52-7"></a>    missing_index <span class="ot">&lt;-</span> <span class="fu">is.na</span>(x)</span>
+<span id="cb52-8"><a href="#cb52-8"></a>    x <span class="ot">&lt;-</span> x[<span class="sc">!</span>missing_index]</span>
+<span id="cb52-9"><a href="#cb52-9"></a>  }</span>
+<span id="cb52-10"><a href="#cb52-10"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-23" class="level1" data-auto-animate="true"><h1 data-auto-animate="true"></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>average <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb53-2"><a href="#cb53-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb53-3"><a href="#cb53-3"></a>    rlang<span class="sc">::</span><span class="fu">abort</span>(<span class="st">"`x` must be numeric"</span>)</span>
+<span id="cb53-4"><a href="#cb53-4"></a>  } </span>
+<span id="cb53-5"><a href="#cb53-5"></a>  </span>
+<span id="cb53-6"><a href="#cb53-6"></a>  <span class="cf">if</span> (na.rm) {</span>
+<span id="cb53-7"><a href="#cb53-7"></a>    missing_index <span class="ot">&lt;-</span> <span class="fu">is.na</span>(x)</span>
+<span id="cb53-8"><a href="#cb53-8"></a>    x <span class="ot">&lt;-</span> x[<span class="sc">!</span>missing_index]</span>
+<span id="cb53-9"><a href="#cb53-9"></a>  }</span>
+<span id="cb53-10"><a href="#cb53-10"></a>  </span>
+<span id="cb53-11"><a href="#cb53-11"></a>  <span class="fu">sum</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x)</span>
+<span id="cb53-12"><a href="#cb53-12"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="section-24" class="level1"><h1></h1>
+<div class="cell">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">average</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 50.5</code></pre>
+</div>
+</div>
+</section><section id="section-25" class="level1"><h1></h1>
+<div class="cell">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">average</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `average()`:
+! `x` must be numeric</code></pre>
+</div>
+</div>
+</section><section id="section-26" class="level1"><h1></h1>
+<div class="cell">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">average</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="cn">NA</span>, <span class="fl">11</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+</section><section id="thats-the-basics" class="level1"><h1>that’s the basics</h1>
+</section><section id="recap" class="level1"><h1>recap</h1>
+<section id="functions" class="level2"><h2 class="anchored" data-anchor-id="functions">functions:</h2>
+<ul>
+<li>are objects</li>
+<li>that take inputs (arguments)</li>
+<li>return an output</li>
+<li>contain valid R code</li>
+</ul></section><section id="make-good-functions-by" class="level2"><h2 class="anchored" data-anchor-id="make-good-functions-by">make good functions by:</h2>
+<ul>
+<li>handle missing arguments</li>
+<li>exiting the function early</li>
+<li>checking types</li>
+</ul></section></section><section id="write-your-own-function" class="level1"><h1>write your own function</h1>
+
+
+</section></main><!-- /main --><script>
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+  // slide changes (different for each slide format).
+  (function () {
+    // dispatch for htmlwidgets
+    function fireSlideEnter() {
+      const event = window.document.createEvent("Event");
+      event.initEvent("slideenter", true, true);
+      window.document.dispatchEvent(event);
+    }
+
+    function fireSlideChanged(previousSlide, currentSlide) {
+      fireSlideEnter();
+
+      // dispatch for shiny
+      if (window.jQuery) {
+        if (previousSlide) {
+          window.jQuery(previousSlide).trigger("hidden");
+        }
+        if (currentSlide) {
+          window.jQuery(currentSlide).trigger("shown");
+        }
+      }
+    }
+
+    // hookup for slidy
+    if (window.w3c_slidy) {
+      window.w3c_slidy.add_observer(function (slide_num) {
+        // slide_num starts at position 1
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+      });
+    }
+
+  })();
+</script><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

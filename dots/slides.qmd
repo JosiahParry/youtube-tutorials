@@ -551,7 +551,7 @@ add2(3, 0.14, 0.0015)
 #| code-line-numbers: "3"
 data_frame <- function(...) {
   dots <- list(...)
-  ellipsis::check_dots_unnamed()
+  ellipsis::check_dots_empty()
   
   list2DF(dots)
 }
