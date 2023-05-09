@@ -12,10 +12,14 @@ website:
       - about.qmd
       - href: dots/slides.qmd
         text: Dots ... 
+      - href: geohash/script.qmd
+        text: Geohash script
+      - href: geohash/slides.qmd
+        text: Geohash slides
       - href: simple-features/script.qmd
         text: Simple Features
-      - href: twitter-geohash/script.qmd
-        text: Geohash
+  
+        
       
 
 format:
