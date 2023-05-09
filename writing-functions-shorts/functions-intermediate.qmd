@@ -5,6 +5,5 @@ format: revealjs
 
 ## Topics to cover:
 
-- dots `...`
 - s3 methods
 - side-effects

@@ -40,5 +40,20 @@
   },
   "about.qmd": {
     "about.html": "5281d7be"
+  },
+  "simple-features/slides.qmd": {
+    "slides.html": "9b58cdcb"
+  },
+  "twitter-geohash/slides.qmd": {
+    "slides.html": "748654f1"
+  },
+  "twitter-geohash/script.qmd": {
+    "script.html": "a1c58a3d"
+  },
+  "geohash/slides.qmd": {
+    "slides.html": "f21183f8"
+  },
+  "twitter-geohash/notes.qmd": {
+    "notes.html": "9e2ffd7a"
   }
 }

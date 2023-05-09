@@ -1,0 +1,11 @@
+/*-- scss:defaults --*/
+
+$body-bg: #262520;
+$body-color: #f7f2d5;
+$link-color: #ffea82;
+
+/*-- scss:rules --*/
+.reveal blockquote {
+  color: $body-color;
+  border-left-color: darken($body-color, 10%);
+}

@@ -1,0 +1,16 @@
+---
+title: "simple features for dummies"
+format:
+  revealjs: 
+    theme: [default, theme.scss]
+---
+
+
+# Open Geospatial Consortium 
+
+## Simple Feature Standard
+
+- here is a point
+
+> "This standard enumerates the requirements for defining and representing geographic features in geographic information systems, applications and transmittable data formats." 
+

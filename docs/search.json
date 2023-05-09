@@ -74,7 +74,7 @@
     "href": "simple-features/script.html#multiples",
     "title": "GIS fundamentals:",
     "section": "Multiples",
-    "text": "Multiples\nWe’ve now built up each of the major geometric objects from Points to Polygons and have seen how smaller units build into larger ones. This concept of making one geometry from another extends into the concept of a GeometryCollection.\nGeometryCollections collect multiple geometric objects of any type into one single entity. This alone can be very useful. Though the GeometryCollection actually has three subclasses that are a bit more restrictive.\nGeometryCollection subclasses start with the Multi- prefix indicating that it contains multiple objects. The Multi- geometry collections differ from the more general GeometryCollection in that they can contain only one type of geometric object. Each geometric object—Point, LineString, and Polygon—have a corresponding Multi type—MultiPoint, MultiLineString, and MultiPolygon respectively.\n\n\n\n\n\ngraph BT\n    A[GeometryCollection] \n    MP(MultiPoint) -->  A\n    ML(MultiLineString) --> A\n    MPLY(MultiPolygon) --> A\n    P(Point) --> MP\n    L(LineString) --> ML\n    PLY(Polygon) --> MPLY\n\n\n\n\n\n\n\n\nMultiPoint\nA MultiPoint, for example, is comprised of one ore more points. Say we have three points Point (0 0), Point (1 0), and Point (1 1). Each of these are considered to be a single feature.\n\n\n\n\n\n\nTip\n\n\n\nA feature refers to any “phenomena”, or thing, that exists in the real physical world.\n\n\nBut what if each of these points were related to each other? Perhaps each point indicates an emergency exit for a single building. It could be quite useful to track these exits as a single feature. Particularly when our data set may contain hundreds or thousands of building emergency exits. In this case we would represent the feature as a MultiPoint ((0 0), (1 0), (1 1)).\n\nanimation of 3 points being different colors switching to the same color. perhaps a label of Point() Point() Point() to MultiPoint((), (), ())\n\nMultiLineString\nMaybe geometry collections of LineStrings are more natural to think about. Road networks are a great example where MultiLineStrings can be made useful. Roads are classified into different categories. This is the road network of Grafton County, New Hampshire. Not all of these roads are the same type. Some of them are dirt roads that connect to people’s houses and farms. Others are larger two lane roads that act as main thoroughfares, and there are a few interstates interspersed as well.\n\n\n\n\n\nWhen we symbolize the road network based on the road type, the differences in type become more apparent.\n\n\n\n\n\nThere are few U.S. roads and interstates whereas the vast majority of the region is covered in “common name” roads. It may make sense to collect each of the road types into a single MultiLineString geometry collection. A MultiLineString, like the MultiPoint, is composed of many LineStrings into a single feature.\nMultiPolygon\nMultiPolygons may be the most common type of geometry collection subclass that we encounter naturally. A really common place where we see multiple polygons being part of the same feature is in political boundaries. Island nations are a really great example of this. Take the Philippines for example.\nThe Philippines is an archipelago of over 7,000 islands making up an entire nation. Each island is an enclosed polygon. But the collection of polygons is identified collectively as The Philippines.\n\n\n\n\n\n\nit would be nice to animate each of these to appear one at a time.\n\nCollecting all of these polygons into a single MultiPolygon is a natural decision given that it represents a single feature.\nGeometryCollection\nEach of these subtypes restrict the constituent geometry object types. The general GeometryCollection geometry object has no such limitation.\n\nA GeometryCollection is a geometric object that is a collection of some number of geometric objects.\n\nI think of GeometryCollections as a grab bag of miscellaneous geometry objects. And here’s a fun thing thing. Since GeometryCollections are geometry objects they can contain GeometryCollections which can contain another one so on forever and ever—if you ever found an actual use case for them.\nPersonally, I’ve never found such a use case, or really any uses for a GeometryCollection object other than some intermediate in an analysis.\n\n\nGEOMETRYCOLLECTION (POLYGON ((0 0, 7 0, 7 5, 0 5, 0 0)), LINESTRING (2 6, 6 5, 6 9, 3 8, 1 10), POINT (0 0))"
+    "text": "Multiples\nWe’ve now built up each of the major geometric objects from Points to Polygons and have seen how smaller units build into larger ones. This concept of making one geometry from another extends into the concept of a GeometryCollection.\nGeometryCollections collect multiple geometric objects of any type into one single entity. This alone can be very useful. Though the GeometryCollection actually has three subclasses that are a bit more restrictive.\nGeometryCollection subclasses start with the Multi- prefix indicating that it contains multiple objects. The Multi- geometry collections differ from the more general GeometryCollection in that they can contain only one type of geometric object. Each geometric object—Point, LineString, and Polygon—have a corresponding Multi type—MultiPoint, MultiLineString, and MultiPolygon respectively.\n\n\n\n\n\ngraph BT\n    A[GeometryCollection] \n    MP(MultiPoint) -->  A\n    ML(MultiLineString) --> A\n    MPLY(MultiPolygon) --> A\n    P(Point) --> MP\n    L(LineString) --> ML\n    PLY(Polygon) --> MPLY\n\n\n\n\n\n\n\n\nMultiPoint\nA MultiPoint, for example, is comprised of one ore more points. Say we have three points Point (0 0), Point (1 0), and Point (1 1). Each of these are considered to be a single feature.\n\n\n\n\n\n\nTip\n\n\n\nA feature refers to any “phenomena”, or thing, that exists in the real physical world.\n\n\nBut what if each of these points were related to each other? Perhaps each point indicates an emergency exit for a single building. It could be quite useful to track these exits as a single feature. Particularly when our data set may contain hundreds or thousands of building emergency exits. In this case we would represent the feature as a MultiPoint ((0 0), (1 0), (1 1)).\n\nanimation of 3 points being different colors switching to the same color. perhaps a label of Point() Point() Point() to MultiPoint((), (), ())\n\nMultiLineString\nMaybe geometry collections of LineStrings are more natural to think about. Road networks are a great example where MultiLineStrings can be made useful. Roads are classified into different categories. This is the road network of Grafton County, New Hampshire. Not all of these roads are the same type. Some of them are dirt roads that connect to people’s houses and farms. Others are larger two lane roads that act as main thoroughfares, and there are a few interstates interspersed as well.\n\n\n\n\n\nWhen we symbolize the road network based on the road type, the differences in type become more apparent.\n\n\n\n\n\nThere are few U.S. roads and interstates whereas the vast majority of the region is covered in “common name” roads. It may make sense to collect each of the road types into a single MultiLineString geometry collection. A MultiLineString, like the MultiPoint, is composed of many LineStrings into a single feature.\nMultiPolygon\nMultiPolygons may be the most common type of geometry collection subclass that we encounter naturally. A really common place where we see multiple polygons being part of the same feature is in political boundaries. Island nations are a really great example of this. Take the Philippines for example.\nThe Philippines is an archipelago of over 7,000 islands making up an entire nation. Each island is an enclosed polygon. But the collection of polygons is identified collectively as The Philippines.\n\n\n\n\n\n\nit would be nice to animate each of these to appear one at a time.\n\nCollecting all of these polygons into a single MultiPolygon is a natural decision given that it represents a single feature.\nGeometryCollection\nEach of these subtypes restrict the constituent geometry object types. The general GeometryCollection geometry object has no such limitation.\n\nA GeometryCollection is a geometric object that is a collection of some number of geometric objects.\n\nI think of GeometryCollections as a grab bag of miscellaneous geometry objects. And here’s a fun thing thing. Since GeometryCollections are geometry objects they can contain GeometryCollections which can contain another one so on forever and ever—if you ever found an actual use case for them.\nPersonally, I’ve never found such a use case, or really any uses for a GeometryCollection object other than some intermediate in an analysis.\n\n\nGEOMETRYCOLLECTION (POLYGON ((0 0, 7 0, 7 5, 0 5, 0 0)), LINESTRING (0 5, 9 8, 7 9, 8 9, 2 10), POINT (0 0))"
   },
   {
     "objectID": "hot-spot-analysis/hot-spot-analysis.html",
@@ -368,7 +368,7 @@
     "href": "writing-functions-shorts/functions-intermediate.html",
     "title": "functions-intermediate",
     "section": "",
-    "text": "dots ...\ns3 methods\nside-effects"
+    "text": "s3 methods\nside-effects"
   },
   {
     "objectID": "writing-functions-shorts/understanding-functions.html#functions-rock-because",
@@ -782,5 +782,369 @@
     "title": "YouTube Video Content",
     "section": "",
     "text": "Here you can find slides or scripts or other miscellaneous rendered output from my YouTube videos."
+  },
+  {
+    "objectID": "simple-features/slides.html#simple-feature-standard",
+    "href": "simple-features/slides.html#simple-feature-standard",
+    "title": "simple features for dummies",
+    "section": "Simple Feature Standard",
+    "text": "Simple Feature Standard\n\nhere is a point\n\n\n“This standard enumerates the requirements for defining and representing geographic features in geographic information systems, applications and transmittable data formats.”"
+  },
+  {
+    "objectID": "twitter-geohash/slides.html#other-title-page",
+    "href": "twitter-geohash/slides.html#other-title-page",
+    "title": "“The Algorithm”",
+    "section": "other title page",
+    "text": "other title page\n\nbullet\nbullet 2\n\n\nquote\n\n:::{.aside} this is an aside ::"
+  },
+  {
+    "objectID": "twitter-geohash/slides.html#the-algorithm",
+    "href": "twitter-geohash/slides.html#the-algorithm",
+    "title": "GeoHash",
+    "section": "“The algorithm”",
+    "text": "“The algorithm”"
+  },
+  {
+    "objectID": "twitter-geohash/slides.html#java-geoobject",
+    "href": "twitter-geohash/slides.html#java-geoobject",
+    "title": "“The Algorithm”",
+    "section": "Java GeoObject",
+    "text": "Java GeoObject\n\npublic static GeoObject createForIngester(double latitude, double longitude) {\n    return new GeoObject(\n        latitude,\n        longitude,\n        // store with highest level of accuracy: POINT_LEVEL\n        GeoAddressAccuracy.POINT_LEVEL.getCode(),\n        ThriftGeoLocationSource.GEOTAG);\n  }"
+  },
+  {
+    "objectID": "twitter-geohash/slides.html#geoobject",
+    "href": "twitter-geohash/slides.html#geoobject",
+    "title": "GeoHash",
+    "section": "GeoObject",
+    "text": "GeoObject\n\npublic static GeoObject createForIngester(double latitude, double longitude) {\n    return new GeoObject(\n        latitude,\n        longitude,\n        // store with highest level of accuracy: POINT_LEVEL\n        GeoAddressAccuracy.POINT_LEVEL.getCode(),\n        ThriftGeoLocationSource.GEOTAG);\n  }\n\n\nThey have a “GeoObject” that they interact with\nhttps://github.com/twitter/the-algorithm/blob/main/src/java/com/twitter/search/common/relevance/entities/GeoObject.java\nuses GeoAddressAccuracy is from google maps java api\nhttps://geo-google.sourceforge.net/apidocs/geo/google/datamodel/GeoAddressAccuracy.html\nit is an enum defining how accurate somehting is ranges from 0-9 http://galhano.com/blog/?p=1259 0 being unknown\n9 being a specific location"
+  },
+  {
+    "objectID": "twitter-geohash/script.html",
+    "href": "twitter-geohash/script.html",
+    "title": "script",
+    "section": "",
+    "text": "what is a geohash?\nmost simply put, a geohash a one dimension representation of two dimensional data\nThe form of geohashes that we use today were invented in 2008 by a fella named Gustavo Niemeyer.\nforms of the algorithm have existed as far back as 1966 created at GM\n\nhttps://en.wikipedia.org/wiki/Geohash\n\n\nso Gustavo Niemeyer unknowingly rediscovered the same thing only almost half a century later\nthere are tons of videos out there that describe how you can use a geohash and why you might want to use them, but there are very few that will help you understand them.\nas always, my goal here is to have you walk away understanding not just “knowing”\n\nthere’s an important distinction there\nwhen you know something you can tell me what that is but when you understand you can tell me why it is"
+  },
+  {
+    "objectID": "twitter-geohash/script.html#building-the-intuition",
+    "href": "twitter-geohash/script.html#building-the-intuition",
+    "title": "script",
+    "section": "Building the intuition",
+    "text": "Building the intuition\n\nI’m going to be brief on the applications of geohashes, there are other videos for that\nan alpha numeric string representation of a coordinate\nin other words, using only numbers and letters we can represent an x and y value\n\nthis has big implications for databases querying that we can get into later\n\n\nthe geohash is a type of spatial index\ndivide the earth into equal portions along in a square grid\neach square is then subdivided into 32 more squares adding a level of precision\nthen that square can be further subdivided into another grid and so on until we do it 12 times\n\n12 is our maximum zoom level.\n\nThere is a technical reason for this having to do with the total number of bits that can be held by a number\n\n\n\n\nthe text based index represents a single grid which has a few handy properties\nthe text string can be up to 12 characters long. The shorter the string the larger the bounding box\na single letter is the largest area representing a five thousand by five thousand bounding box\n\nnot too helpful, so adding more levels of precision can help us get closer and closer\n\n\nwhen we reach the 12th level of precision we’re within centimeters of our initial location\n\n\n\nIndex Precision\nBounding Box\n\n\n\n1\n≤ 5,000km X 5,000 Km\n\n\n2\n≤ 1,250km X 625km\n\n\n3\n≤ 156km X 156km\n\n\n4\n≤ 39.1km X 19.5km\n\n\n5\n≤ 4.89km X 4.89km\n\n\n6\n≤ 1.22km X 0.61km\n\n\n7\n≤ 153m X 153m\n\n\n8\n≤ 38.2m X 19.1m\n\n\n9\n≤ 4.77m X 4.77m\n\n\n10\n≤ 1.19m X 0.596m\n\n\n11\n≤ 149mm X 149mm\n\n\n12\n≤ 37.2mm X 18.6mm\n\n\n\n\nresolution: https://docs.quadrant.io/quadrant-geohash-algorithm\nso for all intents and purposes we can locate places pretty exactly by using a single string\nanother useful property is that points within the same grids share the same prefix\nsay, you’re a tourist in Boston and you’ve just gotten off the train at Park Street station to explore the Boston Common and you want to find a nice coffee within a reasonable distance\n\n\npark_street &lt;- geohashTools::gh_encode(42.35675660592967, -71.06224330327713, 12)\n\ngeorge_howell &lt;- geohashTools::gh_encode(42.35486966028336, -71.06172831916592, 12)\n\nPark Street is located very precisely at the geohash drt2yyy1cxwy. I just so happen to know that there is a great coffee shop quite close by near Downtown Crossing called George Howell which has a geohash of drt2yyqqvxyy.\nIf we were to query all coffee shop locations that shared the same first 6 characters of our geohash George Howell would definitely show up.\nBeing able to truncate and filter on a geohash is far more efficient computationally than doing some traditional geographic approach such as taking a location and drawing a distance buffer, extracting every point in that buffer, then calculating a distance matrix.\nThat’s the gist of the geohash. And that’s about just as much as you need to know to minimally use geohashes. And that’s where most videos will stop. But that’s not enough because we don’t actually understand how we make a geohash. We’re going to spend the rest of this time walking through the geohash algorithm step by step in such a way thay you will be able to implement it yourself afterwards."
+  },
+  {
+    "objectID": "twitter-geohash/script.html#precision",
+    "href": "twitter-geohash/script.html#precision",
+    "title": "script",
+    "section": "Precision",
+    "text": "Precision\nWe can only have up to 12 levels of precision. We take two numbers x and y and make them into binary representations of themselves\nWhen we work with decimal numbers they are typical what are called 64 bit floats This means that the number is represented by 64 different 1’s and 0s.\nMedium post that helped me get to the last part https://yatmanwong.medium.com/geohash-implementation-explained-2ed9627a61ff Factual blog post http://web.archive.org/web/20220620005549/https://www.factual.com/blog/how-geohashes-work/"
+  },
+  {
+    "objectID": "twitter-geohash/script.html#z-order-curves",
+    "href": "twitter-geohash/script.html#z-order-curves",
+    "title": "script",
+    "section": "Z-order curves",
+    "text": "Z-order curves\nAt the root, a geohash is an implementation of a Z-order curve. It’s not necessary to understand Z-order curves in all of of their intricacies to truly understand geohashes but its worth diving into a bit. Shoot, I don’t even fully get them.\nIn the field of mathematical analysis there is an entire subfield dedicated to what are called “space filling curves.” In essence, they are a suite of algorithms that map 2 or 3 dimensional data into a single dimension. The Z-order curve is one of these space filling curves that is used to map 2 dimensional data into one dimension. The Z-order curve is used a bunch in big data technologies like Apache Spark, Cassandra, and Parquet to speed up search.\nBut there is no way I can do justice to explaining them so I really recommend that you watch this 3blue1brown video on them.\nIn geography we are always dealing in at least 2 dimensions: longitude and latitude. Using a Z-order curve we can encode longitude and latitude as a single value and that’s exactly what geohash does. But how?\nNow pay attention here. This is the only important part about a z-order curve I want you to care about.\nSay we have two numbers x and y. x is equal to 23 and y is equal to 42. From x and y we can create a third value, z (hence the name).\nZ-coordinates\nI’m about to make a leap here. Stay with me. Both of these numbers can be represented in binary as a combination of 0’s and 1s. In binary, 23 is 00010111 and 42 is 00101010. Each number is represented by 8 different 0s or 1s so they are 8 bit numbers—integers, to be exact. To get our z-coordinate all we need to do is “interleave” them.\nInterleaving sounds fancy but it’s super simple. I like to think of interleaving as weaving two leavings together by alternating one and another. Our z-coordinate is the sequence of bits that results from interleaving x and y.\nTo do this, we take the first value of x followed by the first value of y. Then we append the second value of x followed by the second value of y. We do this until we’ve exhausted all bits in x and y.\nThe result is a sequence of 16 bits 0000011001101110. Instead of having 8 bits, we now have 16 bits. Or a 16 bit integer. When converted from binary we get the value of 1646. This is an important detail, when we interleave two numbers we always double the number of bits used.\n\nthat interleaving of bits is all that a geohash really is.\n\nSo do we just convert our x and y values to binary and then interleave them? Well, no. Of course it’s not that simple. There are two ah hahs! The first has to do with the limitations of modern computing.\nBack to bits.\nIn R, and python, and most other systems, numbers that contain values after the decimal place are known as “double precision floating points” which is a really long way of saying they are 64 bit numbers. Again, that means that our numbers are represented by 64 sequential 1s or 0s.\nWhen we interleave two floats we will end up with a 128 bit number. That’s a bit more than most languages and tools are able to handle. Though that’s going to change in the next few years I bet.\nSince we can only handle 64 bits, we have to truncate x and y to 32 bits so that when we interleave the two we end up with 64 bits.\nThe geohash algorithm implements a pretty creative way of representing numbers as binary. The binary representation is actually a way of specifying the location on the numberline.\nStart with an X value. X can fall anywhere in the interval [-180, 180). We break that interval into two in the middle that is left inclusive. If the value falls in the left interval then it gets the value of 0. If it falls in the right interval, then it gets the value of 1. We can do this up to 32 times–remember, 32 bits!\nFor the value 19 it falls into the right interval so the first bit is the value of 1. Now we set our initial interval to [0, 180). We again partition it in the middle into 2 intervals. Since 19 falls in the left interval it gets the value of 0. So on an so forth until we do this 32 times!\nWe do the same thing for latitude but the initial bounds are different. They are [-90, 90). Again, repeat this 32 times.\nWe can look at what this might look like on the plane.\nWe start with a point that is in the upper left quadrant. We partition on our longitude. Since it’s in the right interval it gets the value 1. Now we partition it again. It’s in the left, it gets the value of 0. Again we partition. It is in the right. It gets the value of 1. One last time we partiion. It falls into the right interval so it gets the value of 1.\nOnce we have completed our encoding on longitude we can begin encoding our latitude. The point falls in the right interval which, when viewed on the plane, is actually the top one. And again, its in the top. So far we have the bits 1 and 1. Then again. This time it is on the bottom. It get’s a 0. The last time it is at the top and gets a 1.\nWhen we interleave the results of our encoding we get the value of 1 1 0 1 1 0 1 1."
+  },
+  {
+    "objectID": "geohash/slides.html#section-2",
+    "href": "geohash/slides.html#section-2",
+    "title": "geohash",
+    "section": "",
+    "text": "github.com/niemeyer"
+  },
+  {
+    "objectID": "geohash/slides.html#h3",
+    "href": "geohash/slides.html#h3",
+    "title": "geohash",
+    "section": "H3",
+    "text": "H3"
+  },
+  {
+    "objectID": "geohash/slides.html#section-4",
+    "href": "geohash/slides.html#section-4",
+    "title": "geohash",
+    "section": "",
+    "text": "github.com/niemeyer"
+  },
+  {
+    "objectID": "geohash/slides.html#shared-characters",
+    "href": "geohash/slides.html#shared-characters",
+    "title": "geohash",
+    "section": "Shared Characters",
+    "text": "Shared Characters\n\nsx8dfsymrrcc (23.321884838, 42.69793408)\nsx8dfsymrrc9 (23.321884800, 42.69793400)\nsx8dfsymrr11 (23.321884000, 42.69793000)\nsx8dfsymr1qn (23.321880000, 42.69790000)"
+  },
+  {
+    "objectID": "twitter-geohash/script.html#notes",
+    "href": "twitter-geohash/script.html#notes",
+    "title": "script",
+    "section": "notes",
+    "text": "notes\nMedium post that helped me get to the last part https://yatmanwong.medium.com/geohash-implementation-explained-2ed9627a61ff Factual blog post http://web.archive.org/web/20220620005549/https://www.factual.com/blog/how-geohashes-work/"
+  },
+  {
+    "objectID": "writing-functions-shorts/functions-intermediate.html#topics-to-cover",
+    "href": "writing-functions-shorts/functions-intermediate.html#topics-to-cover",
+    "title": "functions-intermediate",
+    "section": "",
+    "text": "s3 methods\nside-effects"
+  },
+  {
+    "objectID": "twitter-geohash/notes.html",
+    "href": "twitter-geohash/notes.html",
+    "title": "notes",
+    "section": "",
+    "text": "Twitter’s Algorithm: they know where you are (understanding geohashes)\n\nsofware: Apache Lucene\n\ngeospatial indexing https://lucene.apache.org/core/9_5_0/spatial-extras/index.html\n\nuses spatial4j https://github.com/locationtech/spatial4j\nhttps://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/earlybird/queryparser/EarlybirdLuceneQueryVisitor.java#L22\n\n\n\ntwitter finally released “The Algorithm”\nit at least appears to be some form of twitter that’s been used\nthe repo has garnered a ton of interested\nthe goal of the release was to add transparency into how twitter recommends tweets and how tweets find their way onto your timeline\ni’m not big into ML. I’m big into spatial. So I wanted to see how twitter is using geospatial data in their algorithms\nOverall, twitter just really really wants to know where you are and they go to some lengths to get a good idea of where that is.\nthey want your location for getting trending topics in an area, for finding people to follow based on your location, for searching, and even for determing what type of content you should be allowed to see\nbut underpinning it all, is the use of GeoHashes to record location data rather than explicit point coordinates\nso, i’m going to use this as an opportunity to learn a bit more about geohashes.\nThe form of geohashes that we use today were invented in 2008 by a fella named Gustavo Niemeyer. Though forms of the algorithm have existed as far back as 1966\n\nhttps://en.wikipedia.org/wiki/Geohash\n\ntwitter collects your location and then “scrubs” your location from your tweets\nbut this happens only after some time lag recorded in miliseconds. i wonder if this means that tweets shouldn’t show up in geolocated queries do if they haven’t been scrubbed in that brief time window\nthey keep track of the latest tweet id\n\nif the incoming tweet id is greater than the tracked one the location is “scrubbed”\n\nthere is a time lag that is computed between when a tweet is ingested and when it is scrubbed\n\nhttps://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/earlybird/common/userupdates/UserScrubGeoMap.java#L73\nfile: https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/earlybird/common/userupdates/UserScrubGeoMap.java#L10\n\ntwitter will also extract your locaiton from your IP address\n\nthey fetch a geohash and then truncate it to 4 letters meaning its an approx 20x20 grid they’re looking at.\n\nhttps://docs.quadrant.io/quadrant-geohash-algorithm\n\nhttps://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/follow-recommendations-service/common/src/main/scala/com/twitter/follow_recommendations/common/clients/geoduck/ReverseGeocodeClient.scala#L4\nat minimum what they want is your country code\n\ntwitter really wants to know where you are\n\ni dont fully understand how this works\nit looks like they’re going to extract the location of your request\nhttps://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/follow-recommendations-service/common/src/main/scala/com/twitter/follow_recommendations/common/clients/geoduck/LocationServiceClient.scala\n\nusing POI type data:\n\nhttps://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/earlybird/queryparser/EarlybirdLuceneQueryVisitor.java#L162\n\nlocation appears to mainly be used for recommendations and querying\nfollower recommendations\ngeoduck (geolocating service)\nblack listed country codes\n\nhttps://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/visibilitylib/src/main/scala/com/twitter/visibility/builder/tweets/TweetMediaMetadataFeatures.scala#L11\n\nmedia is restricted or permitted based on location\n\nhttps://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/visibilitylib/src/main/scala/com/twitter/visibility/builder/tweets/TweetMediaMetadataFeatures.scala#L11"
+  },
+  {
+    "objectID": "geohash/slides.html#section-9",
+    "href": "geohash/slides.html#section-9",
+    "title": "geohash",
+    "section": "",
+    "text": "res |&gt;\n  mutate(shared_chars = count_seq_chars_to_ref(geohash, \"drt2yyy1cxwy\")) |&gt; \n    select(name, geohash, shared_chars) |&gt; \n    arrange(-shared_chars)\n\n# A tibble: 60 × 3\n   name                           geohash      shared_chars\n   &lt;chr&gt;                          &lt;chr&gt;               &lt;int&gt;\n 1 Caffè Nero                     drt2yynp0vqs            6\n 2 Starbucks                      drt2yywg71qc            6\n 3 George Howell Coffee           drt2yyqt0qst            6\n 4 Caffè Nero                     drt2yyx9mj6t            6\n 5 Starbucks                      drt2yyrmzf78            6\n 6 Starbucks                      drt2yy8zuexj            6\n 7 Thinking Cup                   drt2yykfq0r5            6\n 8 Caffè Nero                     drt2yzpxth1y            5\n 9 Mod Espresso                   drt2yu4exnt2            5\n10 Jaho Coffee Roaster & Wine Bar drt2yvvsf94j            5\n# … with 50 more rows"
+  },
+  {
+    "objectID": "geohash/slides.html#section-10",
+    "href": "geohash/slides.html#section-10",
+    "title": "geohash",
+    "section": "",
+    "text": "res |&gt;\n  mutate(shared_chars = count_seq_chars_to_ref(geohash, \"drt2yyy1cxwy\")) |&gt; \n  select(name, geohash, shared_chars) |&gt; \n  arrange(-shared_chars)\n\n\n\n\n# A tibble: 60 × 3\n   name                           geohash      shared_chars\n   &lt;chr&gt;                          &lt;chr&gt;               &lt;int&gt;\n 1 Caffè Nero                     drt2yyx9mj6t            6\n 2 Starbucks                      drt2yywg71qc            6\n 3 George Howell Coffee           drt2yyqt0qst            6\n 4 Caffè Nero                     drt2yynp0vqs            6\n 5 Starbucks                      drt2yyrmzf78            6\n 6 Starbucks                      drt2yy8zuexj            6\n 7 Mod Espresso                   drt2yu4exnt2            5\n 8 Caffè Nero                     drt2yzpxth1y            5\n 9 Jaho Coffee Roaster & Wine Bar drt2yvvsf94j            5\n10 APM Coffee                     drt2yvxe1j90            5\n# ℹ 50 more rows"
+  },
+  {
+    "objectID": "geohash/slides.html#encoding-longitude",
+    "href": "geohash/slides.html#encoding-longitude",
+    "title": "geohash",
+    "section": "Encoding longitude",
+    "text": "Encoding longitude\n\nx = 19\ninterval: [-180, 180)\npartition: [-180, 0), [0, 180)\nLeft = 0\nRight = 1"
+  },
+  {
+    "objectID": "geohash/slides.html#encoding-longitude-1",
+    "href": "geohash/slides.html#encoding-longitude-1",
+    "title": "geohash",
+    "section": "Encoding longitude",
+    "text": "Encoding longitude\n\nx = 19\nnew interval [0, 180)\npartition: [0, 90), [90, 180)\nBit = 0"
+  },
+  {
+    "objectID": "geohash/slides.html#encoding-latitude",
+    "href": "geohash/slides.html#encoding-latitude",
+    "title": "geohash",
+    "section": "Encoding latitude",
+    "text": "Encoding latitude\n\ny = 47\ninterval: [-90, 90)\npartition: [-90, 0), [0, 90)\nBit = 1"
+  },
+  {
+    "objectID": "geohash/slides.html#section-28",
+    "href": "geohash/slides.html#section-28",
+    "title": "geohash",
+    "section": "",
+    "text": "0, 1, 2, 3, 4, 5, 6, 7,\n8, 9, b, c, d, e, f, g,\nh, j, k, m, n, p, q, r,\ns, t, u, v, w, x, y, z,"
+  },
+  {
+    "objectID": "twitter-geohash/script.html#converting-from-binary-to-geohash",
+    "href": "twitter-geohash/script.html#converting-from-binary-to-geohash",
+    "title": "script",
+    "section": "Converting from binary to geohash",
+    "text": "Converting from binary to geohash\nI told you that a geohash is just a z-coordinate. But now we have a binary z-coordinate and it looks nothing like the geohashes I showed you earlier. Well, there’s one last step that we have to take to go from our binary z-coordinate to a geohash.\nGeohashes are “base32” encoded. What does that mean?\nThe number system that we use and are familiar with is called base 10. That’s because we have 10 unique digits that we use to represent values 0-9.\nBinary is a base 2 number system because it uses the two digits 0 and 1 to represent values.\nThe n refers to how many character are in the alphabet being used to represent values.\nSo base 32 means that there are 32 digits that are used to represent values. These are a combination of letters and numbers. Typically, these are the letters A through Z and the numbers 2 through 7.\nThough the Geohash algorithm has it’s own base 32 alphabet called the “geohash alphabet” (wiki source). It contains the numbers 0 through 9 and the entire alphabet except a, i, l, and o because they look similar to numbers (except a)—they just needed 1 fewer character.\nTo utilze the alphabet we need to define a lookup table that has our characters by position."
+  },
+  {
+    "objectID": "geohash/slides.html",
+    "href": "geohash/slides.html",
+    "title": "geohash",
+    "section": "",
+    "text": "library(geohashTools)\nsofia &lt;- gh_encode(42.69793408217603, 23.321884838596265, 12)\n\nknitr::opts_chunk$set(eval = FALSE)"
+  },
+  {
+    "objectID": "geohash/slides.html#geometry-object",
+    "href": "geohash/slides.html#geometry-object",
+    "title": "geohash",
+    "section": "Geometry Object",
+    "text": "Geometry Object"
+  },
+  {
+    "objectID": "geohash/slides.html#always-collects-your-location",
+    "href": "geohash/slides.html#always-collects-your-location",
+    "title": "geohash",
+    "section": "Always collects your location",
+    "text": "Always collects your location"
+  },
+  {
+    "objectID": "geohash/slides.html#geo-blacklist",
+    "href": "geohash/slides.html#geo-blacklist",
+    "title": "geohash",
+    "section": "Geo blacklist",
+    "text": "Geo blacklist"
+  },
+  {
+    "objectID": "geohash/slides.html#section-1",
+    "href": "geohash/slides.html#section-1",
+    "title": "geohash",
+    "section": "",
+    "text": "Index Precision\nBounding Box\n\n\n\n\n1\n≤ 5,000km X 5,000 Km\n\n\n2\n≤ 1,250km X 625km\n\n\n3\n≤ 156km X 156km\n\n\n4\n≤ 39.1km X 19.5km\n\n\n5\n≤ 4.89km X 4.89km\n\n\n6\n≤ 1.22km X 0.61km\n\n\n7\n≤ 153m X 153m\n\n\n8\n≤ 38.2m X 19.1m\n\n\n9\n≤ 4.77m X 4.77m\n\n\n10\n≤ 1.19m X 0.596m\n\n\n11\n≤ 149mm X 149mm\n\n\n12\n≤ 37.2mm X 18.6mm"
+  },
+  {
+    "objectID": "geohash/slides.html#shared-characters-1",
+    "href": "geohash/slides.html#shared-characters-1",
+    "title": "geohash",
+    "section": "Shared Characters",
+    "text": "Shared Characters\n\nsx8dfsymrrcc (reference point)\nsx8dfsymrrc9 (0.13 meters away)\nsx8dfsymrr11 (0.62 meters away)\nsx8dfsymr1qn (5.19 meters away)\nsx8dfsy2j3dm (141.8 meters away)"
+  },
+  {
+    "objectID": "geohash/slides.html#section-11",
+    "href": "geohash/slides.html#section-11",
+    "title": "geohash",
+    "section": "",
+    "text": "res |&gt; \n  mutate(\n      geohash = gh_encode(lat, long, 12),\n      shared_chars = count_seq_chars_to_ref(geohash, park_street)\n  ) |&gt; \n  filter(shared_chars &gt;= 6) |&gt;\n  select(name, geohash, shared_chars)\n\n\n\n\n# A tibble: 6 × 3\n  name                 geohash      shared_chars\n  &lt;chr&gt;                &lt;chr&gt;               &lt;int&gt;\n1 Starbucks            drt2yywg71qc            6\n2 Caffè Nero           drt2yyx9mj6t            6\n3 George Howell Coffee drt2yyqt0qst            6\n4 Caffè Nero           drt2yynp0vqs            6\n5 Starbucks            drt2yyrmzf78            6\n6 Starbucks            drt2yy8zuexj            6"
+  },
+  {
+    "objectID": "geohash/slides.html#section-5",
+    "href": "geohash/slides.html#section-5",
+    "title": "geohash",
+    "section": "",
+    "text": "github.com/niemeyer"
+  },
+  {
+    "objectID": "geohash/slides.html#section-12",
+    "href": "geohash/slides.html#section-12",
+    "title": "geohash",
+    "section": "",
+    "text": "res |&gt;\n  mutate(shared_chars = count_seq_chars_to_ref(geohash, \"drt2yyy1cxwy\")) |&gt; \n  select(name, geohash, shared_chars) |&gt; \n  arrange(-shared_chars)\n\n\n\n\n# A tibble: 60 × 3\n   name                           geohash      shared_chars\n   &lt;chr&gt;                          &lt;chr&gt;               &lt;int&gt;\n 1 Starbucks                      drt2yywg71qc            6\n 2 Caffè Nero                     drt2yyx9mj6t            6\n 3 George Howell Coffee           drt2yyqt0qst            6\n 4 Caffè Nero                     drt2yynp0vqs            6\n 5 Starbucks                      drt2yyrmzf78            6\n 6 Starbucks                      drt2yy8zuexj            6\n 7 Caffè Nero                     drt2yzpxth1y            5\n 8 Mod Espresso                   drt2yu4exnt2            5\n 9 Jaho Coffee Roaster & Wine Bar drt2yvvsf94j            5\n10 APM Coffee                     drt2yvxe1j90            5\n# ℹ 50 more rows"
+  },
+  {
+    "objectID": "geohash/slides.html#section-40",
+    "href": "geohash/slides.html#section-40",
+    "title": "geohash",
+    "section": "",
+    "text": "github.com/niemeyer"
+  },
+  {
+    "objectID": "geohash/slides.html#section-14",
+    "href": "geohash/slides.html#section-14",
+    "title": "geohash",
+    "section": "",
+    "text": "github.com/niemeyer"
+  },
+  {
+    "objectID": "geohash/slides.html#interleaving-1",
+    "href": "geohash/slides.html#interleaving-1",
+    "title": "geohash",
+    "section": "Interleaving",
+    "text": "Interleaving\n\nx: 0_0_0_1_0_1_1_1_\ny: _0_0_1_0_1_0_1_0\nz: ??"
+  },
+  {
+    "objectID": "geohash/slides.html#interleaving-2",
+    "href": "geohash/slides.html#interleaving-2",
+    "title": "geohash",
+    "section": "Interleaving",
+    "text": "Interleaving\n\nx: 0_0_0_1_0_1_1_1_\ny: _0_0_1_0_1_0_1_0\nz: 0000011001101110"
+  },
+  {
+    "objectID": "geohash/slides.html#section-56",
+    "href": "geohash/slides.html#section-56",
+    "title": "geohash",
+    "section": "",
+    "text": "1   0   0   1   1\n  0   1   1   0   0\n1 0 0 1 0 1 1 0 1 0"
+  },
+  {
+    "objectID": "geohash/slides.html#encode-x-1",
+    "href": "geohash/slides.html#encode-x-1",
+    "title": "geohash",
+    "section": "Encode X",
+    "text": "Encode X\n\nfor (i in 1:32) {\n}"
+  },
+  {
+    "objectID": "geohash/slides.html#encode-x-2",
+    "href": "geohash/slides.html#encode-x-2",
+    "title": "geohash",
+    "section": "Encode X",
+    "text": "Encode X\n\nfor (i in 1:32) {\n  if (x &gt;= xvals[2]) { # upper interval\n  }\n}"
+  },
+  {
+    "objectID": "geohash/slides.html#encode-x-3",
+    "href": "geohash/slides.html#encode-x-3",
+    "title": "geohash",
+    "section": "Encode X",
+    "text": "Encode X\n\nfor (i in 1:32) {\n  if (x &gt;= xvals[2]) {\n    xbin[i] &lt;- 1L\n  }\n}"
+  },
+  {
+    "objectID": "geohash/slides.html#encode-x-4",
+    "href": "geohash/slides.html#encode-x-4",
+    "title": "geohash",
+    "section": "Encode X",
+    "text": "Encode X\n\nfor (i in 1:32) {\n  if (x &gt;= xvals[2]) {\n    xbin[i] &lt;- 1L\n    xvals[1] &lt;- xvals[2] # new lower bound\n  }\n}"
+  },
+  {
+    "objectID": "geohash/slides.html#encode-x-5",
+    "href": "geohash/slides.html#encode-x-5",
+    "title": "geohash",
+    "section": "Encode X",
+    "text": "Encode X\n\nfor (i in 1:32) {\n  if (x &gt;= xvals[2]) {\n    xbin[i] &lt;- 1L\n    xvals[1] &lt;- xvals[2] # new lower bound\n  } else {\n    xbin[i] &lt;- 0L\n    xvals[3] &lt;- xvals[2] # new upper bound\n  }\n}"
+  },
+  {
+    "objectID": "geohash/slides.html#encode-x-6",
+    "href": "geohash/slides.html#encode-x-6",
+    "title": "geohash",
+    "section": "Encode X",
+    "text": "Encode X\n\nfor (i in 1:32) {\n  if (x &gt;= xvals[2]) {\n    xbin[i] &lt;- 1L\n    xvals[1] &lt;- xvals[2] # new lower bound\n  } else {\n    xbin[i] &lt;- 0L\n    xvals[3] &lt;- xvals[2] # new upper bound\n  }\n  xvals[2] &lt;- (xvals[1] + xvals[3]) / 2 # new mid point\n}"
+  },
+  {
+    "objectID": "geohash/slides.html#encode-x-7",
+    "href": "geohash/slides.html#encode-x-7",
+    "title": "geohash",
+    "section": "Encode X",
+    "text": "Encode X\n\nfor (i in 1:32) {\n  if (x &gt;= xvals[2]) {\n    xbin[i] &lt;- 1L\n    xvals[1] &lt;- xvals[2] # new lower bound\n  } else {\n    xbin[i] &lt;- 0L\n    xvals[3] &lt;- xvals[2] # new upper bound\n  }\n  xvals[2] &lt;- (xvals[1] + xvals[3]) / 2 # new mid point\n}\n\nxbin\n\n [1] 1 0 0 0 1 1 0 1 1 0 0 0 0 0 1 0 1 1 0 1 1 0 0 0 0 0 1 0 1 1 0 1"
+  },
+  {
+    "objectID": "geohash/slides.html#encode-y",
+    "href": "geohash/slides.html#encode-y",
+    "title": "geohash",
+    "section": "Encode Y",
+    "text": "Encode Y\n\nfor (i in 1:32) {\n  if (y &gt;= yvals[2]) {\n    ybin[i] &lt;- 1L\n    yvals[1] &lt;- yvals[2]\n  } else {\n    ybin[i] &lt;- 0L\n    yvals[3] &lt;- yvals[2]\n  }\n  yvals[2] &lt;- (yvals[1] + yvals[3]) / 2\n}\n\nybin\n\n [1] 1 1 0 0 0 0 1 0 1 1 0 1 1 0 0 0 0 0 1 0 1 1 0 1 1 0 0 0 0 0 1 0"
+  },
+  {
+    "objectID": "geohash/slides.html#bits-to-int-1",
+    "href": "geohash/slides.html#bits-to-int-1",
+    "title": "geohash",
+    "section": "Bits to int",
+    "text": "Bits to int\n\nfive_bits &lt;- bits[[1]]"
+  },
+  {
+    "objectID": "geohash/slides.html#bits-to-int-2",
+    "href": "geohash/slides.html#bits-to-int-2",
+    "title": "geohash",
+    "section": "Bits to int",
+    "text": "Bits to int\n\nfive_bits &lt;- bits[[1]]\nposition &lt;- paste(five_bits, collapse = \"\")\nposition\n\n[1] \"11010\""
+  },
+  {
+    "objectID": "geohash/slides.html#bits-to-int-3",
+    "href": "geohash/slides.html#bits-to-int-3",
+    "title": "geohash",
+    "section": "Bits to int",
+    "text": "Bits to int\n\nfive_bits &lt;- bits[[1]]\nposition &lt;- paste(five_bits, collapse = \"\")\nb32_pos &lt;- strtoi(position, base = 2)\nb32_pos\n\n[1] 26"
+  },
+  {
+    "objectID": "geohash/slides.html#bits-to-int-4",
+    "href": "geohash/slides.html#bits-to-int-4",
+    "title": "geohash",
+    "section": "Bits to int",
+    "text": "Bits to int\n\nfive_bits &lt;- bits[[1]]\nposition &lt;- paste(five_bits, collapse = \"\")\nb32_pos &lt;- strtoi(position, base = 2)\n\nbit_lu[b32_pos + 1]\n\n[1] \"u\""
+  },
+  {
+    "objectID": "geohash/slides.html#base-32-conversion",
+    "href": "geohash/slides.html#base-32-conversion",
+    "title": "geohash",
+    "section": "Base 32 conversion",
+    "text": "Base 32 conversion\n\nbase32_conversion &lt;- function(x) {\n  bit_lu &lt;- c('0', '1', '2', '3', '4', '5', '6', '7',\n              '8', '9', 'b', 'c', 'd', 'e', 'f', 'g',\n              'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r',\n              's', 't', 'u', 'v', 'w', 'x', 'y', 'z')\n\n  # add 1 b/c R is 1 base indexed\n  position &lt;- strtoi(paste(x, collapse = \"\"), 2) + 1\n  bit_lu[position]\n}"
+  },
+  {
+    "objectID": "geohash/slides.html#encode-all-1",
+    "href": "geohash/slides.html#encode-all-1",
+    "title": "geohash",
+    "section": "Encode all",
+    "text": "Encode all\n\nindexes &lt;- purrr::map_chr(bits, base32_conversion)\n\n\n\n\n [1] \"u\" \"2\" \"m\" \"e\" \"2\" \"k\" \"5\" \"6\" \"u\" \"5\" \"4\" \"b\""
+  },
+  {
+    "objectID": "geohash/slides.html#encode-all-2",
+    "href": "geohash/slides.html#encode-all-2",
+    "title": "geohash",
+    "section": "Encode all",
+    "text": "Encode all\n\nindexes &lt;- purrr::map_chr(bits, base32_conversion)\ngeohash &lt;- paste(indexes, collapse = \"\")\n\n\n\n\n[1] \"u2me2k56u54b\""
   }
 ]

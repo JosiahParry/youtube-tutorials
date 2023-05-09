@@ -1,0 +1,107 @@
+---
+title: 'GeoHash'
+format: revealjs
+---
+
+
+# {background-image="images/twitter-blog.png" background-sizee="contain"}
+
+
+<!-- #  -->
+
+<!-- ![](images/iconmonstr-twitter-1.svg){width=30%} -->
+
+<!-- :::{.notes} -->
+<!-- A few weeks ago Elon Musk said that the whole of twitter's "algorithm" would be open sourced. The engineering world woke up on March 31st to find that something resembling the source code of twitter is now on github -->
+<!-- ::: -->
+
+<!-- # {background-image="images/twitter-blog.png" background-sizee="contain"} -->
+
+<!-- :::{.notes} -->
+<!-- ::: -->
+
+<!-- ## "The algorithm" {background-image="images/twitter-algo-diagram.png"  background-size="contain"} -->
+
+
+<!-- # Iconic GitHub moments.  -->
+
+
+<!-- #  {background-image="images/OwO.png" background-size="contain"} -->
+
+
+<!-- # recording of purry peet -->
+
+<!-- # elon hard coded -->
+
+<!-- :::{.notes} -->
+<!-- Elon literally being hard coded into "The Algorithm" -->
+<!-- ::: -->
+
+<!-- # C++ fix -->
+
+<!-- # girls  -->
+
+<!-- # rust -->
+
+<!-- # something actually interesting.... -->
+
+<!-- # {background-image="images/geo-PR.png" background-size="contain"} -->
+
+<!-- ## GeoObject -->
+
+<!-- ```{r, eval = FALSE, echo=T} -->
+<!-- public static GeoObject createForIngester(double latitude, double longitude) { -->
+<!--     return new GeoObject( -->
+<!--         latitude, -->
+<!--         longitude, -->
+<!--         // store with highest level of accuracy: POINT_LEVEL -->
+<!--         GeoAddressAccuracy.POINT_LEVEL.getCode(), -->
+<!--         ThriftGeoLocationSource.GEOTAG); -->
+<!--   } -->
+<!-- ``` -->
+
+
+<!-- :::{.notes} -->
+<!-- They have a "GeoObject" that they interact with  -->
+
+<!-- https://github.com/twitter/the-algorithm/blob/main/src/java/com/twitter/search/common/relevance/entities/GeoObject.java -->
+
+<!-- uses GeoAddressAccuracy is from google maps java api  -->
+
+<!-- https://geo-google.sourceforge.net/apidocs/geo/google/datamodel/GeoAddressAccuracy.html -->
+
+<!-- it is an enum defining how accurate somehting is ranges from 0-9 -->
+<!-- http://galhano.com/blog/?p=1259 -->
+<!-- 0 being unknown  -->
+
+<!-- 9 being  a specific location -->
+
+<!-- ::: -->
+
+
+<!-- # {background-image="images/geo-object-centroid.png" background-size="contain"} -->
+
+<!-- :::{.notes} -->
+<!-- it appears that they estimate a place by finding the centroid of a location by calculating the average of the bounding box -->
+<!-- ::: -->
+
+<!-- # {background-image="images/geo-locator.png" background-size="contain"} -->
+
+
+<!-- :::{.notes} -->
+<!-- twitter uses geolocation in their tweet ingester -->
+<!-- they take raw tweets  -->
+<!-- https://github.com/twitter/the-algorithm/tree/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/ingester -->
+
+<!-- ::: -->
+
+
+<!-- # {background-image="images/geolocation-on-profile.png" background-size="contain"} -->
+
+<!-- :::{.notes} -->
+<!-- https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/earlybird/queryparser/EarlybirdLuceneQueryVisitor.java#L172 -->
+
+<!-- they actually ollect your location data but then remove it later  -->
+<!-- ::: -->
+
+<!-- ---------> 

@@ -1,0 +1,81 @@
+---
+title: "notes"
+---
+
+# Twitter's Algorithm: they know where you are (understanding geohashes)
+
+-   sofware: Apache Lucene
+
+    -   geospatial indexing https://lucene.apache.org/core/9_5_0/spatial-extras/index.html
+        -   uses spatial4j https://github.com/locationtech/spatial4j
+        -   https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/earlybird/queryparser/EarlybirdLuceneQueryVisitor.java#L22
+
+-   
+
+-   twitter finally released "The Algorithm"
+
+-   it at least appears to be some form of twitter that's been used
+
+-   the repo has garnered a ton of interested
+
+-   the goal of the release was to add transparency into how twitter recommends tweets and how tweets find their way onto your timeline
+
+-   i'm not big into ML. I'm big into spatial. So I wanted to see how twitter is using geospatial data in their algorithms
+
+-   Overall, twitter just really really wants to know where you are and they go to some lengths to get a good idea of where that is.
+
+-   they want your location for getting trending topics in an area, for finding people to follow based on your location, for searching, and even for determing what type of content you should be allowed to see
+
+-   but underpinning it all, is the use of GeoHashes to record location data rather than explicit point coordinates
+
+-   so, i'm going to use this as an opportunity to learn a bit more about geohashes.
+
+-   The form of geohashes that we use today were invented in 2008 by a fella named Gustavo Niemeyer. Though forms of the algorithm have existed as far back as 1966
+
+    -   https://en.wikipedia.org/wiki/Geohash
+
+-   twitter collects your location and then "scrubs" your location from your tweets
+
+-   but this happens only after some time lag recorded in miliseconds. i wonder if this means that tweets shouldn't show up in geolocated queries do if they haven't been scrubbed in that brief time window
+
+-   they keep track of the latest tweet id
+
+    -   if the incoming tweet id is greater than the tracked one the location is "scrubbed"
+
+-   there is a time lag that is computed between when a tweet is ingested and when it is scrubbed
+
+    -   https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/earlybird/common/userupdates/UserScrubGeoMap.java#L73
+    -   file: https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/earlybird/common/userupdates/UserScrubGeoMap.java#L10
+
+-   twitter will also extract your locaiton from your IP address
+
+    -   they fetch a geohash and then truncate it to 4 letters meaning its an approx 20x20 grid they're looking at.
+        -   https://docs.quadrant.io/quadrant-geohash-algorithm
+    -   https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/follow-recommendations-service/common/src/main/scala/com/twitter/follow_recommendations/common/clients/geoduck/ReverseGeocodeClient.scala#L4
+    -   at minimum what they want is your country code
+
+-   twitter really wants to know where you are
+
+    -   i dont fully understand how this works
+    -   it looks like they're going to extract the location of your request
+    -   https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/follow-recommendations-service/common/src/main/scala/com/twitter/follow_recommendations/common/clients/geoduck/LocationServiceClient.scala
+
+-   using POI type data:
+
+    -   https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/src/java/com/twitter/search/earlybird/queryparser/EarlybirdLuceneQueryVisitor.java#L162
+
+-   location appears to mainly be used for recommendations and querying
+
+-   follower recommendations
+
+-   geoduck (geolocating service)
+
+-   black listed country codes
+
+    -   https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/visibilitylib/src/main/scala/com/twitter/visibility/builder/tweets/TweetMediaMetadataFeatures.scala#L11
+
+-   media is restricted or permitted based on location
+
+    -   https://github.com/twitter/the-algorithm/blob/ec83d01dcaebf369444d75ed04b3625a0a645eb9/visibilitylib/src/main/scala/com/twitter/visibility/builder/tweets/TweetMediaMetadataFeatures.scala#L11
+
+-

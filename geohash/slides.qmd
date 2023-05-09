@@ -1,0 +1,742 @@
+---
+title: "geohash"
+format: 
+  revealjs:
+    incremental: true
+include-in-header: 
+  text: |
+    <style>
+      .custom-small table {
+        font-size: .75em
+      }
+    </style>
+---
+
+# 
+
+![](images/twitter-blog.png)
+
+## Geometry Object 
+
+![](images/geo-object-centroid.png)
+
+## Always collects your location
+
+![](images/geolocation-on-profile.png)
+
+## Geo blacklist
+
+![](images/geoblacklist.png)
+
+# Geohash explorer
+
+https://geohash.softeng.co/
+
+## 
+
+::: custom-small
+
+| Index Precision | Bounding Box         |
+|-----------------|----------------------|
+| 1               | ≤ 5,000km X 5,000 Km |
+| 2               | ≤ 1,250km X 625km    |
+| 3               | ≤ 156km X 156km      |
+| 4               | ≤ 39.1km X 19.5km    |
+| 5               | ≤ 4.89km X 4.89km    |
+| 6               | ≤ 1.22km X 0.61km    |
+| 7               | ≤ 153m X 153m        |
+| 8               | ≤ 38.2m X 19.1m      |
+| 9               | ≤ 4.77m X 4.77m      |
+| 10              | ≤ 1.19m X 0.596m     |
+| 11              | ≤ 149mm X 149mm      |
+| 12              | ≤ 37.2mm X 18.6mm    |
+
+:::
+
+```{r}
+library(geohashTools)
+sofia <- gh_encode(42.69793408217603, 23.321884838596265, 12)
+
+knitr::opts_chunk$set(eval = T)
+```
+
+# (23.321, 42.697)
+
+# (23.321, 42.697) {background-image="sofia.png" data-background-opacity="0.2"}
+
+# `r sofia` {background-image="sofia.png" data-background-opacity="0.2"}
+
+<!-- https://stackoverflow.com/questions/75947268/center-slide-header-in-middle-of-revealjs-quarto -->
+
+```{css, eval = TRUE}
+.center h1 {
+  text-align: center;
+}
+```
+
+# Spatial Index
+
+# Locations without coordinates
+
+## H3 {background-image="Twitter-H3.png"}
+
+# [S2]{style="color:white"} {background-image="s2.gif"}
+
+
+# Shared Characters
+
+## Shared Characters 
+
+- **`sx8dfsymrrcc`** (reference point)
+- **`sx8dfsymrrc`**9 (0.13 meters away)
+- **`sx8dfsymrr`**11 (0.62 meters away)
+- **`sx8dfsymr`**1qn (5.19 meters away)
+- **`sx8dfsy`**2j3dm (141.8 meters away)
+
+# Strings are cheap
+
+# Distance matrices are expensive
+
+# Search for a shared string
+
+# 
+
+```sql
+SELECT 
+  substring(geohash, 1, 6) AS target_gh
+FROM locations
+WHERE target_gh = 'sx8dfsy'
+```
+
+# {background-image="park-street.png"}
+
+# {background-image="park-street-espresso.png" background-size="contain"}
+
+# {background-image="park-street-geohash.png" background-size="contain"}
+
+# 
+
+```{r, echo = TRUE, eval = TRUE}
+library(dplyr)
+library(geohashTools)
+library(populartimes)
+
+# store park street coordinates
+park_street_loc <- c(42.35675660592967, -71.06224330327713)
+
+# encode the geohash
+park_street <- gh_encode(park_street_loc[1], park_street_loc[2], 12)
+park_street
+```
+
+#
+
+```{r, echo = TRUE, eval = FALSE}
+res <- text_search(
+  location = park_street_loc,
+  query = "espresso",
+  type = "cafe"
+)
+
+res[c("name", "rating", "price_level")]
+```
+
+. . .
+
+```{r, echo = FALSE, eval = TRUE}
+res <- text_search(
+  location = park_street_loc,
+  query = "espresso",
+  type = "cafe"
+)
+
+res[c("name", "rating", "price_level")]
+```
+
+
+# 
+```rust
+fn count_seq_chars_to_ref(x: Strings, y: &str) -> Integers {
+  x.iter()
+        .map(|xi|
+            xi.chars().zip(y.chars())
+            .take_while(|a| a.0 == a.1)
+            .count()
+        ).map(|x|(x as i32).into())
+        .collect()
+}
+```
+
+```{r, echo = FALSE}
+rextendr::rust_function(
+  "
+  fn count_seq_chars_to_ref(x: Strings, y: &str) -> Integers {
+  x.iter()
+        .map(|xi|
+            xi.chars().zip(y.chars())
+            .take_while(|a| a.0 == a.1)
+            .count()
+        ).map(|x|(x as i32).into())
+        .collect()
+  }
+",
+  extendr_fn_options = list("use_try_from" = TRUE),
+  use_dev_extendr = F
+)
+```
+
+
+## 
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-line-numbers: 3, 4, 6,
+res |> 
+  mutate(
+      geohash = gh_encode(lat, long, 12),
+      shared_chars = count_seq_chars_to_ref(geohash, park_street)
+  ) |> 
+  filter(shared_chars >= 6) |>
+  select(name, geohash, shared_chars)
+```
+
+. . .
+
+```{r, echo = FALSE, eval = TRUE}
+res |> 
+  mutate(
+      geohash = gh_encode(lat, long, 12),
+      shared_chars = count_seq_chars_to_ref(geohash, park_street)
+  ) |> 
+  filter(shared_chars >= 6) |>
+  select(name, geohash, shared_chars)
+```
+
+
+#
+
+![](https://cdn.shopify.com/s/files/1/0550/4119/6267/files/6_a45203b6-e294-4dca-9df2-08153826277b_1445x.jpg?v=1657216837)
+
+
+##  {background-image="geohash.png" background-size="contain"}
+
+# Understand <br> Know
+
+# Understand <br> ~~Know~~
+
+# Ready?
+
+##  {background-image="gustavo.png" background-size="contain"}
+
+::: aside
+github.com/niemeyer
+:::
+
+# {background-image="images/paste-1.png"}
+
+#  {background-image="images/paste-2.png" background-size="contain"}
+
+
+# {background-image="https://img-9gag-fun.9cache.com/photo/aK6Yj9b_460s.jpg" background-size="contain"}
+
+# Z-order curves
+
+# {background-image="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Four-level_Z.svg/1200px-Four-level_Z.svg.png" background-size="contain"}
+
+::: aside
+wikicommons
+:::
+
+# {background-image="images/peano-curve.png" background-size="contain"}
+
+# 2 Dimensions -> 1 Dimension
+
+# ![](Apache_Spark_logo.png)
+
+# ![](Apache_Parquet_logo.svg)
+
+# ![](Cassandra_logo.svg){width=200%}
+
+
+# {background-image="images/3b1b.png" background-size="contain"}
+
+# ![](long-lat-grid.svg){width=60%}
+
+# **I M P O R T A N T**
+
+# Z-coordinate
+
+# (x, y) -> Z
+
+
+# x = 23<br>y = 42<br>z = ??
+
+
+# 23
+
+# **`00010111`**
+
+# 42
+
+# **`00101010`**
+
+# Interleaving
+
+# interleave manim video 
+
+# x & y are 8 bits
+
+# z is 16 bits
+
+# that's pretty much it.
+
+# Back to bits
+
+# _double precision <br>floating point_
+
+# 64 bits
+
+`01000000 00110011 00000111 10101110`<br>
+`00010100 01111010 11100001 01000111`
+
+
+# 128 bits
+
+`01000000 00110011 00000111 10101110`<br>
+`00010100 01111010 11100001 01000111`<br>
+`01000000 00110011 00000111 10101110`<br>
+`00010100 01111010 11100001 01000111`
+
+# Truncate to 32 bits
+
+`01000000 00110011 00000111 10101110`
+
+# Long & lat to binary
+
+## Encoding longitude
+
+- `x = 19`
+- interval: `[-180, 180)`
+- partition: `[-180, 0)`, `[0, 180)`
+- Left = 0
+- Right = 1
+
+## Encoding longitude
+
+- `x = 19`
+- new interval `[0, 180)`
+- partition: `[0, 90)`, `[90, 180)`
+- Bit = `0`
+
+
+## Encoding latitude
+
+- `y = 47`
+- interval: `[-90, 90)`
+- partition: `[-90, 0)`, `[0, 90)`
+- Bit = 1
+
+#  {background-image="gridding/lon-01.svg" background-size="contain"}
+
+#  {background-image="gridding/lon-02.svg" background-size="contain"}
+
+#  {background-image="gridding/lon-03.svg" background-size="contain"}
+
+#  {background-image="gridding/lon-04.svg" background-size="contain"}
+
+#  {background-image="gridding/lon-05.svg" background-size="contain"}
+
+#  {background-image="gridding/lat-00.svg" background-size="contain"}
+
+#  {background-image="gridding/lat-01.svg" background-size="contain"}
+
+#  {background-image="gridding/lat-02.svg" background-size="contain"}
+
+#  {background-image="gridding/lat-03.svg" background-size="contain"}
+
+#  {background-image="gridding/lat-04.svg" background-size="contain"}
+
+#  {background-image="gridding/z-coord.svg" background-size="contain"}
+
+# `Binary != GeoHash`
+
+# Base32 encoding
+
+# Base 10 (decimal)
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+# Base 2 (binary)
+
+0, 1
+
+# Base _n_
+
+- the number of characters in the alphabet
+
+# Base 32
+A-Z<br>
+2-7<br>
+[RFC 4648](https://datatracker.ietf.org/doc/html/rfc4648)
+
+# Geohash Alphabet
+0-9<br>
+a-z (except a, i, l, o)
+
+#
+
+```rust
+const BASE32: [char; 32] = [
+    '0', '1', '2', '3', '4', '5', '6', '7',
+    '8', '9', 'b', 'c', 'd', 'e', 'f', 'g',
+    'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r',
+    's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+];
+```
+
+
+# Base 32 == 5 bits 
+
+# **`00000 == 0`**
+
+# **`11111 == 31`**
+
+# 2^5 possible values
+
+# Decoding 32 bit
+
+# 110100001010011011010100100000
+# 11010 00010 10011 01101 01001 00000
+
+# 11010
+# 11010 == 26
+
+
+# 00010 == 2
+
+# 10011 == 20
+
+# 01101 == 14
+
+# 01001 == 9
+
+# 00000 == 0 
+
+# 26 2 20 14 9 0
+
+# 
+
+```rust
+const BASE32: [char; 32] = [
+    '0', '1', '2', '3', '4', '5', '6', '7',
+    '8', '9', 'b', 'c', 'd', 'e', 'f', 'g',
+    'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r',
+    's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+];
+```
+
+# **`BASE32[26]`**
+
+# **`BASE32[26] == 'u'`**
+
+# **`BASE32[2] == '2'`**
+
+# **`u 2 n f 9 0`**
+
+#  RECAP
+
+# Z-coord
+
+1 dim mapping from (x, y)
+
+# Encode X & Y as binary
+
+# Partition number line
+
+# **[-180, 0)** [0, 180)
+`1`
+
+# [-180, -90) **[-90, 0)**
+`1 0`
+
+# Interleave bits 
+
+## 
+
+```rust
+1   0   0   1   1
+  0   1   1   0   0
+1 0 0 1 0 1 1 0 1 0
+```
+
+# Break up the bits 
+
+11001 00100 00001 11111
+
+# Translate into integers
+
+25 4 1 31
+
+# Base 32 encode
+
+# A note on bits
+
+# Coding Geohash
+
+# Define x and y
+
+```{r, echo = TRUE}
+x <- 19
+y <- 47
+```
+
+# Specify precision 
+
+```{r echo = TRUE}
+precision <- 12
+```
+
+# Define search vectors
+
+```{r echo = TRUE}
+#| code-line-numbers: 2, 3,
+# instantiate search vectors
+xvals <- c(-180, 0, 180)
+yvals <- c(-90, 0, 90)
+```
+
+# Allocate binary vectors
+
+```{r echo = TRUE}
+# 32 * 2 = 64 bits after interleaving
+xbin <- integer(32)
+ybin <- integer(32)
+```
+
+# Encode X 
+
+## Encode X {auto-animate=true}
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-line-numbers: "1"
+for (i in 1:32) {
+}
+```
+
+## Encode X {auto-animate=true}
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-line-numbers: "2"
+for (i in 1:32) {
+  if (x >= xvals[2]) { # upper interval
+  }
+}
+```
+
+
+## Encode X {auto-animate=true}
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-line-numbers: "3"
+for (i in 1:32) {
+  if (x >= xvals[2]) {
+    xbin[i] <- 1L
+  }
+}
+```
+
+## Encode X {auto-animate=true}
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-line-numbers: "4"
+for (i in 1:32) {
+  if (x >= xvals[2]) {
+    xbin[i] <- 1L
+    xvals[1] <- xvals[2] # new lower bound
+  }
+}
+```
+
+
+## Encode X {auto-animate=true}
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-line-numbers: "6|7"
+for (i in 1:32) {
+  if (x >= xvals[2]) {
+    xbin[i] <- 1L
+    xvals[1] <- xvals[2] # new lower bound
+  } else {
+    xbin[i] <- 0L
+    xvals[3] <- xvals[2] # new upper bound
+  }
+}
+```
+
+## Encode X {auto-animate=true}
+
+```{r, echo = TRUE, eval = FALSE}
+#| code-line-numbers: "9"
+for (i in 1:32) {
+  if (x >= xvals[2]) {
+    xbin[i] <- 1L
+    xvals[1] <- xvals[2] # new lower bound
+  } else {
+    xbin[i] <- 0L
+    xvals[3] <- xvals[2] # new upper bound
+  }
+  xvals[2] <- (xvals[1] + xvals[3]) / 2 # new mid point
+}
+```
+
+## Encode X {auto-animate=true}
+
+```{r, echo = TRUE, eval = TRUE}
+for (i in 1:32) {
+  if (x >= xvals[2]) {
+    xbin[i] <- 1L
+    xvals[1] <- xvals[2] # new lower bound
+  } else {
+    xbin[i] <- 0L
+    xvals[3] <- xvals[2] # new upper bound
+  }
+  xvals[2] <- (xvals[1] + xvals[3]) / 2 # new mid point
+}
+
+xbin
+```
+
+# Repeat for Y
+
+## Encode Y
+
+```{r echo = TRUE, eval = TRUE}
+#| code-line-numbers: "2|3|4|6|7|9|"
+for (i in 1:32) {
+  if (y >= yvals[2]) {
+    ybin[i] <- 1L
+    yvals[1] <- yvals[2]
+  } else {
+    ybin[i] <- 0L
+    yvals[3] <- yvals[2]
+  }
+  yvals[2] <- (yvals[1] + yvals[3]) / 2
+}
+
+ybin
+```
+
+# Interleave
+
+```{r echo = TRUE}
+# interleave results into a 64 bit binary
+z_coord <- vctrs::vec_interleave(xbin, ybin)
+z_coord
+```
+
+# Split into 5 bits
+
+```{r echo = TRUE}
+num_id <- ceiling(1:64 / 5)
+bits <- split(z_coord, num_id)
+```
+
+# 12's the limit! 
+
+```{r echo = TRUE}
+tail(bits, 3)
+```
+
+# Drop unused bits
+
+```{r echo = TRUE}
+bits <- split(z_coord, num_id)[1:precision]
+```
+
+# Base 32 alphabet
+
+```{r echo = TRUE}
+bit_lu <- c(
+  "0", "1", "2", "3", "4", "5", "6", "7",
+  "8", "9", "b", "c", "d", "e", "f", "g",
+  "h", "j", "k", "m", "n", "p", "q", "r",
+  "s", "t", "u", "v", "w", "x", "y", "z"
+)
+```
+
+# Bits to int
+
+## Bits to int {auto-animate="true"}
+```{r echo = TRUE}
+five_bits <- bits[[1]]
+```
+
+## Bits to int {auto-animate="true"}
+
+```{r echo = TRUE}
+five_bits <- bits[[1]]
+position <- paste(five_bits, collapse = "")
+position
+```
+
+## Bits to int {auto-animate="true"}
+
+```{r echo = TRUE}
+five_bits <- bits[[1]]
+position <- paste(five_bits, collapse = "")
+b32_pos <- strtoi(position, base = 2)
+b32_pos
+```
+
+
+## Bits to int {auto-animate="true"}
+
+```{r echo = TRUE}
+five_bits <- bits[[1]]
+position <- paste(five_bits, collapse = "")
+b32_pos <- strtoi(position, base = 2)
+
+bit_lu[b32_pos + 1]
+```
+
+# Make it into a function
+
+## Base 32 conversion
+```{r echo = TRUE}
+base32_conversion <- function(x) {
+  bit_lu <- c('0', '1', '2', '3', '4', '5', '6', '7',
+              '8', '9', 'b', 'c', 'd', 'e', 'f', 'g',
+              'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r',
+              's', 't', 'u', 'v', 'w', 'x', 'y', 'z')
+
+  # add 1 b/c R is 1 base indexed
+  position <- strtoi(paste(x, collapse = ""), 2) + 1
+  bit_lu[position]
+}
+```
+
+# Encode all 
+
+## Encode all {auto-animate="true"}
+```{r echo = TRUE, eval = FALSE}
+indexes <- purrr::map_chr(bits, base32_conversion)
+```
+
+. . .
+
+```{r echo = FALSE, eval = TRUE}
+indexes <- purrr::map_chr(bits, base32_conversion)
+unname(indexes)
+```
+
+## Encode all {auto-animate="true"}
+```{r echo = TRUE, eval = FALSE}
+indexes <- purrr::map_chr(bits, base32_conversion)
+geohash <- paste(indexes, collapse = "")
+```
+
+. . .
+
+```{r echo = FALSE, eval = TRUE}
+indexes <- purrr::map_chr(bits, base32_conversion)
+geohash <- paste(indexes, collapse = "")
+geohash
+```
