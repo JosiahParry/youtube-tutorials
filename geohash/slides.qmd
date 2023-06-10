@@ -16,7 +16,7 @@ include-in-header:
 
 ![](images/twitter-blog.png)
 
-## Geometry Object 
+## Geometry Object
 
 ![](images/geo-object-centroid.png)
 

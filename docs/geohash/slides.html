@@ -8,7 +8,7 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.313">
+  <meta name="generator" content="quarto-99.9.9">
 
   <title>youtube-tutorials - geohash</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -383,7 +383,6 @@
       margin-right: 0; 
     }
   </style>
-  
   <style>
     .custom-small table {
       font-size: .75em
@@ -406,7 +405,7 @@
 <h1></h1>
 
 <img data-src="images/twitter-blog.png" class="r-stretch"></section>
-<section id="geometry-object" class="slide level2">
+<section id="geometry-object" class="slide level2 test">
 <h2>Geometry Object</h2>
 
 <img data-src="images/geo-object-centroid.png" class="r-stretch"></section>
@@ -613,18 +612,18 @@
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60 × 3
-   name                 rating price_level
-   &lt;chr&gt;                 &lt;dbl&gt;       &lt;int&gt;
- 1 Espresso Love           4.4           1
- 2 Ogawa Coffee            4.6           2
- 3 Render Coffee           4.4           1
- 4 Kohi Coffee Company     4.7           1
- 5 Starbucks               3.9           2
- 6 Caffè Nero              4.2           2
- 7 George Howell Coffee    4.6           2
- 8 Caffè Nero              4.4           2
- 9 Starbucks               3.6           2
-10 Caffè Nero              4.1           2
+   name                           rating price_level
+   &lt;chr&gt;                           &lt;dbl&gt;       &lt;int&gt;
+ 1 Espresso Love                     4.4           1
+ 2 Caffè Nero                        4.2           2
+ 3 Ogawa Coffee                      4.6           2
+ 4 George Howell Coffee              4.6           2
+ 5 Render Coffee                     4.4           1
+ 6 Jaho Coffee Roaster &amp; Wine Bar    4.3           2
+ 7 The Well Coffee House             4.7           1
+ 8 Kohi Coffee Company               4.7           1
+ 9 Caffè Nero                        4.1           2
+10 Caffè Nero                        4.4           2
 # ℹ 50 more rows</code></pre>
 </div>
 </div>
@@ -658,15 +657,16 @@
 <div class="fragment">
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
+<pre><code># A tibble: 7 × 3
   name                 geohash      shared_chars
   &lt;chr&gt;                &lt;chr&gt;               &lt;int&gt;
-1 Starbucks            drt2yywg71qc            6
-2 Caffè Nero           drt2yyx9mj6t            6
-3 George Howell Coffee drt2yyqt0qst            6
-4 Caffè Nero           drt2yynp0vqs            6
-5 Starbucks            drt2yyrmzf78            6
-6 Starbucks            drt2yy8zuexj            6</code></pre>
+1 Caffè Nero           drt2yyx9mj6t            6
+2 George Howell Coffee drt2yyqwe8r7            6
+3 Caffè Nero           drt2yynp0vqs            6
+4 Thinking Cup         drt2yykfq0r5            6
+5 Starbucks            drt2yywg71qc            6
+6 Starbucks            drt2yyrmzf78            6
+7 Starbucks            drt2yy8zuexj            6</code></pre>
 </div>
 </div>
 </div>
@@ -1792,10 +1792,9 @@ $`13`
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1805,8 +1804,17 @@ $`13`
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

@@ -1,0 +1,136 @@
+---
+title: "S3 object system"
+format: 
+  revealjs:
+    #highlight-style: gruvbox-dark
+    theme: [dark, styles.scss]
+    incremental: true
+    include-in-header: "highlighting.html"
+echo: true
+output-location: fragment
+---
+
+<!-- https://journal.r-project.org/archive/2020/RJ-2020-028/RJ-2020-028.pdf#page=5&zoom=100,132,296 -->
+
+## We'll cover:
+
+-   Objects in R
+-   Atomic vectors
+-   the posers: matrix & data.frame
+-   Classes & attributes
+-   Generic & non-generic functions
+-   Method dispatch
+
+# R objects
+
+# `vector` or `NULL`
+
+<!-- https://adv-r.hadley.nz/vectors-chap.html#vectors-chap -->
+
+# 
+![](images/paste-1.png)
+
+
+
+# 
+
+![](https://d33wubrfki0l68.cloudfront.net/2ff3a6cebf1bb80abb2a814ae1cfc67b12817713/ae848/diagrams/vectors/summary-tree.png)
+
+# Types are not classes
+
+#  {auto-animate=true}
+
+```{r}
+x <- as.factor(c("a", "b", "c"))
+x
+```
+
+#  {auto-animate=true}
+
+```{r}
+x <- as.factor(c("a", "b", "c"))
+class(x)
+```
+
+
+# {auto-animate=true}
+
+```{r}
+x <- as.factor(c("a", "b", "c"))
+typeof(x)
+```
+
+
+## Primary types: 
+
+- double `0.123`
+- integer `1L`
+- character `"hi there"`
+- logical `TRUE`
+
+# Vectors are one type
+
+# {auto-animate="true"}
+
+```{r}
+class(c(1, 2, 3, 4))
+```
+
+# {auto-animate="true"}
+
+```{r}
+class(c(1, "2", 3, "4"))
+```
+
+# 
+::: {.r-fit-text}
+<h1>Even missing values have types</h1>
+:::
+
+# {auto-animate="true"}
+
+```{r}
+class(NA_real_)
+```
+
+# {auto-animate="true"}
+
+```{r}
+class(NA_integer_)
+```
+
+
+# {auto-animate="true"}
+
+```{r}
+class(NA_character_)
+```
+
+
+# {auto-animate="true"}
+
+```{r}
+class(NA)
+```
+
+
+
+
+
+
+
+## 
+
+:::{.notes}
+S3 is a programming system adopted by R from its predecessor S It is called s3 because it is from the third version of S
+
+Objects in R Common Base R types Atomic vectors On top of those are data.frames and matrix
+
+Matrix are just vectors they get their special behavior from two things: first their class and then attributes
+
+Let's look at attributes first. Attributes are essentially metadata for any R object.
+
+View all attributes of objects with attributes() view a specific attribute with attr(x, "attr-name")
+
+Set attributes with attr()
+:::

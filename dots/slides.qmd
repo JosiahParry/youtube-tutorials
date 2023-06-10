@@ -2,9 +2,13 @@
 title: ". . ."
 format: 
   revealjs:
+    #highlight-style: gruvbox-dark
+    theme: [dark, styles.scss]
     incremental: true
+    include-in-header: "highlighting.html"
 echo: true
 ---
+
 
 
 :::{.notes}
@@ -13,7 +17,9 @@ you may have an intuition of what they are
 but do you really know what they do and how they work?
 :::
 
-# "dots"
+
+
+# "dots" 
 
 
 :::{.notes}
@@ -589,3 +595,4 @@ You should check them with `{ellipsis}`
 # what's next?
 
 # thanks! 
+

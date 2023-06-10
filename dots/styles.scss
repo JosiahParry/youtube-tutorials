@@ -1,0 +1,56 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+
+.reveal-full-page .reveal-viewport {
+    background-color: #383030;
+}
+
+
+.slides {
+    h1, h2, h3, h4, h5 {
+        color: #fff2f2;
+    }
+    
+    code {
+        color: #c59e63;
+        background-color: #908f8d26;
+        
+    }
+
+    .cell .sourceCode {
+        background-color: #5d5151;
+    }
+
+    blockquote {
+        color: #cbcbcb;
+        font-style: italic;
+    }
+
+    code span .cf {
+        color: #ffe17a;
+    }
+
+    code span .fu {
+        color: #ffe27a
+    }
+
+    code span .st {
+        color: #a1ea8e;
+    }
+
+    pre code {
+        background-color: #443d3d;
+        color: #f4f3e9;
+    }
+
+    code span .sc {
+        color: #6edff5;
+    }
+}
+
+
+
+:root {
+    --r-main-color: #ffd477
+}

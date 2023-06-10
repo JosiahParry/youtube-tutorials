@@ -1,0 +1,824 @@
+---
+title: "Rust goes brrrr"
+format: revealjs
+---
+
+
+# 
+![](images/paste-1.png)
+
+# 
+
+![](images/paste-2.png)
+
+## 
+
+```{r, include = FALSE}
+options("width" = 78)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# remotes::install_github("josiahparry/pathattr")
+library(pathattr)
+head(path10k)
+```
+
+## 
+
+```{r}
+path10k$path[1:5]
+```
+
+## 
+
+```{r, results="asis", echo = FALSE}
+knitr::kable(removal_effects_table)
+```
+
+## 
+
+```r
+
+#>    channel_name   re conversion     value       date
+#> 1:       tiktok 0.10 0.09615385  653.2879 2023-04-17
+#> 2:         blog 0.09 0.08653846  587.9591 2023-02-25
+#> 3:           gs 0.60 0.57692308 3919.7273 2023-01-24
+#> 4:           fb 0.20 0.19230769 1306.5758 2023-03-12
+#> 5:          rtl 0.05 0.04807692  326.6439 2023-03-09
+```
+
+## 
+
+```{r, eval = FALSE}
+#| code-line-numbers: "2,3|4,5|7-17|7|14,15|8-10"
+attribute_path <- function(path_str, date_str, outcome, value, retbl) {
+  touches <- stringr::str_split_1(path_str, ">")
+  dates <- stringr::str_split_1(date_str, ">")
+  dates <- dates[touches != '']
+  touches <- touches[touches != '']
+
+  tibble::tibble(channel_name = touches[touches!='']) |>
+    dplyr::left_join(
+      retbl |> dplyr::select(channel_name, removal_effects_conversion),
+      "channel_name"
+    ) |> 
+    dplyr::rename(re = removal_effects_conversion) |> 
+    dplyr::mutate(
+      conversion = outcome * re / sum(re, na.rm = TRUE),
+      value = value * re / sum(re, na.rm = TRUE),
+      date = dates
+    )
+}
+```
+
+# Break it down
+
+# Argument placeholders
+
+```{r}
+path_str <- "tiktok>blog>gs>fb>rtl"
+date_str <- "2023-04-17>2023-02-25>2023-01-24>2023-03-12>2023-03-09"
+outcome <- 1L
+value <- 6794.194
+retbl <- removal_effects_table
+```
+
+## Lines 2 - 5
+
+```{r}
+touches <- stringr::str_split_1(path_str, ">")
+dates <- stringr::str_split_1(date_str, ">")
+touches <- touches[touches != '']
+dates <- dates[touches != '']
+
+touches
+dates
+```
+
+## {auto-animate="true"}
+
+```{r, eval = FALSE}
+dplyr::tibble(channel_name = touches)
+```
+
+. . . 
+
+```{r, eval = TRUE, echo = FALSE}
+dplyr::tibble(channel_name = touches)
+```
+
+
+## {auto-animate="true"}
+
+```{r, eval = FALSE}
+dplyr::tibble(channel_name = touches) |> 
+  dplyr::left_join(
+    retbl, "channel_name"
+  )
+```
+
+. . .
+
+```{r, echo = FALSE}
+dplyr::tibble(channel_name = touches) |> 
+  dplyr::left_join(
+    retbl, "channel_name"
+  )
+```
+
+# Too comlicated
+
+# 
+:::{.r-fit-text}
+I got a trick up my sleeve 
+:::
+
+# Lookup Vectors
+
+
+# 
+
+```{r}
+alpha_index <- 1:26
+alpha_index
+```
+
+# Give em' names
+
+```{r}
+names(alpha_index) <- letters
+alpha_index
+```
+
+# Values by name 
+
+```{r}
+alpha_index[c("j", "o", "s", "i", "a", "h")]
+```
+
+#
+::: {.r-fit-text}
+Rewrite with a lookup vector  
+:::
+
+## {auto-animate="true"}
+
+```{r}
+lookup <- setNames(
+    retbl[["removal_effects_conversion"]], 
+    retbl[["channel_name"]]
+)
+
+lookup
+```
+
+## {auto-animate="true"}
+
+```{r}
+lookup <- setNames(
+    retbl[["removal_effects_conversion"]], 
+    retbl[["channel_name"]]
+)
+
+lookup[touches]
+```
+
+
+# Benchmark it
+
+## 
+
+```{r, eval = FALSE}
+bench::mark(
+    lookup_table = lookup[touches],
+    dplyr_join = {
+        tidyr::tibble(channel_name = touches) |>
+            dplyr::left_join(
+              retbl,
+              "channel_name"
+            )
+    },
+    check = FALSE
+)
+```
+
+. . . 
+
+```{r, echo = FALSE}
+bench::mark(
+    lookup_table = lookup[touches],
+    dplyr_join = {
+        tidyr::tibble(channel_name = touches) |>
+            dplyr::left_join(
+              retbl,
+              "channel_name"
+            )
+    },
+    check = FALSE
+)
+```
+
+
+# 
+::: {.r-fit-text}
+If you don't need it, don't use it.
+:::
+
+## {auto-animate="true"}
+
+```{r, eval = TRUE}
+re <- lookup[touches]
+```
+
+```{r, echo = FALSE}
+re
+```
+
+## {auto-animate="true"}
+
+```{r, eval = FALSE}
+re <- lookup[touches]
+re_tot <- sum(re, na.rm = TRUE)
+```
+
+```{r, echo = FALSE}
+re_tot <- sum(re, na.rm = TRUE)
+re_tot
+```
+
+## {auto-animate="true"}
+
+```{r}
+re <- lookup[touches]
+re_tot <- sum(re, na.rm = TRUE)
+conversion <- outcome * re / re_tot
+```
+
+```{r echo = FALSE}
+conversion
+```
+
+## {auto-animate="true"}
+
+```{r}
+re <- lookup[touches]
+re_tot <- sum(re, na.rm = TRUE)
+conversion <- outcome * re / re_tot
+val <- value * re / re_tot
+```
+
+```{r echo = FALSE}
+val
+```
+
+## {auto-animate="true"}
+
+```{r}
+re <- lookup[touches]
+re_tot <- sum(re, na.rm = TRUE)
+conversion <- outcome * re / re_tot
+val <- value * re / re_tot
+
+tibble::tibble(
+    channel_name = touches,
+    re, 
+    conversion,
+    value = val,
+    date = dates
+)
+```
+
+# 
+::: {.r-fit-text}
+Make it a function
+:::
+
+## 
+
+```{r eval = TRUE}
+#| code-line-numbers: "2,3|5,6|8|9|10,11|13-19"
+attr_path2 <- function(path_str, date_str, outcome, value, lookup) {
+  touches <- stringr::str_split_1(path_str,">")
+  dates <- stringr::str_split_1(date_str,">")
+    
+  dates <- dates[touches != '']
+  touches <- touches[touches != '']
+
+  re <- unname(lookup[touches])
+  re_tot <- sum(re, na.rm = TRUE)
+  conversion <- outcome * re / re_tot
+  value <- value * re / re_tot
+
+  tibble::tibble(
+    channel_name = touches,
+    re,
+    conversion,
+    value,
+    date = dates
+  )
+}
+```
+
+# Benchmark it
+
+. . .
+
+```{r, eval = FALSE}
+bench::mark(
+    original = attribute_path(path_str, date_str, outcome, value, retbl),
+    base_R = attr_path2(path_str, date_str, outcome, value, lookup)
+)
+```
+
+. . .
+
+```{r echo = FALSE}
+bench::mark(
+    original = attribute_path(path_str, date_str, outcome, value, retbl),
+    base_R = attr_path2(path_str, date_str, outcome, value, lookup)
+)
+```
+
+#
+
+::: {.r-fit-text}
+Iterate over rows
+:::
+
+# 
+::: {.r-fit-text}
+Make testing subset
+:::
+
+```{r}
+path_data <- path10k[1:500,] |> 
+  dplyr::select(
+    path_str = path, 
+    date_str = dates,
+    outcome = leads, 
+    value
+  )
+```
+
+
+# Original approach
+```{r}
+#| output-location: fragment
+path_data |>
+  purrr::pmap(attribute_path, removal_effects_table) |>
+  data.table::rbindlist()
+```
+
+# Base R approach
+
+```{r}
+#| output-location: fragment
+path_data |>
+  purrr::pmap(attr_path2, lookup) |>
+  data.table::rbindlist()
+```
+
+# Benchmark it 
+
+. . . 
+
+```{r eval = FALSE, warn = FALSE}
+bench::mark(
+  original = purrr::pmap(path_data, attribute_path, removal_effects_table) |>
+    data.table::rbindlist(),
+  base_R = purrr::pmap(path_data, attr_path2, lookup) |>
+  data.table::rbindlist()
+)
+```
+
+. . .
+
+```{r echo = FALSE}
+bench::mark(
+  original = purrr::pmap(path_data, attribute_path, removal_effects_table) |>
+    data.table::rbindlist(),
+  base_R = purrr::pmap(path_data, attr_path2, lookup) |>
+  data.table::rbindlist()
+)
+```
+
+# 
+::: {.r-fit-text}
+Would it be faster in Rust?
+::: 
+
+# 
+::: {.r-fit-text}
+Yeah, probably.
+:::
+
+# 
+::: {.r-fit-text}
+Is it worth it?
+::: 
+
+# 
+
+::: {.r-fit-text}
+🤔💭
+:::
+
+# 
+::: {.r-fit-text}
+Split is vectorized....
+::: 
+
+```{r}
+#| output-location: fragment
+dplyr::select(path_data, 1:2)
+```
+
+# 
+::: {.r-fit-text}
+Mutating before didn't make it faster
+::: 
+
+# 
+::: {.r-fit-text}
+Row-wise operations aren't fast in R
+::: 
+
+
+# {background-image="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Original_Ferris.svg/2560px-Original_Ferris.svg.png" background-size="contain"}
+
+
+# Rust code walk through
+
+# Benchmark it
+
+```{r, warn = FALSE}
+bm <- bench::mark(
+  original = purrr::pmap(path_data, attribute_path, removal_effects_table) |>
+    data.table::rbindlist(),
+  base_R = purrr::pmap(path_data, attr_path2, lookup) |>
+  data.table::rbindlist(),
+  rust = attr_path(
+    path_data$path_str, path_data$date_str, 
+    path_data$outcome, path_data$value, as.list(lookup)
+  ) |> data.table::rbindlist()
+)
+```
+
+## Benchmark it 
+
+```{r}
+bm |> 
+    dplyr::select(1:5) |> 
+    dplyr::mutate(
+        times_faster = dplyr::coalesce(
+          as.double(dplyr::lag(median, 2) / median),
+          as.double(dplyr::lag(median, 1) / median)
+          )
+    )
+```
+
+#
+
+![](https://static.wixstatic.com/media/ebb970_46d9d3c86086448b940a4c5a60e49380~mv2.png/v1/fill/w_928,h_664,al_c,q_90/ebb970_46d9d3c86086448b940a4c5a60e49380~mv2.png)
+
+# {background-image="images/paste-3.png" background-size="contain"}
+
+# 
+
+::: {.r-fit-text}
+I'll try anything once...
+:::
+
+##
+
+```{r eval = TRUE}
+path_data <- path10k[1:1000,]
+start <- Sys.time() # start timing
+
+library(data.table)
+lu <- c(fb = 0.2, tiktok = 0.1, gda = 0.3, yt = 0.10, gs = 0.60, rtl = 0.05, blog = 0.09)
+touches <- strsplit(path_data$path, ">", fixed = TRUE)
+lt <- lengths(touches)
+groups <- rep.int(seq_along(touches), lt)
+outcome <- rep.int(path_data$leads, lt)
+value <- rep.int(path_data$value, lt) 
+touches <- unlist(touches)
+dates <- unlist(strsplit(path_data$dates, ">", fixed = TRUE))
+not_empty <- touches != ''
+dates <- dates[not_empty] 
+touches <- touches[not_empty]
+re <- lu[touches]
+DT <- data.table(
+    channel_name = touches,
+    outcome = outcome,
+    date = dates,
+    re,
+    value,
+    groups
+)
+DT[, re_tot := sum(re, na.rm = TRUE), by = groups]
+DT[, `:=`(conversion = outcome * re / re_tot, value = value * re / re_tot)]
+end <- Sys.time()
+```
+
+
+#
+
+::: {.r-fit-text}
+that...felt fast...
+:::
+
+# 
+
+::: {.r-fit-text}
+`r paste0("Time difference of ", as.character(round(end - start, 4)), "secs")`
+:::
+
+
+# 
+![](https://akm-img-a-in.tosshub.com/indiatoday/images/story/202106/cover4_new_1200x768.jpeg)
+
+
+#
+
+::: {.r-fit-text}
+What makes it so fast?
+:::
+
+# {background-image="images/paste-4.png" background-size="contain"}
+
+# 
+
+::: {.r-fit-text}
+The important parts
+::: 
+
+## {auto-animate="true"}
+
+```{r}
+touches <- strsplit(path_data$path, ">", fixed = TRUE)
+```
+
+```{r echo = FALSE}
+touches
+```
+
+## {auto-animate="true"}
+
+```{r}
+touches <- strsplit(path_data$path, ">", fixed = TRUE)
+lt <- lengths(touches)
+```
+
+```{r echo = FALSE}
+lt
+```
+
+## {auto-animate="true"}
+
+```{r}
+touches <- strsplit(path_data$path, ">", fixed = TRUE)
+lt <- lengths(touches)
+groups <- rep.int(seq_along(touches), lt)
+```
+
+```{r echo = FALSE}
+groups
+```
+
+## {auto-animate="true"}
+
+```{r}
+touches <- strsplit(path_data$path, ">", fixed = TRUE)
+lt <- lengths(touches)
+groups <- rep.int(seq_along(touches), lt)
+outcome <- rep.int(path_data$leads, lt)
+```
+
+```{r echo = FALSE}
+outcome
+```
+
+## {auto-animate="true"}
+
+```{r}
+touches <- strsplit(path_data$path, ">", fixed = TRUE)
+lt <- lengths(touches)
+groups <- rep.int(seq_along(touches), lt)
+outcome <- rep.int(path_data$leads, lt)
+value <- rep.int(path_data$value, lt) 
+```
+
+```{r echo = FALSE}
+value
+```
+
+
+## {auto-animate="true"}
+
+```{r}
+touches <- strsplit(path_data$path, ">", fixed = TRUE)
+lt <- lengths(touches)
+groups <- rep.int(seq_along(touches), lt)
+outcome <- rep.int(path_data$leads, lt)
+value <- rep.int(path_data$value, lt) 
+touches <- unlist(touches)
+```
+
+```{r echo = FALSE}
+touches
+```
+
+
+## {auto-animate="true"}
+
+```{r}
+touches <- strsplit(path_data$path, ">", fixed = TRUE)
+lt <- lengths(touches)
+groups <- rep.int(seq_along(touches), lt)
+outcome <- rep.int(path_data$leads, lt)
+value <- rep.int(path_data$value, lt) 
+touches <- unlist(touches)
+re <- lu[touches]
+```
+
+```{r echo = FALSE}
+re
+```
+
+#
+
+::: {.r-fit-text}
+That's magical because.....
+:::
+
+## 
+
+```{r}
+#| output-location: fragment
+DT <- data.table(
+  channel_name = touches,
+  outcome = outcome,
+  date = dates,
+  re,
+  value,
+  groups
+)
+
+DT
+```
+
+
+# 
+
+::: {.r-fit-text}
+Back to column-wise operations! 
+:::
+
+
+# 
+
+::: {.r-fit-text}
+The rest is "trivial"
+:::
+
+## {auto-animate="true"}
+```{r}
+DT[, re_tot := sum(re, na.rm = TRUE), by = groups]
+```
+
+```{r echo = FALSE}
+DT
+```
+
+## {auto-animate="true"}
+```{r}
+DT[, re_tot := sum(re, na.rm = TRUE), by = groups]
+DT[, `:=`(conversion = outcome * re / re_tot, value = value * re / re_tot)]
+```
+
+```{r echo = FALSE}
+DT
+```
+
+## {auto-animate="true"}
+```{r}
+DT[, re_tot := sum(re, na.rm = TRUE), by = groups]
+DT[, `:=`(conversion = outcome * re / re_tot, value = value * re / re_tot)]
+DT[,.(channel_name, re, conversion, value, date)]
+```
+
+```{r echo = FALSE}
+DT
+```
+
+# Benchmark it....
+
+## 
+```{r}
+bm <- bench::mark(
+  data.table = {
+    touches <- strsplit(path_data$path, ">", fixed = TRUE)
+    lt <- lengths(touches)
+    groups <- rep.int(seq_along(touches), lt)
+    outcome <- rep.int(path_data$leads, lt)
+    value <- rep.int(path_data$value, lt) 
+    touches <- unlist(touches)
+    dates <- unlist(strsplit(path_data$dates, ">", fixed = TRUE))
+    not_empty <- touches != ''
+    dates <- dates[not_empty] 
+    touches <- touches[not_empty]
+    re <- lu[touches]
+    DT <- data.table(
+      channel_name = touches,
+      outcome = outcome,
+      date = dates,
+      re,
+      value,
+      groups
+    )
+    DT[, re_tot := sum(re, na.rm = TRUE), by = groups]
+    DT[, `:=`(conversion = outcome * re / re_tot, value = value * re / re_tot)]
+    DT[,.(channel_name, re, conversion, value, date)]
+  },
+  
+  rust =  data.table::rbindlist(attr_path(
+    path_data$path,
+    path_data$dates,
+    path_data$leads,
+    path_data$value,
+    as.list(lu)
+  ))
+)
+```
+
+## 
+
+
+```{r}
+bm |>
+  dplyr::select(1:5) |> 
+  dplyr::mutate(
+    times_faster = as.double(dplyr::lead(median, 1) / median)
+  )
+```
+
+#
+
+::: {.r-fit-text}
+nearly 2000x faster than the original
+:::
+
+# 
+::: {.r-fit-text} 
+R is fast! 
+:::
+
+#
+
+::: {.r-fit-text}
+when you vectorize
+:::
+
+#
+
+::: {.r-fit-text}
+it's not always clear that you can
+:::
+
+
+#
+
+::: {.r-fit-text}
+having more eyes is better
+:::
+
+#
+
+::: {.r-fit-text}
+don't let anyone tell you R is slow
+:::
+
+
+#
+
+::: {.r-fit-text}
+that was fun :) 
+:::
+
+
+#
+
+::: {.r-fit-text}
+SUBSCRIBE!! 🔔
+:::
+
+#
+
+::: {.r-fit-text}
+Catch you next time
+:::
+
+
+

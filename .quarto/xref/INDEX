@@ -58,5 +58,14 @@
   },
   "geohash/script.qmd": {
     "script.html": "2e16abf6"
+  },
+  "speeding-up-r/script.qmd": {
+    "script.html": "1eca0716"
+  },
+  "speeding-up-r/slides.qmd": {
+    "slides.html": "30a763a2"
+  },
+  "s3-generics/slides.qmd": {
+    "slides.html": "90ad50ba"
   }
 }
