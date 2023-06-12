@@ -16,7 +16,7 @@ output-location: fragment
 
 -   Objects in R
 -   Atomic vectors
--   the posers: matrix & data.frame
+-   the posers: data.frame, matrix, and factors
 -   Classes & attributes
 -   Generic & non-generic functions
 -   Method dispatch
@@ -115,8 +115,272 @@ class(NA)
 
 
 
+# 
+::: {.r-fit-text}
+<h1>Lists. The other other vector.</h1>
+:::
 
 
+## Lists
+
+- contain anything you want
+- contain other lists 
+- vector of pointers
+  - _point_ to other pieces of memory
+
+# 
+
+```{r}
+list(dbl = 3.14, int = -1, chr = "hey, pal", bool = FALSE)
+```
+
+# Atomic vectors?
+
+# 
+
+#
+
+```{r}
+is.atomic(character())
+```
+
+#
+
+```{r}
+is.atomic(double())
+```
+
+# 
+
+```{r}
+is.atomic(logical())
+```
+
+# 
+
+```{r}
+is.atomic(list())
+```
+
+
+# 
+::: {.r-fit-text}
+<h1>"atomic vectors are **homogeneous**"</h1>
+:::
+
+:::{.caption}
+Ch 20, R for Data Science
+:::
+
+# 
+::: {.r-fit-text}
+<h1>Lists are recursive</h1>
+:::
+
+# 
+
+```{r}
+list(a = list(), b = list(c = list()))
+```
+
+# 
+::: {.r-fit-text}
+<h1>What about matrices and `data.frame`s? </h1>
+:::
+
+
+# 
+::: {.r-fit-text}
+<h1>Bunch of posers.</h1>
+:::
+
+
+
+# Objects are defined by their
+- class and
+- attributes
+
+
+# create a `data.frame`
+
+```{r}
+d <- data.frame()
+class(d)
+```
+
+# what is it's type?
+
+```{r}
+typeof(d)
+```
+
+# what?
+
+# 
+
+:::{.r-fit-text}
+<h1> data frames are actually just lists masquerading as rectangles.</h1>
+:::
+
+# check `attributes()`
+
+```{r}
+attributes(d)
+```
+
+# 
+
+:::{.r-fit-text}
+<h1>`data.frame`s are defined by: </h1>
+:::
+
+- `row.names`
+- `names`
+- `data.frame` class
+
+
+
+# 
+:::{.r-fit-text}
+<h1>remove the mask with `unclass()`</h1>
+:::
+
+
+# 
+
+```{r}
+unclass(d)
+```
+
+## data.frames are:
+
+- named lists 
+- with named rows
+- each list element must be the same length
+
+# and matrixes? 
+
+```{r}
+m <- matrix(1:5)
+
+class(m)
+```
+
+# 
+
+```{r}
+m <- matrix(1:5)
+
+typeof(m)
+```
+
+
+# `integer`, you say?
+
+# check `attributes()`
+
+```{r}
+attributes(m)
+```
+
+
+# 
+::: {.r-fit-text}
+<h1>What if I told you a matrix was a vector in disguise?</h1>
+:::
+
+# matrix defined by:
+
+- `matrix` and `array` classes (sort of)
+- `dim` attribute
+
+
+# `unclass()` a matrix
+
+```{r}
+unclass(m)
+```
+
+# 
+
+:::{.r-fit-text}
+It's still a matrix.
+:::
+
+
+# so annoying...
+
+
+# `array` is an "implicit" class
+
+they're defined by....
+
+# `dim` attribute
+
+```{r}
+attributes(m)
+```
+
+# 
+
+::: {.r-fit-text}
+<h1>Remember, they're all vectors</h1>
+:::
+
+# 
+
+::: {.r-fit-text}
+<h1>we can remove this attribute with:</h1>
+:::
+
+```{r}
+attr(m, "dim") <- NULL
+m
+```
+
+# one more example
+
+# `factor()`
+
+```{r}
+f <- factor()
+```
+
+# 
+
+```{r}
+unclass(f)
+```
+
+# factors are
+
+- integer vectors
+- with `levels` attribute
+- `levels` are a character vector
+
+# 
+
+:::{.r-fit-text}
+<h1> factors are not an implicit class</h1>
+:::
+
+
+# 
+
+:::{.r-fit-text}
+<h1> only arrays are \~ le sigh \~ </h1>
+:::
+
+
+# What have we learned?
+
+## Review:
+
+- all objects are vectors
+- atomic vectors and lists
+- other objects are one of these with:
+  - class attribute
+  - any other attributes
 
 
 ## 
