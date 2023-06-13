@@ -620,20 +620,20 @@ $bool
 
 <section id="section-14" class="title-slide slide level1 center">
 <h1></h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">is.atomic</span>(<span class="fu">character</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="r-fit-text">
+<h1>
+“atomic vectors are <strong>homogeneous</strong>”
+</h1>
 </div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
+<div class="caption">
+<p>Ch 20, R for Data Science</p>
 </div>
 </section>
 
 <section id="section-15" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">is.atomic</span>(<span class="fu">double</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">is.atomic</span>(<span class="fu">character</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -645,7 +645,7 @@ $bool
 <section id="section-16" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">is.atomic</span>(<span class="fu">logical</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">is.atomic</span>(<span class="fu">double</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -657,24 +657,24 @@ $bool
 <section id="section-17" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">is.atomic</span>(<span class="fu">list</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">is.atomic</span>(<span class="fu">logical</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE</code></pre>
+<pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 </section>
 
 <section id="section-18" class="title-slide slide level1 center">
 <h1></h1>
-<div class="r-fit-text">
-<h1>
-“atomic vectors are <strong>homogeneous</strong>”
-</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">is.atomic</span>(<span class="fu">list</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="caption">
-<p>Ch 20, R for Data Science</p>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
 </div>
 </section>
 
@@ -769,6 +769,14 @@ data frames are actually just lists masquerading as rectangles.
 </div>
 </section>
 
+<section id="section-24" class="title-slide slide level1 center">
+<h1></h1>
+<blockquote>
+<p>“Data frames are actually just lists masquerading as rectangles.”</p>
+</blockquote>
+<p><em>— <cite>Me, Finding an SPSS {haven}<cite></cite></cite></em></p>
+</section>
+
 <section id="check-attributes" class="title-slide slide level1 center">
 <h1>check <code>attributes()</code></h1>
 <div class="cell">
@@ -788,7 +796,7 @@ $class
 </div>
 </section>
 
-<section id="section-24" class="title-slide slide level1 center">
+<section id="section-25" class="title-slide slide level1 center">
 <h1></h1>
 <div class="r-fit-text">
 <h1>
@@ -802,7 +810,7 @@ $class
 </ul>
 </section>
 
-<section id="section-25" class="title-slide slide level1 center">
+<section id="section-26" class="title-slide slide level1 center">
 <h1></h1>
 <div class="r-fit-text">
 <h1>
@@ -812,7 +820,7 @@ remove the mask with <code>unclass()</code>
 </section>
 
 <section>
-<section id="section-26" class="title-slide slide level1 center">
+<section id="section-27" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">unclass</span>(d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -847,7 +855,7 @@ integer(0)</code></pre>
 </div>
 </section>
 
-<section id="section-27" class="title-slide slide level1 center">
+<section id="section-28" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
@@ -879,7 +887,7 @@ integer(0)</code></pre>
 </div>
 </section>
 
-<section id="section-28" class="title-slide slide level1 center">
+<section id="section-29" class="title-slide slide level1 center">
 <h1></h1>
 <div class="r-fit-text">
 <h1>
@@ -913,7 +921,7 @@ What if I told you a matrix was a vector in disguise?
 </div>
 </section>
 
-<section id="section-29" class="title-slide slide level1 center">
+<section id="section-30" class="title-slide slide level1 center">
 <h1></h1>
 <div class="r-fit-text">
 <p>It’s still a matrix.</p>
@@ -925,8 +933,13 @@ What if I told you a matrix was a vector in disguise?
 
 </section>
 
-<section id="array-is-an-implicit-class" class="title-slide slide level1 center">
-<h1><code>array</code> is an “implicit” class</h1>
+<section id="section-31" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<h1>
+<code>array</code> is an “implicit” class
+</h1>
+</div>
 <p>they’re defined by….</p>
 </section>
 
@@ -943,7 +956,7 @@ What if I told you a matrix was a vector in disguise?
 </div>
 </section>
 
-<section id="section-30" class="title-slide slide level1 center">
+<section id="section-32" class="title-slide slide level1 center">
 <h1></h1>
 <div class="r-fit-text">
 <h1>
@@ -952,7 +965,7 @@ Remember, they’re all vectors
 </div>
 </section>
 
-<section id="section-31" class="title-slide slide level1 center">
+<section id="section-33" class="title-slide slide level1 center">
 <h1></h1>
 <div class="r-fit-text">
 <h1>
@@ -970,25 +983,73 @@ we can remove this attribute with:
 </div>
 </section>
 
-<section id="one-more-example" class="title-slide slide level1 center">
-<h1>one more example</h1>
+<section id="change-the-dimensions" class="title-slide slide level1 center">
+<h1>change the dimensions:</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="co"># 1 row 5 columns</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a><span class="fu">attr</span>(m, <span class="st">"dim"</span>) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb51-3"><a href="#cb51-3"></a>m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    2    3    4    5</code></pre>
+</div>
+</div>
+</section>
+
+<section id="what-is-the-class" class="title-slide slide level1 center">
+<h1>what is the class?</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">class</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "matrix" "array" </code></pre>
+</div>
+</div>
+</section>
+
+<section id="but-actually" class="title-slide slide level1 center">
+<h1>but actually?</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">attributes</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>$dim
+[1] 1 5</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>lol, nope</p>
+</div>
+</section>
+
+<section id="yet-another-poser" class="title-slide slide level1 center">
+<h1>yet, another poser</h1>
 
 </section>
 
 <section id="factor" class="title-slide slide level1 center">
 <h1><code>factor()</code></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>f <span class="ot">&lt;-</span> <span class="fu">factor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>f <span class="ot">&lt;-</span> <span class="fu">factor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 </section>
 
-<section id="section-32" class="title-slide slide level1 center">
+<section id="section-34" class="title-slide slide level1 center">
 <h1></h1>
+<div class="r-fit-text">
+<h1>
+what’s under the hood?
+</h1>
+</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">unclass</span>(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">unclass</span>(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1008,7 +1069,7 @@ character(0)</code></pre>
 </ul>
 </section>
 
-<section id="section-33" class="title-slide slide level1 center">
+<section id="section-35" class="title-slide slide level1 center">
 <h1></h1>
 <div class="r-fit-text">
 <h1>
@@ -1017,13 +1078,18 @@ factors are not an implicit class
 </div>
 </section>
 
-<section id="section-34" class="title-slide slide level1 center">
+<section id="section-36" class="title-slide slide level1 center">
 <h1></h1>
 <div class="r-fit-text">
 <h1>
-only arrays are ~ le sigh ~
+only arrays are
 </h1>
 </div>
+</section>
+
+<section id="le-sigh" class="title-slide slide level1 center">
+<h1>~ le sigh ~</h1>
+
 </section>
 
 <section>
@@ -1043,7 +1109,7 @@ only arrays are ~ le sigh ~
 </ul></li>
 </ul>
 </section>
-<section id="section-35" class="slide level2">
+<section id="section-37" class="slide level2">
 <h2></h2>
 <aside class="notes">
 <p>S3 is a programming system adopted by R from its predecessor S It is called s3 because it is from the third version of S</p>

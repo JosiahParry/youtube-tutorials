@@ -137,6 +137,13 @@ list(dbl = 3.14, int = -1, chr = "hey, pal", bool = FALSE)
 # Atomic vectors?
 
 # 
+::: {.r-fit-text}
+<h1>"atomic vectors are **homogeneous**"</h1>
+:::
+
+:::{.caption}
+Ch 20, R for Data Science
+:::
 
 #
 
@@ -163,14 +170,6 @@ is.atomic(list())
 ```
 
 
-# 
-::: {.r-fit-text}
-<h1>"atomic vectors are **homogeneous**"</h1>
-:::
-
-:::{.caption}
-Ch 20, R for Data Science
-:::
 
 # 
 ::: {.r-fit-text}
@@ -221,6 +220,12 @@ typeof(d)
 :::{.r-fit-text}
 <h1> data frames are actually just lists masquerading as rectangles.</h1>
 :::
+
+# 
+
+> "Data frames are actually just lists masquerading as rectangles."
+
+_— <cite>Me, Finding an SPSS {haven}<cite>_
 
 # check `attributes()`
 
@@ -311,7 +316,10 @@ It's still a matrix.
 # so annoying...
 
 
-# `array` is an "implicit" class
+# 
+:::{.r-fit-text}
+<h1>`array` is an "implicit" class</h1>
+:::
 
 they're defined by....
 
@@ -338,7 +346,31 @@ attr(m, "dim") <- NULL
 m
 ```
 
-# one more example
+# change the dimensions:
+
+```{r}
+# 1 row 5 columns
+attr(m, "dim") <- c(1, 5)
+m
+```
+
+# what is the class?
+
+```{r}
+class(m)
+```
+
+# but actually?
+
+```{r}
+attributes(m)
+```
+
+. . . 
+
+lol, nope
+
+# yet, another poser
 
 # `factor()`
 
@@ -346,7 +378,11 @@ m
 f <- factor()
 ```
 
-# 
+#
+
+:::{.r-fit-text}
+<h1>what's under the hood?</h1>
+:::
 
 ```{r}
 unclass(f)
@@ -368,9 +404,11 @@ unclass(f)
 # 
 
 :::{.r-fit-text}
-<h1> only arrays are \~ le sigh \~ </h1>
+<h1> only arrays are</h1>
 :::
 
+
+#  \~ le sigh \~
 
 # What have we learned?
 
@@ -381,6 +419,90 @@ unclass(f)
 - other objects are one of these with:
   - class attribute
   - any other attributes
+
+#
+
+:::{.r-fit-text}
+Objects can have multiple classes
+:::
+
+#
+
+:::{.r-fit-text}
+example: the humble `tibble`
+:::
+
+# 
+
+```{r}
+tbl <- tibble::tibble()
+class(tbl)
+```
+
+# 
+
+:::{.r-fit-text}
+Subsequent classes are a _subclass_
+:::
+
+# 
+
+:::{.r-fit-text}
+`tbl` is a subclass of `data.frame`
+:::
+
+```{r}
+class(tbl)
+```
+
+# 
+
+:::{.r-fit-text}
+`tbl_df` is a subclass of `tbl`
+:::
+
+```{r}
+class(tbl)
+```
+
+#
+
+:::{.r-fit-text}
+Preceding classes are a _superclass_
+:::
+
+# 
+
+:::{.r-fit-text}
+The _base class_ is the last listed
+:::
+
+```{r}
+class(tbl)
+```
+
+## Class hierarchy
+
+```{r}
+class(tbl)
+```
+
+- **base class**: `data.frame`
+- has 2 subclasses: `tbl` and `tbl_df`
+- `tbl` is a superclass of `tbl_df`
+
+#
+
+:::{.r-fit-text}
+classes are the basis for _dispatch_
+:::
+
+# 
+
+:::{.r-fit-text}
+Object Oriented Programming Fundamentals
+:::
+
 
 
 ## 
