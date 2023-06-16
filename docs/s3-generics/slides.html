@@ -1108,8 +1108,457 @@ only arrays are
 <li class="fragment">any other attributes</li>
 </ul></li>
 </ul>
+</section></section>
+<section id="section-37" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Objects can have multiple classes</p>
+</div>
 </section>
-<section id="section-37" class="slide level2">
+
+<section id="section-38" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>example: the humble <code>tibble</code></p>
+</div>
+</section>
+
+<section id="section-39" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>()</span>
+<span id="cb60-2"><a href="#cb60-2"></a><span class="fu">class</span>(tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-40" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Subsequent classes are a <em>subclass</em></p>
+</div>
+</section>
+
+<section id="section-41" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p><code>tbl</code> is a subclass of <code>data.frame</code></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">class</span>(tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-42" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p><code>tbl_df</code> is a subclass of <code>tbl</code></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">class</span>(tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-43" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Preceding classes are a <em>superclass</em></p>
+</div>
+</section>
+
+<section>
+<section id="section-44" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>The <em>base class</em> is the last listed</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">class</span>(tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+</section>
+<section id="class-hierarchy" class="slide level2">
+<h2>Class hierarchy</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">class</span>(tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment"><strong>base class</strong>: <code>data.frame</code></li>
+<li class="fragment">has 2 subclasses: <code>tbl</code> and <code>tbl_df</code></li>
+<li class="fragment"><code>tbl</code> is a superclass of <code>tbl_df</code></li>
+</ul>
+</section></section>
+<section id="section-45" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>classes are the basis for <em>dispatch</em></p>
+</div>
+</section>
+
+<section>
+<section id="section-46" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>S3 Function Fundamentals</p>
+</div>
+</section>
+<section id="s3-functions-have-two-parts" class="slide level2">
+<h2>S3 Functions have two parts:</h2>
+<ul>
+<li class="fragment">a generic</li>
+<li class="fragment">methods</li>
+</ul>
+</section></section>
+<section id="section-47" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>function (x, ...) 
+UseMethod("mean")
+&lt;bytecode: 0x1269a9a70&gt;
+&lt;environment: namespace:base&gt;</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-48" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p><code>UseMethod("fn_name")</code> creates a “generic” function</p>
+</div>
+</section>
+
+<section id="section-49" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Generics don’t do anything</p>
+</div>
+</section>
+
+<section id="section-50" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>generics <em><strong>dispatch</strong></em> a <strong><em>method</em></strong> based on an object’s class</p>
+</div>
+</section>
+
+<section id="section-51" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p><strong><em>dispatch</em></strong> means to execute a function</p>
+</div>
+</section>
+
+<section id="section-52" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>a <strong><em>method</em></strong> is a class specific function</p>
+</div>
+</section>
+
+<section id="define-a-generic" class="title-slide slide level1 center">
+<h1>Define a generic</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>generic_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb72-2"><a href="#cb72-2"></a>  <span class="fu">UseMethod</span>(<span class="st">"generic_fn"</span>)</span>
+<span id="cb72-3"><a href="#cb72-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+</section>
+
+<section id="section-53" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Methods have the format: <br><code>generic.method</code></p>
+</div>
+</section>
+
+<section id="section-54" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Now you realize why putting <code>.</code> in object nams is bad, huh?</p>
+</div>
+</section>
+
+<section id="explore-s3-with-sloop" class="title-slide slide level1 center">
+<h1>Explore S3 with <code>{sloop}</code></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>sloop<span class="sc">::</span><span class="fu">s3_methods_generic</span>(<span class="st">"mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 4
+  generic class      visible source             
+  &lt;chr&gt;   &lt;chr&gt;      &lt;lgl&gt;   &lt;chr&gt;              
+1 mean    Date       FALSE   registered S3method
+2 mean    default    FALSE   registered S3method
+3 mean    difftime   FALSE   registered S3method
+4 mean    POSIXct    FALSE   registered S3method
+5 mean    POSIXlt    FALSE   registered S3method
+6 mean    quosure    FALSE   registered S3method
+7 mean    vctrs_vctr FALSE   registered S3method</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-55" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Generics can have defaults</p>
+</div>
+</section>
+
+<section id="section-56" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Defaults are methods available for <em><strong>all</strong></em> classes</p>
+</div>
+</section>
+
+<section id="section-57" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Used when no method is found</p>
+</div>
+</section>
+
+<section id="example-human-class" class="title-slide slide level1 center">
+<h1>Example: human class</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a>person <span class="ot">&lt;-</span> <span class="fu">structure</span>(</span>
+<span id="cb75-2"><a href="#cb75-2"></a>  <span class="fu">list</span>(<span class="at">first =</span> <span class="st">"Josiah"</span>, <span class="at">last =</span> <span class="st">"Parry"</span>),</span>
+<span id="cb75-3"><a href="#cb75-3"></a>  <span class="at">class =</span> <span class="st">"human"</span></span>
+<span id="cb75-4"><a href="#cb75-4"></a>)</span>
+<span id="cb75-5"><a href="#cb75-5"></a></span>
+<span id="cb75-6"><a href="#cb75-6"></a><span class="fu">print</span>(person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>$first
+[1] "Josiah"
+
+$last
+[1] "Parry"
+
+attr(,"class")
+[1] "human"</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-58" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="fu">library</span>(sloop)</span>
+<span id="cb77-2"><a href="#cb77-2"></a><span class="fu">s3_dispatch</span>(<span class="fu">print</span>(person))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>   print.human
+=&gt; print.default</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-59" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>default method used</p>
+</div>
+</section>
+
+<section id="define-a-method" class="title-slide slide level1 center">
+<h1>define a method</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a>print.human <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb79-2"><a href="#cb79-2"></a>  <span class="fu">cat</span>(<span class="st">"Human: "</span>, x[[<span class="st">"last"</span>]], <span class="st">", "</span>, x[[<span class="st">"first"</span>]], <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb79-3"><a href="#cb79-3"></a>  <span class="fu">invisible</span>(x)</span>
+<span id="cb79-4"><a href="#cb79-4"></a>}</span>
+<span id="cb79-5"><a href="#cb79-5"></a></span>
+<span id="cb79-6"><a href="#cb79-6"></a><span class="fu">print</span>(person)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>Human: Parry, Josiah</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-60" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p><code>print()</code> dispatches on <code>human</code> class</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">print</span>(person))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>=&gt; print.human
+ * print.default</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-61" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Objects can have multiple classes</p>
+</div>
+</section>
+
+<section id="section-62" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Try to include the base class</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a>person <span class="ot">&lt;-</span> <span class="fu">structure</span>(</span>
+<span id="cb83-2"><a href="#cb83-2"></a>  <span class="fu">list</span>(<span class="at">first =</span> <span class="st">"Josiah"</span>, <span class="at">last =</span> <span class="st">"Parry"</span>),</span>
+<span id="cb83-3"><a href="#cb83-3"></a>  <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"human"</span>, <span class="st">"list"</span>)</span>
+<span id="cb83-4"><a href="#cb83-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+</section>
+
+<section id="section-63" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Adding a subclass</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a>me <span class="ot">&lt;-</span> <span class="fu">structure</span>(</span>
+<span id="cb84-2"><a href="#cb84-2"></a>  <span class="fu">list</span>(<span class="at">first =</span> <span class="st">"Josiah"</span>, <span class="at">last =</span> <span class="st">"Parry"</span>),</span>
+<span id="cb84-3"><a href="#cb84-3"></a>  <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"myself"</span>, <span class="st">"human"</span>, <span class="st">"list"</span>) </span>
+<span id="cb84-4"><a href="#cb84-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+</section>
+
+<section id="section-64" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">print</span>(me))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>   print.myself
+=&gt; print.human
+   print.list
+ * print.default</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-65" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>subclasses <strong>inherit</strong> behavior from superclasses</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">print</span>(me))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>   print.myself
+=&gt; print.human
+   print.list
+ * print.default</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-66" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p><code>"myself"</code> <em><strong>inherits</strong></em> <code>"human"</code></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="fu">s3_dispatch</span>(<span class="fu">print</span>(me))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>   print.myself
+=&gt; print.human
+   print.list
+ * print.default</code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-67" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>Inheritance defines shared behavior</p>
+</div>
+</section>
+
+<section id="subclass-methods-can" class="title-slide slide level1 center">
+<h1>subclass methods can:</h1>
+<ul>
+<li class="fragment">have their own behavior</li>
+<li class="fragment"><strong>and</strong> inherit functionality</li>
+</ul>
+</section>
+
+<section id="nextmethod" class="title-slide slide level1 center">
+<h1><code>NextMethod()</code></h1>
+<ul>
+<li class="fragment">tells R to continue to the next class’ method</li>
+</ul>
+</section>
+
+<section>
+<section id="section-68" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a>print.myself <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb91-2"><a href="#cb91-2"></a>  <span class="fu">cat</span>(<span class="st">"Hey, that's me!</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb91-3"><a href="#cb91-3"></a>  <span class="fu">NextMethod</span>()</span>
+<span id="cb91-4"><a href="#cb91-4"></a>}</span>
+<span id="cb91-5"><a href="#cb91-5"></a></span>
+<span id="cb91-6"><a href="#cb91-6"></a>me</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>Hey, that's me!
+Human: Parry, Josiah</code></pre>
+</div>
+</div>
+</section>
+<section id="section-69" class="slide level2">
 <h2></h2>
 <aside class="notes">
 <p>S3 is a programming system adopted by R from its predecessor S It is called s3 because it is from the third version of S</p>
@@ -1118,6 +1567,15 @@ only arrays are
 <p>Let’s look at attributes first. Attributes are essentially metadata for any R object.</p>
 <p>View all attributes of objects with attributes() view a specific attribute with attr(x, “attr-name”)</p>
 <p>Set attributes with attr()</p>
+<ul>
+<li><p>a generic function doesn’t do anything</p></li>
+<li><p>it create a function that tells R that it’s going to behave differently based on the class that is provided</p></li>
+<li><p>generics will not work without creating a method</p></li>
+<li><p>a method is a function that is “dispatched” based on the object’s class</p></li>
+<li><p>methods are additional functions that are executed based on objects class</p></li>
+<li><p>a method is “dispatched” based on the detected class</p></li>
+<li><p>when</p></li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

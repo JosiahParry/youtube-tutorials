@@ -47,10 +47,15 @@
     code span .sc {
         color: #6edff5;
     }
+
+    h1 code {
+        font-size: 85%;
+    }
 }
 
 
 
 :root {
-    --r-main-color: #ffd477
+  //  --r-main-color: #ffd477
+  --r-main-color: #ffbc50;
 }

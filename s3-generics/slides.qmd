@@ -500,10 +500,229 @@ classes are the basis for _dispatch_
 # 
 
 :::{.r-fit-text}
-Object Oriented Programming Fundamentals
+S3 Function Fundamentals
 :::
 
 
+## S3 Functions have two parts:
+
+- a generic 
+- methods
+
+#
+
+```{r}
+mean
+```
+#
+
+:::{.r-fit-text}
+`UseMethod("fn_name")` creates a "generic" function
+:::
+
+# 
+
+:::{.r-fit-text}
+Generics don't do anything
+:::
+
+
+# 
+
+:::{.r-fit-text}
+generics _**dispatch**_ a **_method_** 
+based on an object's class
+:::
+
+
+# 
+
+:::{.r-fit-text}
+**_dispatch_** means to execute a function
+:::
+
+# 
+
+:::{.r-fit-text}
+a **_method_** is a class specific function
+:::
+
+# Define a generic
+
+```{r}
+generic_fn <- function(x, ...) {
+  UseMethod("generic_fn")
+}
+```
+
+# 
+
+:::{.r-fit-text}
+Methods have the format:
+<br>`generic.method` 
+:::
+
+# 
+
+:::{.r-fit-text}
+Now you realize why putting `.` in object nams is bad, huh?
+:::
+
+
+# Explore S3 with `{sloop}`
+
+```{r}
+sloop::s3_methods_generic("mean")
+```
+
+
+# 
+:::{.r-fit-text}
+Generics can have defaults
+:::
+
+
+# 
+
+:::{.r-fit-text}
+Defaults are methods available for _**all**_ classes 
+:::
+
+# 
+
+:::{.r-fit-text}
+Used when no method is found
+:::
+
+# Example: human class
+
+```{r}
+person <- structure(
+  list(first = "Josiah", last = "Parry"),
+  class = "human"
+)
+
+print(person)
+```
+
+# 
+
+```{r}
+library(sloop)
+s3_dispatch(print(person))
+```
+
+#
+
+:::{.r-fit-text}
+default method used
+:::
+
+# define a method
+
+```{r}
+print.human <- function(x, ...) {
+  cat("Human: ", x[["last"]], ", ", x[["first"]], sep = "")
+  invisible(x)
+}
+
+print(person)
+```
+
+# 
+
+:::{.r-fit-text}
+`print()` dispatches on `human` class
+:::
+
+```{r}
+s3_dispatch(print(person))
+```
+
+#
+
+:::{.r-fit-text}
+Objects can have multiple classes
+:::
+
+# 
+
+:::{.r-fit-text}
+Try to include the base class
+:::
+
+```{r}
+person <- structure(
+  list(first = "Josiah", last = "Parry"),
+  class = c("human", "list")
+)
+```
+
+# 
+
+:::{.r-fit-text}
+Adding a subclass
+:::
+
+```{r}
+me <- structure(
+  list(first = "Josiah", last = "Parry"),
+  class = c("myself", "human", "list") 
+)
+```
+
+# 
+
+```{r}
+s3_dispatch(print(me))
+```
+
+# 
+
+:::{.r-fit-text}
+subclasses **inherit** behavior from superclasses
+:::
+
+```{r}
+s3_dispatch(print(me))
+```
+
+
+# 
+
+:::{.r-fit-text}
+`"myself"` _**inherits**_ `"human"`
+:::
+
+```{r}
+s3_dispatch(print(me))
+```
+
+# 
+
+:::{.r-fit-text}
+Inheritance defines shared behavior
+:::
+
+# subclass methods can:
+
+- have their own behavior
+- **and** inherit functionality
+
+# `NextMethod()`
+
+- tells R to continue to the next class' method
+
+#
+
+```{r}
+print.myself <- function(x) {
+  cat("Hey, that's me!\n")
+  NextMethod()
+}
+
+me
+```
 
 ## 
 
@@ -519,4 +738,17 @@ Let's look at attributes first. Attributes are essentially metadata for any R ob
 View all attributes of objects with attributes() view a specific attribute with attr(x, "attr-name")
 
 Set attributes with attr()
+
+
+- a generic function doesn't do anything
+- it create a function that tells R that it's going to behave differently based on the class that is provided
+- generics will not work without creating a method
+- a method is a function that is "dispatched" based on the object's class
+- methods are additional functions that are executed based on objects class
+- a method is "dispatched" based on the detected class
+
+
+
+- when 
+
 :::
