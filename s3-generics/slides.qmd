@@ -594,6 +594,14 @@ Defaults are methods available for _**all**_ classes
 Used when no method is found
 :::
 
+# defined like 
+
+```{r}
+my_fn.default <- function(x, ...) {
+  # do something here for all objects
+}
+```
+
 # Example: human class
 
 ```{r}
@@ -628,8 +636,6 @@ print.human <- function(x, ...) {
 
 print(person)
 ```
-
-# 
 
 :::{.r-fit-text}
 `print()` dispatches on `human` class
@@ -713,7 +719,7 @@ Inheritance defines shared behavior
 
 - tells R to continue to the next class' method
 
-#
+# for example
 
 ```{r}
 print.myself <- function(x) {
@@ -722,6 +728,92 @@ print.myself <- function(x) {
 }
 
 me
+```
+
+# 
+
+```{r}
+s3_dispatch(print(me))
+```
+
+
+# A personal example:
+
+. . . 
+
+Buffering points
+
+# Many types of geometry: 
+
+- sf
+- s2
+- geos
+- rsgeo
+
+# Define a generic:
+
+```{r}
+buffer <- function(x, dist, ...) {
+  UseMethod("buffer")
+}
+```
+
+# Create some fake data 
+
+```{r}
+library(sf, quietly = TRUE)
+x <- matrix(rnorm(10, -90, 90), ncol = 2)
+
+x_sf <- st_cast(st_sfc(st_multipoint(x)), "POINT")
+x_geos <- geos::as_geos_geometry(x_sf)
+x_s2 <- s2::as_s2_geography(x_sf)
+x_rs <- rsgeo::as_rsgeom(x_sf)
+```
+
+# Using the generic
+
+```{r, error = TRUE}
+buffer(x_sf)
+```
+
+# 
+
+:::{.r-fit-text}
+We haven't define a method
+:::
+
+# sf method 
+
+```{r}
+buffer.sfc <- function(x, dist, ...) {
+  sf::st_buffer(x, dist, ...)
+}
+```
+
+# 
+
+```{r, message = TRUE}
+buffer(x_sf, 3)
+```
+
+# 
+
+```{r, error = TRUE}
+buffer(x_rsgeo, 3)
+```
+
+# 
+
+```{r}
+buffer.geos_geometry <- function(x, dist, ...) {
+  geos::geos_buffer(x, dist, ...)
+}
+```
+
+# 
+
+```{r}
+buffer(x_geos, 3)
 ```
 
 ## 

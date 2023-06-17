@@ -1727,5 +1727,19 @@
     "title": "S3 object system",
     "section": "",
     "text": "S3 is a programming system adopted by R from its predecessor S It is called s3 because it is from the third version of S\nObjects in R Common Base R types Atomic vectors On top of those are data.frames and matrix\nMatrix are just vectors they get their special behavior from two things: first their class and then attributes\nLet’s look at attributes first. Attributes are essentially metadata for any R object.\nView all attributes of objects with attributes() view a specific attribute with attr(x, “attr-name”)\nSet attributes with attr()\n\na generic function doesn’t do anything\nit create a function that tells R that it’s going to behave differently based on the class that is provided\ngenerics will not work without creating a method\na method is a function that is “dispatched” based on the object’s class\nmethods are additional functions that are executed based on objects class\na method is “dispatched” based on the detected class\nwhen"
+  },
+  {
+    "objectID": "s3-generics/slides.html#section-70",
+    "href": "s3-generics/slides.html#section-70",
+    "title": "S3 object system",
+    "section": "",
+    "text": "S3 is a programming system adopted by R from its predecessor S It is called s3 because it is from the third version of S\nObjects in R Common Base R types Atomic vectors On top of those are data.frames and matrix\nMatrix are just vectors they get their special behavior from two things: first their class and then attributes\nLet’s look at attributes first. Attributes are essentially metadata for any R object.\nView all attributes of objects with attributes() view a specific attribute with attr(x, “attr-name”)\nSet attributes with attr()\n\na generic function doesn’t do anything\nit create a function that tells R that it’s going to behave differently based on the class that is provided\ngenerics will not work without creating a method\na method is a function that is “dispatched” based on the object’s class\nmethods are additional functions that are executed based on objects class\na method is “dispatched” based on the detected class\nwhen"
+  },
+  {
+    "objectID": "s3-generics/slides.html#section-73",
+    "href": "s3-generics/slides.html#section-73",
+    "title": "S3 object system",
+    "section": "",
+    "text": "S3 is a programming system adopted by R from its predecessor S It is called s3 because it is from the third version of S\nObjects in R Common Base R types Atomic vectors On top of those are data.frames and matrix\nMatrix are just vectors they get their special behavior from two things: first their class and then attributes\nLet’s look at attributes first. Attributes are essentially metadata for any R object.\nView all attributes of objects with attributes() view a specific attribute with attr(x, “attr-name”)\nSet attributes with attr()\n\na generic function doesn’t do anything\nit create a function that tells R that it’s going to behave differently based on the class that is provided\ngenerics will not work without creating a method\na method is a function that is “dispatched” based on the object’s class\nmethods are additional functions that are executed based on objects class\na method is “dispatched” based on the detected class\nwhen"
   }
 ]
