@@ -7,13 +7,14 @@
 }
 
 
+
 .slides {
     h1, h2, h3, h4, h5 {
         color: #fff2f2;
     }
     
     code {
-        color: #c59e63;
+        color: #ffe27a;
         background-color: #908f8d26;
         
     }
@@ -49,13 +50,43 @@
     }
 
     h1 code {
-        font-size: 85%;
+        font-size: 80%;
     }
+
+    // the last bullet point is always white
+    ul > li.fragment.visible.current-fragment {
+        color: white;
+    }
+
+    // fit text is always white
+    .r-fit-text {
+        p {
+            color: white;
+        }
+
+        code {
+            font-size: 80%;
+        }
+    }
+
+
 }
+
+
+// progress bar at bootom
+.reveal {
+    .progress {
+        color : #8e8e8e;
+    }
+    .slide-menu-button .fa-bars::before {
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#8e8e8e" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>');
+    }
+} 
+
 
 
 
 :root {
   //  --r-main-color: #ffd477
-  --r-main-color: #ffbc50;
+  --r-main-color: #ffe477;
 }

@@ -574,7 +574,7 @@ Methods have the format:
 # 
 
 :::{.r-fit-text}
-Now you realize why putting `.` in object nams is bad, huh?
+Do you realize why putting `.` in object names is bad?
 :::
 
 
@@ -645,6 +645,8 @@ print.human <- function(x, ...) {
 
 print(person)
 ```
+
+#
 
 :::{.r-fit-text}
 `print()` dispatches on `human` class
@@ -921,12 +923,68 @@ Either atomic or list
 classes are just an attribute
 :::
 
+# 
+
+:::{.r-fit-text}
+S3 generics are created by `UseMethod("fn_name")`
+:::
+
+```{r}
+fx <- function(x, ...) {
+  UseMethod("fx")
+}
+```
+
 #
 
 :::{.r-fit-text}
-
+Generic functions are class dependent
 :::
 
+# 
+
+:::{.r-fit-text}
+Generics have _**methods**_ per class
+:::
+
+```{r, eval = F}
+fx.custom_class <- function(x, ...) {
+  # Valid R code
+}
+```
+
+# 
+
+:::{.r-fit-text}
+Methods are _**dispatched**_ by class
+:::
+
+```{r}
+sloop::s3_dispatch(ordered("x")[1])
+```
+
+# 
+
+:::{.r-fit-text}
+Methods can _**inherit**_ methods
+:::
+
+```{r, eval=FALSE}
+fx.sub_clss <- function(x, ...) {
+  # class specific stuff
+
+  # inherit methods from super class
+  NextMethod()
+}
+```
+
+# 
+
+:::{.r-fit-text}
+That's all there is to it.
+:::
+
+(mostly)
 
 ## 
 
