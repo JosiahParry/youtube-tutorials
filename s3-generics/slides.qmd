@@ -10,6 +10,10 @@ echo: true
 output-location: fragment
 ---
 
+```{r, include = FALSE}
+options(width = 75)
+knitr::opts_chunk$set(message = TRUE)
+```
 <!-- https://journal.r-project.org/archive/2020/RJ-2020-028/RJ-2020-028.pdf#page=5&zoom=100,132,296 -->
 
 ## We'll cover:
@@ -195,7 +199,12 @@ list(a = list(), b = list(c = list()))
 
 
 
-# Objects are defined by their
+# 
+
+:::{.r-fit-text}
+Objects are defined by their
+:::
+
 - class and
 - attributes
 
@@ -799,10 +808,10 @@ buffer(x_sf, 3)
 # 
 
 ```{r, error = TRUE}
-buffer(x_rsgeo, 3)
+buffer(x_geos, 3)
 ```
 
-# 
+# geos method
 
 ```{r}
 buffer.geos_geometry <- function(x, dist, ...) {
@@ -815,6 +824,109 @@ buffer.geos_geometry <- function(x, dist, ...) {
 ```{r}
 buffer(x_geos, 3)
 ```
+
+# s2 method
+
+```{r}
+buffer.s2_geography <- function(x, dist, ...) {
+  s2::s2_buffer_cells(x, dist, ...)
+}
+```
+
+# 
+
+```{r}
+buffer(x_s2, 3)
+```
+
+# 
+
+:::{.r-fit-text}
+`{rsgeo}` doesn't have a buffer
+:::
+
+# 
+
+:::{.r-fit-text}
+It can convert to sf objects!
+:::
+
+# default method
+
+```{r}
+buffer.default <- function(x, dist, ...) {
+  geometries <- sf::st_as_sfc(x)
+  sf::st_buffer(geometries, dist, ...)
+}
+```
+
+# using the default
+
+```{r}
+buffer(x_rs, 3)
+```
+
+# it works! 
+
+# sort of 
+
+
+# not an `rs_POINT`
+
+```{r}
+buffer(x_rs, 3)
+```
+
+# use inheritance!
+
+# rsgeo method
+
+```{r}
+buffer.rs_POINT <- function(x, dist, ...) {
+  res <- NextMethod()
+  rsgeo::as_rsgeom(res)
+}
+```
+
+# rsgeo method
+
+```{r}
+buffer(x_rs, 3)
+```
+
+# beautiful! 
+
+# we've:
+
+- created an S3 generic
+- wrote class methods
+- wrote a default method
+- used inheritance in a method
+
+# Let's recap
+
+# 
+
+:::{.r-fit-text}
+All objects are vectors
+:::
+
+. . .
+
+Either atomic or list
+
+# 
+
+:::{.r-fit-text}
+classes are just an attribute
+:::
+
+#
+
+:::{.r-fit-text}
+
+:::
+
 
 ## 
 

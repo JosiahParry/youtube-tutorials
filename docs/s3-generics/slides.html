@@ -1241,7 +1241,7 @@ only arrays are
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("mean")
-&lt;bytecode: 0x11350f670&gt;
+&lt;bytecode: 0x10fce0470&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -1613,23 +1613,25 @@ Human: Parry, Josiah</code></pre>
 <section id="create-some-fake-data" class="title-slide slide level1 center">
 <h1>Create some fake data</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a><span class="fu">library</span>(sf, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb97-2"><a href="#cb97-2"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>), <span class="at">ncol =</span> <span class="dv">2</span>)</span>
-<span id="cb97-3"><a href="#cb97-3"></a></span>
-<span id="cb97-4"><a href="#cb97-4"></a>x_sf <span class="ot">&lt;-</span> <span class="fu">st_cast</span>(<span class="fu">st_sfc</span>(<span class="fu">st_multipoint</span>(x)), <span class="st">"POINT"</span>)</span>
-<span id="cb97-5"><a href="#cb97-5"></a>x_geos <span class="ot">&lt;-</span> geos<span class="sc">::</span><span class="fu">as_geos_geometry</span>(x_sf)</span>
-<span id="cb97-6"><a href="#cb97-6"></a>x_s2 <span class="ot">&lt;-</span> s2<span class="sc">::</span><span class="fu">as_s2_geography</span>(x_sf)</span>
-<span id="cb97-7"><a href="#cb97-7"></a>x_rs <span class="ot">&lt;-</span> rsgeo<span class="sc">::</span><span class="fu">as_rsgeom</span>(x_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a><span class="fu">library</span>(sf, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
-
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>), <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb99-2"><a href="#cb99-2"></a></span>
+<span id="cb99-3"><a href="#cb99-3"></a>x_sf <span class="ot">&lt;-</span> <span class="fu">st_cast</span>(<span class="fu">st_sfc</span>(<span class="fu">st_multipoint</span>(x)), <span class="st">"POINT"</span>)</span>
+<span id="cb99-4"><a href="#cb99-4"></a>x_geos <span class="ot">&lt;-</span> geos<span class="sc">::</span><span class="fu">as_geos_geometry</span>(x_sf)</span>
+<span id="cb99-5"><a href="#cb99-5"></a>x_s2 <span class="ot">&lt;-</span> s2<span class="sc">::</span><span class="fu">as_s2_geography</span>(x_sf)</span>
+<span id="cb99-6"><a href="#cb99-6"></a>x_rs <span class="ot">&lt;-</span> rsgeo<span class="sc">::</span><span class="fu">as_rsgeom</span>(x_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
 <section id="using-the-generic" class="title-slide slide level1 center">
 <h1>Using the generic</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="fu">buffer</span>(x_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a><span class="fu">buffer</span>(x_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-error">
@@ -1648,9 +1650,9 @@ Human: Parry, Josiah</code></pre>
 <section id="sf-method" class="title-slide slide level1 center">
 <h1>sf method</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a>buffer.sfc <span class="ot">&lt;-</span> <span class="cf">function</span>(x, dist, ...) {</span>
-<span id="cb100-2"><a href="#cb100-2"></a>  sf<span class="sc">::</span><span class="fu">st_buffer</span>(x, dist, ...)</span>
-<span id="cb100-3"><a href="#cb100-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a>buffer.sfc <span class="ot">&lt;-</span> <span class="cf">function</span>(x, dist, ...) {</span>
+<span id="cb102-2"><a href="#cb102-2"></a>  sf<span class="sc">::</span><span class="fu">st_buffer</span>(x, dist, ...)</span>
+<span id="cb102-3"><a href="#cb102-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -1660,30 +1662,30 @@ Human: Parry, Josiah</code></pre>
 <section id="section-69" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="fu">buffer</span>(x_sf, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a><span class="fu">buffer</span>(x_sf, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>Geometry set for 5 features 
 Geometry type: POLYGON
 Dimension:     XY
-Bounding box:  xmin: -188.6746 ymin: -196.517 xmax: -18.60459 ymax: -101.6617
+Bounding box:  xmin: -109.5238 ymin: -267.1595 xmax: 49.2487 ymax: 34.96381
 CRS:           NA</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>POLYGON ((-182.6746 -193.517, -182.6787 -193.67...</code></pre>
+<pre><code>POLYGON ((-73.46333 -264.1595, -73.46744 -264.3...</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>POLYGON ((-92.00736 -104.6617, -92.01147 -104.8...</code></pre>
+<pre><code>POLYGON ((-103.5238 -42.64062, -103.5279 -42.79...</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>POLYGON ((-50.67526 -146.5688, -50.67937 -146.7...</code></pre>
+<pre><code>POLYGON ((-83.2418 -117.1488, -83.24592 -117.30...</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>POLYGON ((-18.60459 -185.604, -18.6087 -185.761...</code></pre>
+<pre><code>POLYGON ((-29.93545 31.96381, -29.93956 31.8068...</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>POLYGON ((-109.3768 -179.5407, -109.3809 -179.6...</code></pre>
+<pre><code>POLYGON ((49.2487 -82.87593, 49.24459 -83.03293...</code></pre>
 </div>
 </div>
 </section>
@@ -1691,21 +1693,184 @@ CRS:           NA</code></pre>
 <section id="section-70" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a><span class="fu">buffer</span>(x_rsgeo, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1"></a><span class="fu">buffer</span>(x_geos, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'x_rsgeo' not found</code></pre>
+<pre><code>Error in UseMethod("buffer"): no applicable method for 'buffer' applied to an object of class "geos_geometry"</code></pre>
 </div>
+</div>
+</section>
+
+<section id="geos-method" class="title-slide slide level1 center">
+<h1>geos method</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a>buffer.geos_geometry <span class="ot">&lt;-</span> <span class="cf">function</span>(x, dist, ...) {</span>
+<span id="cb112-2"><a href="#cb112-2"></a>  geos<span class="sc">::</span><span class="fu">geos_buffer</span>(x, dist, ...)</span>
+<span id="cb112-3"><a href="#cb112-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
 </div>
 </section>
 
 <section id="section-71" class="title-slide slide level1 center">
 <h1></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1"></a>buffer.geos_geometry <span class="ot">&lt;-</span> <span class="cf">function</span>(x, dist, ...) {</span>
-<span id="cb110-2"><a href="#cb110-2"></a>  geos<span class="sc">::</span><span class="fu">geos_buffer</span>(x, dist, ...)</span>
-<span id="cb110-3"><a href="#cb110-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1"></a><span class="fu">buffer</span>(x_geos, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;geos_geometry[5] with CRS=NA&gt;
+[1] &lt;POLYGON [-79.463 -267.159...-73.463 -261.159]&gt;
+[2] &lt;POLYGON [-109.524 -45.641...-103.524 -39.641]&gt;
+[3] &lt;POLYGON [-89.242 -120.149...-83.242 -114.149]&gt;
+[4] &lt;POLYGON [-35.935 28.964...-29.935 34.964]&gt;    
+[5] &lt;POLYGON [43.249 -85.876...49.249 -79.876]&gt;    </code></pre>
+</div>
+</div>
+</section>
+
+<section id="s2-method" class="title-slide slide level1 center">
+<h1>s2 method</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a>buffer.s2_geography <span class="ot">&lt;-</span> <span class="cf">function</span>(x, dist, ...) {</span>
+<span id="cb115-2"><a href="#cb115-2"></a>  s2<span class="sc">::</span><span class="fu">s2_buffer_cells</span>(x, dist, ...)</span>
+<span id="cb115-3"><a href="#cb115-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+</section>
+
+<section id="section-72" class="title-slide slide level1 center">
+<h1></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1"></a><span class="fu">buffer</span>(x_s2, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;geodesic s2_geography[5] with CRS=OGC:CRS84&gt;
+[1] POLYGON ((103.536415 84.1594672, 103.536413 84.1594666, 103.536412 84.1594659, 103.53641 84.1594653, 103.536409 84.1594647...          
+[2] POLYGON ((-106.523803 -42.640599, -106.523803 -42.6405985, -106.523804 -42.6405984, -106.523804 -42.6405981, -106.523804 -42.6405981...
+[3] POLYGON ((93.7581368 -62.8512029, 93.7581369 -62.8512033, 93.7581369 -62.8512036, 93.758137 -62.851204, 93.758137 -62.8512043...       
+[4] POLYGON ((-32.9354209 31.963796, -32.9354206 31.9637961, -32.9354206 31.9637963, -32.9354205 31.9637964, -32.9354205 31.9637964...     
+[5] POLYGON ((46.2485057 -82.8759373, 46.2485071 -82.8759375, 46.2485067 -82.8759375, 46.2485071 -82.8759376, 46.2485058 -82.8759378...    </code></pre>
+</div>
+</div>
+</section>
+
+<section id="section-73" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p><code>{rsgeo}</code> doesn’t have a buffer</p>
+</div>
+</section>
+
+<section id="section-74" class="title-slide slide level1 center">
+<h1></h1>
+<div class="r-fit-text">
+<p>It can convert to sf objects!</p>
+</div>
+</section>
+
+<section id="default-method" class="title-slide slide level1 center">
+<h1>default method</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a>buffer.default <span class="ot">&lt;-</span> <span class="cf">function</span>(x, dist, ...) {</span>
+<span id="cb118-2"><a href="#cb118-2"></a>  geometries <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_as_sfc</span>(x)</span>
+<span id="cb118-3"><a href="#cb118-3"></a>  sf<span class="sc">::</span><span class="fu">st_buffer</span>(geometries, dist, ...)</span>
+<span id="cb118-4"><a href="#cb118-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+</section>
+
+<section id="using-the-default" class="title-slide slide level1 center">
+<h1>using the default</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">buffer</span>(x_rs, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>Geometry set for 5 features 
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -109.5238 ymin: -267.1595 xmax: 49.2487 ymax: 34.96381
+CRS:           NA</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((-73.46333 -264.1595, -73.46744 -264.3...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((-103.5238 -42.64062, -103.5279 -42.79...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((-83.2418 -117.1488, -83.24592 -117.30...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((-29.93545 31.96381, -29.93956 31.8068...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((49.2487 -82.87593, 49.24459 -83.03293...</code></pre>
+</div>
+</div>
+</section>
+
+<section id="it-works" class="title-slide slide level1 center">
+<h1>it works!</h1>
+
+</section>
+
+<section id="sort-of" class="title-slide slide level1 center">
+<h1>sort of</h1>
+
+</section>
+
+<section id="not-an-rs_point" class="title-slide slide level1 center">
+<h1>not an <code>rs_POINT</code></h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a><span class="fu">buffer</span>(x_rs, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>Geometry set for 5 features 
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -109.5238 ymin: -267.1595 xmax: 49.2487 ymax: 34.96381
+CRS:           NA</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((-73.46333 -264.1595, -73.46744 -264.3...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((-103.5238 -42.64062, -103.5279 -42.79...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((-83.2418 -117.1488, -83.24592 -117.30...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((-29.93545 31.96381, -29.93956 31.8068...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>POLYGON ((49.2487 -82.87593, 49.24459 -83.03293...</code></pre>
+</div>
+</div>
+</section>
+
+<section id="use-inheritance" class="title-slide slide level1 center">
+<h1>use inheritance!</h1>
+
+</section>
+
+<section id="rsgeo-method" class="title-slide slide level1 center">
+<h1>rsgeo method</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1"></a>buffer.rs_POINT <span class="ot">&lt;-</span> <span class="cf">function</span>(x, dist, ...) {</span>
+<span id="cb133-2"><a href="#cb133-2"></a>  res <span class="ot">&lt;-</span> <span class="fu">NextMethod</span>()</span>
+<span id="cb133-3"><a href="#cb133-3"></a>  rsgeo<span class="sc">::</span><span class="fu">as_rsgeom</span>(res)</span>
+<span id="cb133-4"><a href="#cb133-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -1713,23 +1878,23 @@ CRS:           NA</code></pre>
 </section>
 
 <section>
-<section id="section-72" class="title-slide slide level1 center">
-<h1></h1>
+<section id="rsgeo-method-1" class="title-slide slide level1 center">
+<h1>rsgeo method</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a><span class="fu">buffer</span>(x_geos, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1"></a><span class="fu">buffer</span>(x_rs, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;geos_geometry[5] with CRS=NA&gt;
-[1] &lt;POLYGON [-188.675 -196.52...-182.675 -190.52]&gt;
-[2] &lt;POLYGON [-98.007 -107.66...-92.007 -101.66]&gt;  
-[3] &lt;POLYGON [-56.675 -149.57...-50.675 -143.57]&gt;  
-[4] &lt;POLYGON [-24.605 -188.60...-18.605 -182.60]&gt;  
-[5] &lt;POLYGON [-115.377 -182.54...-109.377 -176.54]&gt;</code></pre>
+<pre><code>&lt;rs_POLYGON[5]&gt;
+[1] (Polygon { exterior: LineString([Coord { x: -73.46332808048969, y: -2...
+[2] (Polygon { exterior: LineString([Coord { x: -103.52383005530983, y: -...
+[3] (Polygon { exterior: LineString([Coord { x: -83.24180365468169, y: -1...
+[4] (Polygon { exterior: LineString([Coord { x: -29.935447360360094, y: 3...
+[5] (Polygon { exterior: LineString([Coord { x: 49.24870494057029, y: -82...</code></pre>
 </div>
 </div>
 </section>
-<section id="section-73" class="slide level2">
+<section id="section-75" class="slide level2">
 <h2></h2>
 <aside class="notes">
 <p>S3 is a programming system adopted by R from its predecessor S It is called s3 because it is from the third version of S</p>
