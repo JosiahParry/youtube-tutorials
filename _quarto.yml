@@ -18,6 +18,9 @@ website:
         text: Geohash slides
       - href: simple-features/script.qmd
         text: Simple Features
+      - href: s3-generics/slides.qmd
+        text: S3 Generics (slides)
+        
   
         
       

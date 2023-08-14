@@ -67,5 +67,11 @@
   },
   "s3-generics/slides.qmd": {
     "slides.html": "90ad50ba"
+  },
+  "intro-valve/slides.qmd": {
+    "slides.html": "870851ca"
+  },
+  "intro-valve/slides/slides.qmd": {
+    "slides.html": "6965709f"
   }
 }
