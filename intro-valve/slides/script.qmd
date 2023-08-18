@@ -1,6 +1,6 @@
 Hey everyone it's Josiah. I've been grinding on a new tool for a few months now. And I'm hyped to formally introduce you to it. It's called Valve. And Valve is going to make R in production kick ass even more.
 
-We've all seen those click bait articles saying "Don't Put R in production" or telling you that R can't make machine learning models for production. That's a bunch of malarkey. Those "hot takes" are uninformed and can be applied to other languages such as Python.
+We've all seen those click bait articles saying "Don't Put R in production" or telling you that R can't make machine learning models for production. Those "hot takes" are uninformed and can be applied to other languages such as Python. That's a bunch of malarkey.
 
 Let's get right down to it. Let's talk "production." And let me be clear: R belongs in production. But we as the R community need to learn how to do that and be better advocates.
 

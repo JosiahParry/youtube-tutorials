@@ -9,5 +9,5 @@ v <- vetiver_pin_read(b, "childcare-costs-xgb")
 
 #* @plumber
 function(pr) {
-    pr %>% vetiver_api(v)
+    pr %>% vetiver_api(v, debug = TRUE)
 }

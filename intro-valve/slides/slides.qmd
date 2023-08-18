@@ -52,7 +52,8 @@ Makes R go brrrrrrrr
 
 # You need to learn how
 
-![](images/paste-6.png)
+
+# 
 
 ::: r-fit-text
 usable by other systems
@@ -60,7 +61,7 @@ usable by other systems
 
 # Enter `REST`ful APIs
 
-# if i've lost you...
+## if i've lost you...
 
 ![](images/paste-15.png)
 
@@ -242,6 +243,8 @@ valve_run(
 )
 ```
 
+
+# Start valve from CLI 
 ------------------------------------------------------------------------
 
 Hey everyone it's Josiah. I've been grinding working on a new tool for a few months now. And I'm damn excited to let you in on my secret sauce. It's called Valve and it's going to make R in production kick ass even more.
