@@ -1,0 +1,136 @@
+Title: Docker for Data Scientists
+
+If you've been doing data science for long enough you've encountered Docker. Maybe you may have made a Docker container and didn't really know what you were doing, or someone told you that you should make one, or you're thinking about different strategies for putting your data science jobs into production. Either way, this video is for you.
+
+As data scientists we make all sorts of things. You definitely made a pdf report, probably some pretty looking charts, maybe you even tuned a fancy machine learning model, or made an interacting web application to help your internal stakeholders explore their own data. For many of the things that data scientists make, it can be hard to get that thing you've built, I'll refer to this as an artifact, off of your own machine. Whenever you've built something that you either want to automate or make available to other people or systems, Docker can likely help.
+
+To understand Docker, it can be helpful to think about what kind of problems it solves. Lets work through an example: you've done a market segmentation analysis that you want your colleague to review. So you send her over your script and the data. She tries running it and it doesn't work. Why? Well, think about all of the things that you didn't send. Your script used additional packages to make the analysis easier. For one we can't be sure that she has those packages or even the right version of those packages. And then, on top of that, some of those packages require an additional system level dependency which wasn't captured. All of this leaves a lot of room for failure for when she tries to run your script.
+
+Now let's extend this example of your coworker's computer, to a server. When we need to run things in production, that is almost always done on a server. Now when you send over your script to be ran on that server the same problem arises. Does that server have your packages? Does it have the right versions? And does it have the same system dependencies? What if there is another script already on the server that has to be ran but with an older version of the package you used and conflicts with the one you used? You can't even run your script on that server if you wanted to because you'd break outstanding code.
+
+One of the ways that we can solve this by using Docker. Docker creates what are called "containers." These containers are self *contained* computers. These containers are designed to run just one application at a time and be completely standalone and self-contained. They contain the code, libraries, and system dependencies (binaries) that you need to run your script or application.
+
+-   TODO Docker essentially creates a way to run multiple self contained virtual machiens on your own operating system.
+
+Docker is great because the containers are generated with code. There are three different concepts we need to wrap our head around.
+
+-   The `Dockerfile`
+
+-   The Docker Image
+
+-   A Docker Container
+
+[![](images/paste-1.png)](https://cto.ai/blog/docker-image-vs-container-vs-dockerfile)
+
+## `Dockerfile`
+
+At the root, every Docker container based on a `Dockerfile`. A `Dockerfile` is a set of instructions that define how the image will be built. This includes things like the operating system it will use, copying any files that need to be included, or additional libraries.
+
+-   Docker uses something called instructions
+
+-   If you understand just 5 of them you can get very far.
+
+    -   `FROM` : the most important step.
+
+        -   you can build your Docker image based on another existing docker image.
+
+        -   It is not expected of you to be able to build a complex docker image from the ground up
+
+        -   people and organizations have already built very useful docker containers that have "most" of what you would already need to get going
+
+        -   we can build on top of these
+
+    -    `COPY` : copy files and folders
+
+        -   this works a lot like the `cp` command you specify what it is you are copying and then where you will be copying it to
+
+    -    `RUN` : run is very useful in that it lets us run any command using the operating system's shell
+
+        -   more often than not the `RUN` instruction will be used to install system dependencies and install libraries for your R and python applications
+
+    -   `EXPOSE` : exposes a port for a web application to work with
+
+        -   `EXPOSE` is very important if you are working with a web application for example something like Plumber, Shiny, Flask, or FastAPI
+
+        -   These tools work over http which requires a port to be exposed so that the application can "listen" and accept incoming requests
+
+    -    `ENTRYPOINT` : defines what the docker container should do when it is started
+
+## Docker Images & building them
+
+From these set of instructions, you can build a **Docker Image**. The Docker Image is built directly from the Dockerfile. It runs through the steps specified in the Dockerfile and begins to
+
+Docker containers are created with a `Dockerfile`. A Dockerfile is a plain text file that describes how to build a Docker image
+
+-   images are templates to build real containers that we can interact with
+
+-   docker images are created from a build process
+
+-   the build process is done with `docker build` CLI command
+
+-   each instruction is converted into a layer in the image
+
+-   as the docker build process moves along it caches the results of each step so that it can be used without rebuilding
+
+-   if you change any instructions then the cache at that point and after have to be rebuilt
+
+![](images/paste-2.png)
+
+-   this lets us speed up the process of building
+
+### Tips for building
+
+-   take advantage of this caching and put the long running stuff at the top and the things that wont change at the top
+
+-   only change your instructions after those steps so that building is a breeze!
+
+## Creating your container
+
+-   creating a container that you can actually use is all just a matter of running the image
+
+## Steps for Data Scientists
+
+For the vast majority of scenarios for data scientists we can reduce Docker to 4 steps:
+
+1.  Choose an appropriate base image
+2.  Install the requisite system dependencies
+3.  Install the additional R or Python Packages
+4.  Specify an `ENTRYPOINT` (what to do when the app starts)
+
+## Shiny App Example
+
+## Flask Example
+
+What will the user take away:
+
+-   fundamental understanding of what Docker is
+
+-   what the important components are
+
+-   distinction between Dockerfile, Docker image, and a container
+
+-   What a registry is
+
+a goal of a docker image is to keep it as small as you possibly can.
+
+Do not use Docker to store data
+
+Think of docker when you need to run something on a computer that is accessible by either other people or other systems.
+
+be sure to cover layers. each of the layers are cached. so when you change a layer that step and all after it have to be executed again.
+
+Benefits of using Docker:
+
+-   portable
+
+-   standardized
+
+-   reproducible - most importantly docker containers are a part of reproducible science
+
+Things you might put in a Docker container:
+
+-   Web-App
+
+-   REST API
+
+-   an R or Python script that you run on a schedule
