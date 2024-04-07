@@ -1,0 +1,224 @@
+---
+title: "Rust JSON parser"
+subtitle: ""
+# format: 
+#   revealjs:
+#     theme: [dark, ../styles.scss]
+#     incremental: true
+format: gfm
+echo: true
+theme: [dark, ../styles.scss]
+output-location: fragment
+---
+
+Today we're going to learn how to make a blazing fast JSON parser using Rust. Specifically, we'll learn how to use the `serde` and `serde_json` crates.
+
+First, will create a new Rust crate. We'll need to add our dependencies. For this we will only need serde and serde_json. When we add serde we need to make sure we include the `derive` feature. This is super important.
+
+```sh
+cargo new json-parser
+cargo add serde --features derive
+cargo add serde_json
+```
+
+For this project, we'll create a json parser for the [JSONPlaceHolder API](https://jsonplaceholder.typicode.com/).
+But you'll be able to adapt this to any API or JSON files.
+Shouts out to Jared Wilber for the recommendation! 
+https://x.com/jdwlbr/status/1776805987477053829
+
+The API has 6 types of responses that we will need to handle: 
+
+- posts
+- comments
+- albums
+- photos
+- todos 
+- users
+
+Our goal is to be able to take some JSON like 
+
+```json
+{
+  "albumId": 1,
+  "id": 3,
+  "title": "officia porro iure quia iusto qui ipsa ut modi",
+  "url": "https://via.placeholder.com/600/24f355",
+  "thumbnailUrl": "https://via.placeholder.com/150/24f355"
+}
+```
+
+and turn it into a rust struct that we can work with. For this, we're going to lean on the rust crate `serde`. `serde` is one of the reasons why I fell in love with Rust. It lets us **ser**ialize and **de**serialize Rust objects. 
+
+Serialization is the process of taking an object 
+
+```rust
+let person = Person {
+  name: "josiah",
+  age: 28
+}
+```
+
+and turn it into another representation, such as json.
+
+```json
+{
+  "name": "josiah",
+  "age": 28
+}
+```
+
+Deserialization is the opposite. We take a representation, in this case, a string, and reconstruct an object. So if we deserialized the JSON we would get back the struct:
+
+```rust
+Person {
+  name: "josiah",
+  age: 28
+}
+```
+
+I've downloaded the JSON and put it in my Rust library to make it easier to work with. 
+
+So how do we take this `posts.json` and deserialize it to make it easier to work with in Rust? 
+
+```rust
+fn main() {
+    let posts = std::fs::read_to_string("posts.json").unwrap();
+    println!("{posts}");
+}
+```
+
+First, we need to create a struct to represent the response. Each post has 4 fields `userId`, `id`, `title`, and `body`. So lets create a struct to represent this.
+
+```rust
+pub struct Post {
+    pub userId: i32,
+    pub id: i32,
+    pub title: String,
+    pub body: String,
+}
+```
+
+In our main lets copy a string for a single post. To deserialize a string slice into a struct we use the `serde_json::from_str` function. It requires a type annotation so it knows what you'll deserialize it into.
+```rust
+use serde_json::from_str;
+
+pub struct Post {
+    pub userId: i32,
+    pub id: i32,
+    pub title: String,
+    pub body: String,
+}
+
+fn main() {
+
+    let post = r#"{
+        "userId": 10,
+        "id": 91,
+        "title": "aut amet sed",
+        "body": "libero voluptate eveniet aperiam sed\nsunt placeat suscipit molestias\nsimilique fugit nam natus\nexpedita consequatur consequatur dolores quia eos et placeat"
+    }"#;
+
+    let post: Post = from_str(post).unwrap();
+}
+```
+
+If we run `cargo check` we get a compiler error telling us that the trait `Deserialize` is not implemented for `Post`. And this is the magic of `serde`. We can derive the traits `Serialize` and `Deserialize` which will let us take a struct and serialize it or deserialze a string into the struct. 
+
+Let's import those traits and derive them as well as the `Debug` and `Clone` traits and then print the results as well.
+
+```rust
+use serde::{Deserialize, Serialize};
+use serde_json::from_str;
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub struct Post {
+    pub userId: i32,
+    pub id: i32,
+    pub title: String,
+    pub body: String,
+}
+
+fn main() {
+    let posts = std::fs::read_to_string("posts.json").unwrap();
+    println!("{posts}");
+
+    let post = r#"{
+        "userId": 10,
+        "id": 91,
+        "title": "aut amet sed",
+        "body": "libero voluptate eveniet aperiam sed\nsunt placeat suscipit molestias\nsimilique fugit nam natus\nexpedita consequatur consequatur dolores quia eos et placeat"
+    }"#;
+
+    let post: Post = from_str(post).unwrap();
+    println!("{post:#?}");
+}
+```
+```json
+Post {
+    userId: 10,
+    id: 91,
+    title: "aut amet sed",
+    body: "libero voluptate eveniet aperiam sed\nsunt placeat suscipit molestias\nsimilique fugit nam natus\nexpedita consequatur consequatur dolores quia eos et placeat",
+}
+```
+
+Boom! As simple as that. Now, we can extend this simple code to handle the whole file. Let's read the file into a `String`. Since the json file is an array of posts we will change the type annotation to `Vec<Post>`.
+
+```rust
+fn main() {
+    let json = std::fs::read_to_string("posts.json").unwrap();
+    let posts: Vec<Post> = from_str(&json).unwrap();
+    println!("{posts:#?}");
+}
+```
+
+There is still a compiler warning though. Rust is telling us that the struct fields should not be camel case. But, according to the json, the field needs to be. There's a macro that we can use to automatically convert the names of the fields to camel case. 
+
+```rust
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Post {
+    pub user_id: i32,
+    pub id: i32,
+    pub title: String,
+    pub body: String,
+}
+```
+
+Now the compiler has stopped complaining. We can replicate this process for the other files as well. For each of these we'll repreat the steps above with some pretty simple boiler plate. We can look at the json for each of these to get a sense of what the structs should look like. This is pretty simple for comments, photos, posts, and todos. But lets take a look at users. This is actually fairly complex!
+
+```json
+  {
+    "id": 1,
+    "name": "Leanne Graham",
+    "username": "Bret",
+    "email": "Sincere@april.biz",
+    "address": {
+      "street": "Kulas Light",
+      "suite": "Apt. 556",
+      "city": "Gwenborough",
+      "zipcode": "92998-3874",
+      "geo": {
+        "lat": "-37.3159",
+        "lng": "81.1496"
+      }
+    },
+    "phone": "1-770-736-8031 x56442",
+    "website": "hildegard.org",
+    "company": {
+      "name": "Romaguera-Crona",
+      "catchPhrase": "Multi-layered client-server neural-net",
+      "bs": "harness real-time e-markets"
+    }
+  }
+  ```
+
+There are nested fields. We could look through each of these and try to meticulously create the appropriate structs....or, we can use a shortcut. Work smarter not harder fellas.
+
+Let me introduce you to [transform.tools's json to rust serde](https://transform.tools/json-to-rust-serde). We can paste any json in here and it will do its best to create the Rust code we need to represent it using serde. 
+
+It does a pretty dang good job! We can give it a once over and change some things here and there to fit our needs a bit better. For our case, we'll change the name from `Root` to `User` and change `i64` to `i32`. But everything else should be okay. 
+
+Now we can modify our main function to read in and parse all of the json files. 
+
+- In the next video I'll go over how we can adapt this and create an R package for processing json in parallel using serde and rayon

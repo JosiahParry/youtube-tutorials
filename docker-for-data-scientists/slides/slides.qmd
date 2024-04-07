@@ -1,0 +1,21 @@
+---
+title: "Docker"
+subtitle: "_for data scientits_"
+format: 
+  revealjs:
+    theme: [dark, styles.scss]
+    incremental: true
+echo: true
+output-location: fragment
+---
+
+```{r, include = FALSE}
+options(width = 75)
+knitr::opts_chunk$set(message = TRUE, eval = FALSE)
+```
+
+```{css, echo = FALSE}
+.center h2 {
+  text-align: center;
+}
+```
